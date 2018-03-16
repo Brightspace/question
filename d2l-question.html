@@ -1,0 +1,31 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<!--
+'d2l-question'
+Polymer-based web component for D2L questions
+
+@demo demo/index.hmtl
+-->
+
+<dom-module id="d2l-question">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+		</style>
+
+		<slot></slot>
+	</template>
+	<script>
+		class D2LQuestion extends Polymer.Element {
+			static get is() {
+				return 'd2l-question';
+			}
+			constructor() {
+				super();
+			}
+		}
+		customElements.define(D2LQuestion.is, D2LQuestion);
+	</script>
+</dom-module>
