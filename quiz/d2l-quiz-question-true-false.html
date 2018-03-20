@@ -1,13 +1,11 @@
 <link rel="import" href="../../polymer/polymer-element.html">
 
 <!--
-'d2l-question-quizzing-true-false'
-Polymer-based web component for D2L questions
+'d2l-quiz-question-true-false'
 
-@demo demo/index.hmtl
 -->
 
-<dom-module id="d2l-question-quizzing-true-false">
+<dom-module id="d2l-quiz-question-true-false">
 	<template>
 		<style>
 			:host {
@@ -26,9 +24,9 @@ Polymer-based web component for D2L questions
 		</div>
 	</template>
 	<script>
-		class D2LQuestionQuizzingTrueFalse extends Polymer.Element {
+		class D2LQuizQuestionTrueFalse extends Polymer.Element {
 			static get is() {
-				return 'd2l-question-quizzing-true-false';
+				return 'd2l-quiz-question-true-false';
 			}
 
 			static get properties() {
@@ -45,6 +43,6 @@ Polymer-based web component for D2L questions
 				super();
 			}
 		}
-		customElements.define(D2LQuestionQuizzingTrueFalse.is, D2LQuestionQuizzingTrueFalse);
+		customElements.define(D2LQuizQuestionTrueFalse.is, D2LQuizQuestionTrueFalse);
 	</script>
 </dom-module>
