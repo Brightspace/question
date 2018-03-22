@@ -1,6 +1,6 @@
 <link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../d2l-fetch-siren-entity-behavior/d2l-fetch-siren-entity-behavior.html">
-<link rel="import" href="../quiz/d2l-quiz-question-true-false.html">
+<link rel="import" href="./quiz/d2l-quiz-question-true-false.html">
 
 <!--
 'd2l-question'
@@ -32,22 +32,22 @@ Polymer-based web component for D2L questions
 						type: String,
 						observer: '_getQuestionData'
 					}
-				}
+				};
 			}
 
-			_appendQuestionType(questionData) {
+			_appendQuestionType(/*questionData*/) {
 				//switch(questionData.properties.question.extension.questionType) {
-					//case 2:
-						this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-true-false'));
-						this.shadowRoot.querySelector('d2l-quiz-question-true-false').setAttribute('question-data', '{"bodyText":"text"}');
-						//break;
+				//case 2:
+				this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-true-false'));
+				this.shadowRoot.querySelector('d2l-quiz-question-true-false').setAttribute('question-data', '{"bodyText":"text"}');
+				//break;
 				//}
 			}
 
 			_getQuestionData() {
 				if (this.href) {
 					this._fetchEntity(this.href)
-					.then((questionData) => {this._appendQuestionType(questionData);}, () => {console.log('FAIL'); this._appendQuestionType();});
+						.then((questionData) => {this._appendQuestionType(questionData);}, () => {this._appendQuestionType();});
 				}
 			}
 		}
