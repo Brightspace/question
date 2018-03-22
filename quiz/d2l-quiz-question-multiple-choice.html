@@ -1,0 +1,137 @@
+<link rel="import" href="../../polymer/polymer-element.html">
+
+<!--
+'d2l-quiz-question-multiple-choice'
+
+-->
+
+<dom-module id="d2l-quiz-question-multiple-choice">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+
+			.body {
+				counter-reset: choices;
+			}
+
+			.answer-radio {
+				display: block;
+			}
+
+			.preview-counters {
+				margin-left: 0.4rem;
+				[dir='rtl'] & {
+				margin-right: 0.4rem;
+			    margin-left: 0;
+			  }
+			}
+
+			.preview-counters-decimal::before {
+				counter-increment: choices;
+				content: counter(choices, decimal) ") ";
+			}
+
+			.preview-counters-lower-roman::before {
+				counter-increment: choices;
+				content: counter(choices, lower-roman) ") ";
+			}
+
+			.preview-counters-upper-roman::before {
+				counter-increment: choices;
+				content: counter(choices, upper-roman) ") ";
+			}
+
+			.preview-counters-lower-alpha::before {
+				counter-increment: choices;
+				content: counter(choices, lower-alpha) ") ";
+			}
+
+			.preview-counters-upper-alpha::before {
+				counter-increment: choices;
+				content: counter(choices, upper-alpha) ") ";
+			}
+		</style>
+
+		<div class="body">
+			<div>
+				<p>[[questionData.bodyText]]</p>
+			</div>
+			<div>
+				<template is="dom-if" if="[[questionData.showHint]]">
+					<p>[[questionData.hint]]</p>
+				</template>
+			</div>
+			<div>
+				<template is="dom-repeat" items="[[_choices]]">
+					<label class="answer-radio"><input type="radio" name="answer" value="[[item.text]]"/>
+					<span class$="[[_enumerationType(questionData.enumeration)]]"></span> [[item.text]]</label>
+				</template>
+			</div>
+		</div>
+	</template>
+
+	<script>
+		class D2LQuizQuestionMultipleChoice extends Polymer.Element {
+			static get is() {
+				return 'd2l-quiz-question-multiple-choice';
+			}
+
+			static get properties() {
+	      		return {
+	        		questionData: {
+	          			type: Object,
+	          			readOnly: false,
+			  			value: () => { return {'bodyText':'I am a test question', 'hint':'this is a hint', 'showHint':true, 'enumeration':'2', 'randomization':true,'choices':[{'text':'123'}, {'text':'456'}]}}
+	        		},
+
+	        		_choices: {
+	        			type: Function,
+	        			computed: "_getChoices(questionData.choices, questionData.randomization)"
+	        		}
+	      		}
+	    	}
+
+			constructor() {
+				super();
+			}
+
+			_enumerationType(enumerationValue) {
+				if (!enumerationValue) {
+					return '';
+				} else if (enumerationValue.toString() === '1') {
+					return 'preview-counters preview-counters-decimal';
+				} else if (enumerationValue.toString() === '2') {
+					return 'preview-counters preview-counters-lower-roman';
+				} else if (enumerationValue.toString() === '3') {
+					return 'preview-counters preview-counters-upper-roman';
+				} else if (enumerationValue.toString() === '4') {
+					return 'preview-counters preview-counters-lower-alpha';
+				} else if (enumerationValue.toString() === '5') {
+					return 'preview-counters preview-counters-upper-alpha';
+				}
+			}
+
+			_randomizeArray(array) {
+			    for (let i = array.length - 1; i > 0; i--) {
+			        let j = Math.floor(Math.random() * (i + 1));
+			        [array[i], array[j]] = [array[j], array[i]];
+			    }
+			}
+
+			_getChoices(choices, randomization) {
+				if(!randomization) {
+					return choices;
+				}
+				else {
+					this._randomizeArray(choices);
+					return choices;
+				}
+			}
+
+		}
+
+		customElements.define(D2LQuizQuestionMultipleChoice.is, D2LQuizQuestionMultipleChoice);
+	</script>
+</dom-module>
