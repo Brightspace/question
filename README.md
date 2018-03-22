@@ -49,5 +49,5 @@ To lint AND run local unit tests:
 npm test
 ```
 
-[ci-url]: https://travis-ci.org/Brightspace/question
-[ci-image]: https://travis-ci.org/Brightspace/question.svg
+[ci-url]: https://travis-ci.com/Brightspace/question
+[ci-image]: https://travis-ci.com/Brightspace/question.svg
