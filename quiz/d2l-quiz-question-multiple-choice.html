@@ -12,7 +12,7 @@
 				display: block;
 			}
 
-			.body {
+			#d2l-quiz-question-body {
 				counter-reset: choices;
 			}
 
@@ -52,21 +52,26 @@
 				counter-increment: choices;
 				content: counter(choices, upper-alpha) ") ";
 			}
+
+			#d2l-quiz-question-hint {
+				margin: 1rem 0 0 0;
+			}
 		</style>
 
-		<div class="body">
+		<div id="d2l-quiz-question-body">
 			<div>
 				<p>[[questionData.bodyText]]</p>
-			</div>
-			<div>
-				<template is="dom-if" if="[[questionData.showHint]]">
-					<p>[[questionData.hint]]</p>
-				</template>
 			</div>
 			<div>
 				<template is="dom-repeat" items="[[_choices]]">
 					<label class="answer-radio"><input type="radio" name="answer" value="[[item.text]]"/>
 					<span class$="[[_enumerationType(questionData.enumeration)]]"></span> [[item.text]]</label>
+				</template>
+			</div>
+			<div id="d2l-quiz-question-hint">
+				<template is="dom-if" if="[[questionData.showHint]]">
+					<b>Hint:</b>
+					<p>[[questionData.hint]]</p>
 				</template>
 			</div>
 		</div>
@@ -75,7 +80,7 @@
 	<script>
 		class D2LQuizQuestionMultipleChoice extends Polymer.Element {
 			static get is() {
-				return 'd2l-quiz-question-multiple-choice';
+				return "d2l-quiz-question-multiple-choice";
 			}
 
 			static get properties() {
@@ -100,16 +105,16 @@
 			_enumerationType(enumerationValue) {
 				if (!enumerationValue) {
 					return '';
-				} else if (enumerationValue.toString() === '1') {
-					return 'preview-counters preview-counters-decimal';
-				} else if (enumerationValue.toString() === '2') {
-					return 'preview-counters preview-counters-lower-roman';
-				} else if (enumerationValue.toString() === '3') {
-					return 'preview-counters preview-counters-upper-roman';
-				} else if (enumerationValue.toString() === '4') {
-					return 'preview-counters preview-counters-lower-alpha';
-				} else if (enumerationValue.toString() === '5') {
-					return 'preview-counters preview-counters-upper-alpha';
+				} else if (enumerationValue.toString() === "1") {
+					return "preview-counters preview-counters-decimal";
+				} else if (enumerationValue.toString() === "2") {
+					return "preview-counters preview-counters-lower-roman";
+				} else if (enumerationValue.toString() === "3") {
+					return "preview-counters preview-counters-upper-roman";
+				} else if (enumerationValue.toString() === "4") {
+					return "preview-counters preview-counters-lower-alpha";
+				} else if (enumerationValue.toString() === "5") {
+					return "preview-counters preview-counters-upper-alpha";
 				}
 			}
 

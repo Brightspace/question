@@ -1,0 +1,67 @@
+<link rel="import" href="../../polymer/polymer-element.html">
+
+<!--
+'d2l-quiz-question-short-answer'
+
+-->
+
+<dom-module id="d2l-quiz-question-short-answer">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+
+			#d2l-quiz-question-hint {
+				margin: 1rem 0 0 0;
+			}			
+		</style>
+
+		<div id="d2l-quiz-question-body">
+			<div>
+				<p>[[questionData.bodyText]]</p>
+			</div>		
+			<div>
+				<template is="dom-repeat" items="[[questionData.answers]]">
+					<div>
+						<label>Blank #[[_displayIndex(index)]]</label> <input row='1'/>
+					</div>
+				</template>
+			</div>
+			<div id="d2l-quiz-question-hint">
+				<template is="dom-if" if="[[questionData.showHint]]">
+					<b>Hint:</b>
+					<p>[[questionData.hint]]</p>
+				</template>
+			</div>
+		</div>
+	</template>
+
+	<script>
+		class D2LQuizQuestionShortAnswer extends Polymer.Element {
+			static get is() {
+				return "d2l-quiz-question-short-answer";
+			}
+
+			static get properties() {
+	      		return {
+	        		questionData: {
+	          			type: Object,
+	          			readOnly: false,
+			  			value: () => { return {'bodyText':'I am a test question', 'hint':'this is a hint', 'showHint':true, 'answers':[{},{},{}]}}
+	        		}
+	      		}
+	    	}
+
+			constructor() {
+				super();
+			}
+
+			_displayIndex(index) {
+				return index + 1;
+			}
+		}
+
+		customElements.define(D2LQuizQuestionShortAnswer.is, D2LQuizQuestionShortAnswer);
+	</script>
+</dom-module>
