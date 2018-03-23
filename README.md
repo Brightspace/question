@@ -1,5 +1,7 @@
 # d2l-question
 
+[![Build status][ci-image]][ci-url]
+
 [Polymer](https://www.polymer-project.org)-based web component for D2L questions.
 
 
@@ -46,3 +48,6 @@ To lint AND run local unit tests:
 ```shell
 npm test
 ```
+
+[ci-url]: https://travis-ci.com/Brightspace/question
+[ci-image]: https://travis-ci.com/Brightspace/question.svg
