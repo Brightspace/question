@@ -1,6 +1,8 @@
-<link rel="import" href="../polymer/polymer-element.html">
-<link rel="import" href="../d2l-fetch-siren-entity-behavior/d2l-fetch-siren-entity-behavior.html">
+<link rel="import" href="./bower_components/polymer/polymer-element.html">
+<link rel="import" href="./bower_components/d2l-fetch-siren-entity-behavior/d2l-fetch-siren-entity-behavior.html">
 <link rel="import" href="./quiz/d2l-quiz-question-true-false.html">
+<link rel="import" href="./quiz/d2l-quiz-question-multiple-choice.html">
+<link rel="import" href="./quiz/d2l-quiz-question-short-answer.html">
 
 <!--
 'd2l-question'
@@ -18,10 +20,1213 @@ Polymer-based web component for D2L questions
 		</style>
 	</template>
 	<script>
+
+		const tf_response = `{
+  "properties": {
+    "question": {
+      "extension": {
+        "questionType": 2
+      },
+      "response": {
+        "maxScore": "1",
+        "responseItems": {
+          "0": {
+            "processing": "match_correct",
+            "correctResponse": [
+              "answer_1_true"
+            ],
+            "mapping": {
+              "mapEntry": {}
+            }
+          }
+        }
+      },
+      "choiceInteraction": {
+        "shuffle": false,
+        "orientation": "vertical",
+        "prompt": "<p>True or False</p>",
+        "choiceOrder": [
+          "answer_1_true",
+          "answer_2_false"
+        ],
+        "choices": {
+          "answer_1_true": {
+            "identifier": "answer_1_true",
+            "text": "True",
+            "feedback": {}
+          },
+          "answer_2_false": {
+            "identifier": "answer_2_false",
+            "text": "False",
+            "feedback": {}
+          }
+        },
+        "enumeration": 2
+      },
+      "modalFeedback": {
+        "hint": {
+          "text": "<p>Hint</p>"
+        },
+        "general": {}
+      }
+    },
+    "schema": {
+      "question": {
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://d2l.com/schemas/qed.json",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+	  "title": "Short Description",
+	  "maxLength": 256
+    },
+	"extension": {
+		"difficulty": {
+		  "type": "integer"
+		},
+		"questionType": {
+		  "type": "integer",
+		  "default": 1,
+		  "oneOf": [
+		  {
+			  "enum": [
+			  1
+			  ],
+			  "title": "Multiple Choice"
+		  },
+		  {
+			  "enum": [
+			  2
+			  ],
+			  "title": "True or False"
+		  },
+		  {
+			  "enum": [
+			  3
+			  ],
+			  "title": "Fill in the Blanks"
+		  },
+		  {
+			  "enum": [
+			  4
+			  ],
+			  "title": "Multi-Select"
+		  },
+		  {
+			  "enum": [
+			  5
+			  ],
+			  "title": "Matching"
+		  },
+		  {
+			  "enum": [
+			  6
+			  ],
+			  "title": "Ordering"
+		  },
+		  {
+			  "enum": [
+			  7
+			  ],
+			  "title": "Written Response"
+		  },
+		  {
+			  "enum": [
+			  8
+			  ],
+			  "title": "Short Answer"
+		  },
+		  {
+			  "enum": [
+			  9
+			  ],
+			  "title": "Likert"
+		  },
+		  {
+			  "enum": [
+			  10
+			  ],
+			  "title": "Image Information"
+		  },
+		  {
+			  "enum": [
+			  11
+			  ],
+			  "title": "Text Information"
+		  },
+		  {
+			  "enum": [
+			  12
+			  ],
+			  "title": "Arithmetic"
+		  },
+		  {
+			  "enum": [
+			  13
+			  ],
+			  "title": "Significant Figures"
+		  },
+		  {
+			  "enum": [
+			  14
+			  ],
+			  "title": "Multi-Short Answer"
+		  }
+		  ]
+		}
+	},
+    "response": {
+      "type": "object",
+      "properties": {
+        "maxScore": {
+          "type": "string",
+          "title": "Default Points",
+		  "readOnly": false
+        },
+		"responseItems": {
+		  "type": "object",
+		  "additionalProperties": {
+		    "type": "object",
+			"properties": {
+				"processing": {
+				  "type": "string",
+				  "default": "match_correct",
+				  "enum": [
+					"match_correct",
+					"map_response"
+				  ]
+				},
+				"correctResponse": {
+				  "type": "array",
+				  "items": {
+					"type": "string"
+				  }
+				}
+			}
+		  }
+		}        		
+      }
+    },
+    "choiceInteraction": {
+      "type": "object",
+      "properties": {
+        "enumeration": {
+		  "title": "Enumeration",
+          "type": "number",
+          "default": 4,
+          "oneOf": [
+            {
+              "enum": [
+                1
+              ],
+              "title": "1, 2, 3, 4, 5, ..."
+            },
+            {
+              "enum": [
+                2
+              ],
+              "title": "i, ii, iii, iv, v, ..."
+            },
+            {
+              "enum": [
+                3
+              ],
+              "title": "I, II, III, IV, V, ..."
+            },
+            {
+              "enum": [
+                4
+              ],
+              "title": "a, b, c, d, e, f, ..."
+            },
+            {
+              "enum": [
+                5
+              ],
+              "title": "A, B, C, D, E, F, ..."
+            }
+          ]
+        },
+        "orientation": {
+          "type": "string"
+        },
+        "prompt": {
+          "type": "string"
+        },
+        "choiceOrder": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "choices": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "identifier": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string",
+				"readOnly": true
+              },
+              "feedback": {
+				"title": "Feedback",
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "modalFeedback": {
+      "type": "object",
+      "properties": {
+        "hint": {
+		  "title": "Hint",
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            }
+          }
+        },
+        "general": {
+		  "title": "Feedback",
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    },
+    "config": {
+      "htmlEditorDisabled": false
+    }
+  },
+  "entities": [],
+  "actions": [
+    {
+      "name": "save",
+      "title": "Save",
+      "method": "PUT",
+      "href": "https://qa108111074g.bspc.com/d2l/api/le/qed/123117/collection/1/68/parent/0/question/107451/2/54672/54699/tool/51000?act=save",
+      "type": "application/json;profile='http://d2l.com/d2l/api/qe/schemas/question.json'"
+    },
+    {
+      "name": "savenew",
+      "title": "Save and New",
+      "method": "PUT",
+      "href": "https://qa108111074g.bspc.com/d2l/api/le/qed/123117/collection/1/68/parent/0/question/107451/2/54672/54699/tool/51000?act=savenew",
+      "type": "application/json;profile='http://d2l.com/d2l/api/qe/schemas/question.json'"
+    },
+    {
+      "name": "savecopy",
+      "title": "Save and Copy",
+      "method": "PUT",
+      "href": "https://qa108111074g.bspc.com/d2l/api/le/qed/123117/collection/1/68/parent/0/question/107451/2/54672/54699/tool/51000?act=savecopy",
+      "type": "application/json;profile='http://d2l.com/d2l/api/qe/schemas/question.json'"
+    },
+    {
+      "name": "new",
+      "title": "New Question",
+      "method": "GET",
+      "href": "https://qa108111074g.bspc.com/d2l/api/le/qed/123117/collection/1/68/parent/0/question/2/tool/51000/new",
+      "type": "application/json;profile='http://d2l.com/d2l/api/qe/schemas/question.json'"
+    },
+    {
+      "name": "manage-options",
+      "title": "Options",
+      "href": "#"
+    },
+    {
+      "name": "add-feedback",
+      "title": "Add Feedback",
+      "href": "#"
+    },
+    {
+      "name": "remove-feedback",
+      "title": "Remove Feedback",
+      "href": "#"
+    },
+    {
+      "name": "add-title",
+      "title": "Add Short Description",
+      "href": "#"
+    },
+    {
+      "name": "remove-title",
+      "title": "Remove Short Description",
+      "href": "#"
+    },
+    {
+      "name": "add-answer",
+      "title": "Add Answer",
+      "href": "#"
+    },
+    {
+      "name": "remove-answer",
+      "title": "Remove answer {number}",
+      "href": "#"
+    },
+    {
+      "name": "add-enumeration",
+      "title": "Add Enumeration",
+      "href": "#"
+    },
+    {
+      "name": "remove-enumeration",
+      "title": "Remove Enumeration",
+      "href": "#"
+    },
+    {
+      "name": "add-hint",
+      "title": "Add Hint",
+      "href": "#"
+    },
+    {
+      "name": "remove-hint",
+      "title": "Remove Hint",
+      "href": "#"
+    },
+    {
+      "name": "show-points",
+      "title": "",
+      "href": "#"
+    },
+    {
+      "name": "show-checkbox",
+      "title": "",
+      "href": "#"
+    }
+  ],
+  "links": [
+    {
+      "rel": [
+        "self"
+      ],
+      "href": "https://qa108111074g.bspc.com/d2l/api/le/qed/6606/collection/1/68/parent/0/question/2/tool/51000"
+    }
+  ],
+  "title": "Creating Question"
+}`;
+
+		const mc_response = `{
+  "properties": {
+    "question": {
+      "extension": {
+        "questionType": 1
+      },
+      "response": {
+        "maxScore": "1",
+        "responseItems": {
+          "0": {
+            "processing": "match_correct",
+            "correctResponse": [
+              "191696"
+            ],
+            "mapping": {
+              "mapEntry": {}
+            }
+          }
+        }
+      },
+      "choiceInteraction": {
+        "shuffle": true,
+        "orientation": "vertical",
+        "prompt": "<p>Multiple Choice</p>",
+        "choiceOrder": [
+          "191696",
+          "191697",
+          "191698",
+          "191699"
+        ],
+        "choices": {
+          "191696": {
+            "identifier": "191696",
+            "text": "<p>A</p>",
+            "feedback": {}
+          },
+          "191697": {
+            "identifier": "191697",
+            "text": "<p>B</p>",
+            "feedback": {}
+          },
+          "191698": {
+            "identifier": "191698",
+            "text": "<p>C</p>",
+            "feedback": {}
+          },
+          "191699": {
+            "identifier": "191699",
+            "text": "<p>D</p>",
+            "feedback": {}
+          }
+        },
+        "enumeration": 4
+      },
+      "modalFeedback": {
+        "hint": {
+          "text": "<p>Hint</p>"
+        },
+        "general": {}
+      }
+    },
+    "schema": {
+      "question": {
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://d2l.com/schemas/qed.json",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+	  "title": "Short Description",
+	  "maxLength": 256
+    },
+	"extension": {
+		"difficulty": {
+		  "type": "integer"
+		},
+		"questionType": {
+		  "type": "integer",
+		  "default": 1,
+		  "oneOf": [
+		  {
+			  "enum": [
+			  1
+			  ],
+			  "title": "Multiple Choice"
+		  },
+		  {
+			  "enum": [
+			  2
+			  ],
+			  "title": "True or False"
+		  },
+		  {
+			  "enum": [
+			  3
+			  ],
+			  "title": "Fill in the Blanks"
+		  },
+		  {
+			  "enum": [
+			  4
+			  ],
+			  "title": "Multi-Select"
+		  },
+		  {
+			  "enum": [
+			  5
+			  ],
+			  "title": "Matching"
+		  },
+		  {
+			  "enum": [
+			  6
+			  ],
+			  "title": "Ordering"
+		  },
+		  {
+			  "enum": [
+			  7
+			  ],
+			  "title": "Written Response"
+		  },
+		  {
+			  "enum": [
+			  8
+			  ],
+			  "title": "Short Answer"
+		  },
+		  {
+			  "enum": [
+			  9
+			  ],
+			  "title": "Likert"
+		  },
+		  {
+			  "enum": [
+			  10
+			  ],
+			  "title": "Image Information"
+		  },
+		  {
+			  "enum": [
+			  11
+			  ],
+			  "title": "Text Information"
+		  },
+		  {
+			  "enum": [
+			  12
+			  ],
+			  "title": "Arithmetic"
+		  },
+		  {
+			  "enum": [
+			  13
+			  ],
+			  "title": "Significant Figures"
+		  },
+		  {
+			  "enum": [
+			  14
+			  ],
+			  "title": "Multi-Short Answer"
+		  }
+		  ]
+		}
+	},
+    "response": {
+      "type": "object",
+      "properties": {
+        "maxScore": {
+          "type": "string",
+          "title": "Default Points",
+		  "readOnly": false
+        },
+		"responseItems": {
+		  "type": "object",
+		  "additionalProperties": {
+		    "type": "object",
+			"properties": {
+				"processing": {
+				  "type": "string",
+				  "default": "match_correct",
+				  "enum": [
+					"match_correct",
+					"map_response"
+				  ]
+				},
+				"correctResponse": {
+				  "type": "array",
+				  "items": {
+					"type": "string"
+				  }
+				},
+				"mapping": {
+				  "type": "object",
+				  "title": "Custom Weights",
+				  "properties": {
+					"mapEntry": {
+					  "type": "object",
+					  "additionalProperties": {
+						"type": "string"
+					  }
+					}
+				  }
+				}
+			}
+		  }
+		} 
+      }
+    },
+    "choiceInteraction": {
+      "type": "object",
+      "properties": {
+        "enumeration": {
+		  "title": "Enumeration",
+          "type": "number",
+          "default": 4,
+          "oneOf": [
+            {
+              "enum": [
+                1
+              ],
+              "title": "1, 2, 3, 4, 5, ..."
+            },
+            {
+              "enum": [
+                2
+              ],
+              "title": "i, ii, iii, iv, v, ..."
+            },
+            {
+              "enum": [
+                3
+              ],
+              "title": "I, II, III, IV, V, ..."
+            },
+            {
+              "enum": [
+                4
+              ],
+              "title": "a, b, c, d, e, f, ..."
+            },
+            {
+              "enum": [
+                5
+              ],
+              "title": "A, B, C, D, E, F, ..."
+            }
+          ]
+        },
+        "shuffle": {
+		  "title": "Randomize answers for each student",
+          "type": "boolean"
+        },
+        "orientation": {
+          "type": "string"
+        },
+        "prompt": {
+          "type": "string"
+        },
+        "choiceOrder": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "choices": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "identifier": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              },
+              "feedback": {
+				"title": "Feedback",
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "modalFeedback": {
+      "type": "object",
+      "properties": {
+        "hint": {
+		  "title": "Hint",
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            }
+          }
+        },
+        "general": {
+		  "title": "Feedback",
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    },
+    "config": {
+      "htmlEditorDisabled": false
+    }
+  },
+  "entities": [],
+  "actions": [
+    {
+      "name": "save",
+      "title": "Save",
+      "method": "PUT",
+      "href": "https://qa108111103g.bspc.com/d2l/api/le/qed/123118/collection/1/83/parent/0/question/107456/1/54676/54703/tool/51000?act=save",
+      "type": "application/json;profile='http://d2l.com/d2l/api/qe/schemas/question.json'"
+    },
+    {
+      "name": "savenew",
+      "title": "Save and New",
+      "method": "PUT",
+      "href": "https://qa108111103g.bspc.com/d2l/api/le/qed/123118/collection/1/83/parent/0/question/107456/1/54676/54703/tool/51000?act=savenew",
+      "type": "application/json;profile='http://d2l.com/d2l/api/qe/schemas/question.json'"
+    },
+    {
+      "name": "savecopy",
+      "title": "Save and Copy",
+      "method": "PUT",
+      "href": "https://qa108111103g.bspc.com/d2l/api/le/qed/123118/collection/1/83/parent/0/question/107456/1/54676/54703/tool/51000?act=savecopy",
+      "type": "application/json;profile='http://d2l.com/d2l/api/qe/schemas/question.json'"
+    },
+    {
+      "name": "new",
+      "title": "New Question",
+      "method": "GET",
+      "href": "https://qa108111103g.bspc.com/d2l/api/le/qed/123118/collection/1/83/parent/0/question/1/tool/51000/new",
+      "type": "application/json;profile='http://d2l.com/d2l/api/qe/schemas/question.json'"
+    },
+    {
+      "name": "manage-options",
+      "title": "Options",
+      "href": "#"
+    },
+    {
+      "name": "add-feedback",
+      "title": "Add Feedback",
+      "href": "#"
+    },
+    {
+      "name": "remove-feedback",
+      "title": "Remove Feedback",
+      "href": "#"
+    },
+    {
+      "name": "add-title",
+      "title": "Add Short Description",
+      "href": "#"
+    },
+    {
+      "name": "remove-title",
+      "title": "Remove Short Description",
+      "href": "#"
+    },
+    {
+      "name": "add-answer",
+      "title": "Add Answer",
+      "href": "#"
+    },
+    {
+      "name": "remove-answer",
+      "title": "Remove answer {number}",
+      "href": "#"
+    },
+    {
+      "name": "add-enumeration",
+      "title": "Add Enumeration",
+      "href": "#"
+    },
+    {
+      "name": "remove-enumeration",
+      "title": "Remove Enumeration",
+      "href": "#"
+    },
+    {
+      "name": "add-hint",
+      "title": "Add Hint",
+      "href": "#"
+    },
+    {
+      "name": "remove-hint",
+      "title": "Remove Hint",
+      "href": "#"
+    },
+    {
+      "name": "show-points",
+      "title": "",
+      "href": "#"
+    },
+    {
+      "name": "add-custom-weights",
+      "title": "Add Custom Weights",
+      "href": "#"
+    },
+    {
+      "name": "remove-custom-weights",
+      "title": "Remove Custom Weights",
+      "href": "#"
+    },
+    {
+      "name": "show-checkbox",
+      "title": "",
+      "href": "#"
+    }
+  ],
+  "links": [
+    {
+      "rel": [
+        "self"
+      ],
+      "href": "https://qa108111103g.bspc.com/d2l/api/le/qed/6606/collection/1/83/parent/0/question/1/tool/51000"
+    }
+  ],
+  "title": "Creating Question"
+}`;
+
+		const sa_response = `{
+  "properties": {
+    "question": {
+      "extension": {
+        "questionType": 8
+      },
+      "response": {
+        "maxScore": "1",
+        "grading": "equally_weighted",
+        "responseItems": {
+          "0": {
+            "processing": "match_correct",
+            "evaluation": "text_case_insensitive",
+            "correctResponse": [
+              "apple",
+              "banana",
+              "cranberry"
+            ],
+            "mapping": {
+              "mapEntry": {}
+            }
+          },
+          "1": {
+            "processing": "match_correct",
+            "evaluation": "text_case_insensitive",
+            "correctResponse": [
+              "car",
+              "plane",
+              "bike"
+            ],
+            "mapping": {
+              "mapEntry": {}
+            }
+          }
+        }
+      },
+      "interaction": {
+        "prompt": "<p>Short Answer</p>"
+      },
+      "modalFeedback": {
+        "hint": {},
+        "general": {}
+      }
+    },
+    "schema": {
+      "question": {
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://d2l.com/schemas/qed.json",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+	  "title": "Short Description",
+	  "maxLength": 256
+    },
+	"extension": {
+		"difficulty": {
+		  "type": "integer"
+		},
+		"questionType": {
+		  "type": "integer",
+		  "default": 1,
+		  "oneOf": [
+		  {
+			  "enum": [
+			  1
+			  ],
+			  "title": "Multiple Choice"
+		  },
+		  {
+			  "enum": [
+			  2
+			  ],
+			  "title": "True or False"
+		  },
+		  {
+			  "enum": [
+			  3
+			  ],
+			  "title": "Fill in the Blanks"
+		  },
+		  {
+			  "enum": [
+			  4
+			  ],
+			  "title": "Multi-Select"
+		  },
+		  {
+			  "enum": [
+			  5
+			  ],
+			  "title": "Matching"
+		  },
+		  {
+			  "enum": [
+			  6
+			  ],
+			  "title": "Ordering"
+		  },
+		  {
+			  "enum": [
+			  7
+			  ],
+			  "title": "Written Response"
+		  },
+		  {
+			  "enum": [
+			  8
+			  ],
+			  "title": "Short Answer"
+		  },
+		  {
+			  "enum": [
+			  9
+			  ],
+			  "title": "Likert"
+		  },
+		  {
+			  "enum": [
+			  10
+			  ],
+			  "title": "Image Information"
+		  },
+		  {
+			  "enum": [
+			  11
+			  ],
+			  "title": "Text Information"
+		  },
+		  {
+			  "enum": [
+			  12
+			  ],
+			  "title": "Arithmetic"
+		  },
+		  {
+			  "enum": [
+			  13
+			  ],
+			  "title": "Significant Figures"
+		  },
+		  {
+			  "enum": [
+			  14
+			  ],
+			  "title": "Multi-Short Answer"
+		  }
+		  ]
+		}
+	},
+    "response": {
+      "type": "object",
+      "properties": {
+        "maxScore": {
+          "type": "string",
+          "title": "Default Points",
+		  "readOnly": false
+        },
+		"grading": {
+          "type": "string"
+        },
+		"responseItems": {
+		  "type": "object",
+		  "additionalProperties": {
+		    "type": "object",
+			"properties": {
+				"processing": {
+				  "type": "string",
+				  "default": "match_correct",
+				  "enum": [
+					"match_correct",
+					"map_response"
+				  ]
+				},		
+				"evaluation": {
+				  "type": "string"
+				},
+				"correctResponse": {
+				  "type": "array",
+				  "items": {
+					"type": "string"
+				  }
+				}
+			}
+		  }
+		} 
+      }
+    },
+    "interaction": {
+      "type": "object",
+      "properties": {
+        "prompt": {
+          "type": "string"
+        }
+      }
+    },
+    "modalFeedback": {
+      "type": "object",
+      "properties": {
+        "hint": {
+		  "title": "Hint",
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            }
+          }
+        },
+        "general": {
+		  "title": "Feedback",
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    },
+    "config": {
+      "htmlEditorDisabled": false
+    }
+  },
+  "entities": [],
+  "actions": [
+    {
+      "name": "save",
+      "title": "Save",
+      "method": "PUT",
+      "href": "https://qa108111103g.bspc.com/d2l/api/le/qed/123118/collection/1/83/parent/0/question/107513/8/54721/54751/tool/51000?act=save",
+      "type": "application/json;profile='http://d2l.com/d2l/api/qe/schemas/question.json'"
+    },
+    {
+      "name": "savenew",
+      "title": "Save and New",
+      "method": "PUT",
+      "href": "https://qa108111103g.bspc.com/d2l/api/le/qed/123118/collection/1/83/parent/0/question/107513/8/54721/54751/tool/51000?act=savenew",
+      "type": "application/json;profile='http://d2l.com/d2l/api/qe/schemas/question.json'"
+    },
+    {
+      "name": "savecopy",
+      "title": "Save and Copy",
+      "method": "PUT",
+      "href": "https://qa108111103g.bspc.com/d2l/api/le/qed/123118/collection/1/83/parent/0/question/107513/8/54721/54751/tool/51000?act=savecopy",
+      "type": "application/json;profile='http://d2l.com/d2l/api/qe/schemas/question.json'"
+    },
+    {
+      "name": "new",
+      "title": "New Question",
+      "method": "GET",
+      "href": "https://qa108111103g.bspc.com/d2l/api/le/qed/123118/collection/1/83/parent/0/question/8/tool/51000/new",
+      "type": "application/json;profile='http://d2l.com/d2l/api/qe/schemas/question.json'"
+    },
+    {
+      "name": "manage-options",
+      "title": "Options",
+      "href": "#"
+    },
+    {
+      "name": "add-feedback",
+      "title": "Add Feedback",
+      "href": "#"
+    },
+    {
+      "name": "remove-feedback",
+      "title": "Remove Feedback",
+      "href": "#"
+    },
+    {
+      "name": "add-title",
+      "title": "Add Short Description",
+      "href": "#"
+    },
+    {
+      "name": "remove-title",
+      "title": "Remove Short Description",
+      "href": "#"
+    },
+    {
+      "name": "add-hint",
+      "title": "Add Hint",
+      "href": "#"
+    },
+    {
+      "name": "remove-hint",
+      "title": "Remove Hint",
+      "href": "#"
+    },
+    {
+      "name": "show-points",
+      "title": "",
+      "href": "#"
+    },
+    {
+      "name": "text_case_insensitive",
+      "title": "Text",
+      "href": "#"
+    },
+    {
+      "name": "text_case_sensitive",
+      "title": "Case-Sensitive Text",
+      "href": "#"
+    },
+    {
+      "name": "regex",
+      "title": "Regular Expression",
+      "href": "#"
+    },
+    {
+      "name": "numeric",
+      "title": "Numeric",
+      "href": "#"
+    }
+  ],
+  "links": [
+    {
+      "rel": [
+        "self"
+      ],
+      "href": "https://qa108111103g.bspc.com/d2l/api/le/qed/6606/collection/1/83/parent/0/question/8/tool/51000"
+    }
+  ],
+  "title": "Creating Question"
+}`;
+
+
+		/* -------------------------------------------------------------------------------- */
+		const QuestionTypeEnum = {
+			MULTIPLE_CHOICE: 1,
+			TRUE_FALSE : 2,
+			SHORT_ANSWER : 8
+		};
+
 		class D2LQuestion extends Polymer.mixinBehaviors(D2L.PolymerBehaviors.FetchSirenEntityBehavior, Polymer.Element) {
 			static get is() {
 				return 'd2l-question';
 			}
+
 			constructor() {
 				super();
 			}
@@ -35,19 +1240,85 @@ Polymer-based web component for D2L questions
 				};
 			}
 
-			_appendQuestionType(/*questionData*/) {
-				//switch(questionData.properties.question.extension.questionType) {
-				//case 2:
-				this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-true-false'));
-				this.shadowRoot.querySelector('d2l-quiz-question-true-false').setAttribute('question-data', '{"bodyText":"text"}');
-				//break;
-				//}
+			_appendQuestionType(questionData) {
+				var question = {};
+
+				switch(questionData.properties.question.extension.questionType) {
+					case QuestionTypeEnum.TRUE_FALSE:			
+						question.bodyText = questionData.properties.question.choiceInteraction.prompt;			
+						question.choices = [{text: "True"}, {text: "False"}];
+						
+						if(questionData.properties.question.modalFeedback.hint.text) {
+							question.hint = questionData.properties.question.modalFeedback.hint.text;
+						}
+						
+						if(questionData.properties.question.choiceInteraction.enumeration) {
+							question.enumeration = questionData.properties.question.choiceInteraction.enumeration;
+						}
+
+						this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-multiple-choice'));						
+						this.shadowRoot.querySelector('d2l-quiz-question-multiple-choice').setAttribute('question-data', JSON.stringify(question));
+						break;
+					
+					case QuestionTypeEnum.MULTIPLE_CHOICE:
+						question.bodyText = questionData.properties.question.choiceInteraction.prompt;
+
+						var choices = [];
+						for(const prop in questionData.properties.question.choiceInteraction.choices) {
+							if(questionData.properties.question.choiceInteraction.choices.hasOwnProperty(prop)) {								
+								var choice = {};
+								choice.text = questionData.properties.question.choiceInteraction.choices[prop].text;
+								choices.push(choice);
+							}
+						}						
+						question.choices = choices;
+
+						question.randomization = questionData.properties.question.choiceInteraction.shuffle;
+
+						if(questionData.properties.question.modalFeedback.hint.text) {
+							question.hint = questionData.properties.question.modalFeedback.hint.text;
+						}
+						
+						if(questionData.properties.question.choiceInteraction.enumeration) {
+							question.enumeration = questionData.properties.question.choiceInteraction.enumeration;
+						}
+
+						this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-multiple-choice'));						
+						this.shadowRoot.querySelector('d2l-quiz-question-multiple-choice').setAttribute('question-data', JSON.stringify(question));
+						break;
+
+					case QuestionTypeEnum.SHORT_ANSWER:
+						question.bodyText = questionData.properties.question.interaction.prompt;
+
+						if(questionData.properties.question.modalFeedback.hint.text) {
+							question.hint = questionData.properties.question.modalFeedback.hint.text;
+						}
+
+						var answers = [];
+						for(const prop in questionData.properties.question.response.responseItems) {
+							if(questionData.properties.question.response.responseItems.hasOwnProperty(prop)) {								
+								var answer = {};								
+								answers.push(answer);
+							}
+						}
+						question.answers = answers;
+
+						this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-short-answer'));						
+						this.shadowRoot.querySelector('d2l-quiz-question-short-answer').setAttribute('question-data', JSON.stringify(question));
+						break;
+
+					default:
+						// call generic renderer
+						break;
+				}
 			}
 
 			_getQuestionData() {
 				if (this.href) {
-					this._fetchEntity(this.href)
-						.then((questionData) => {this._appendQuestionType(questionData);}, () => {this._appendQuestionType();});
+					//this._fetchEntity(this.href)
+					//.then((questionData) => {this._appendQuestionType(questionData);}, () => {console.log('FAIL'); this._appendQuestionType();});
+					var str = JSON.parse(sa_response);
+					this._appendQuestionType(str);
 				}
 			}
 		}

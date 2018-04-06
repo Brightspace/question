@@ -29,7 +29,7 @@
 				</template>
 			</div>
 			<div id="d2l-quiz-question-hint">
-				<template is="dom-if" if="[[questionData.showHint]]">
+				<template is="dom-if" if="[[questionData.hint]]">
 					<b>Hint:</b>
 					<p>[[questionData.hint]]</p>
 				</template>
@@ -48,7 +48,7 @@
 	        		questionData: {
 	          			type: Object,
 	          			readOnly: false,
-			  			value: () => { return {'bodyText':'I am a test question', 'hint':'this is a hint', 'showHint':true, 'answers':[{},{},{}]}}
+			  			value: () => { return {'bodyText':'I am a test question', 'hint':'this is a hint', 'answers':[{},{},{}]}}
 	        		}
 	      		}
 	    	}
