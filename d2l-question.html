@@ -1241,75 +1241,80 @@ Polymer-based web component for D2L questions
 			}
 
 			_appendQuestionType(questionData) {
-				var question = {};
+				try {
+					var question = {};
 
-				switch(questionData.properties.question.extension.questionType) {
-					case QuestionTypeEnum.TRUE_FALSE:			
-						question.bodyText = questionData.properties.question.choiceInteraction.prompt;			
-						question.choices = [{text: "True"}, {text: "False"}];
-						
-						if(questionData.properties.question.modalFeedback.hint.text) {
-							question.hint = questionData.properties.question.modalFeedback.hint.text;
-						}
-						
-						if(questionData.properties.question.choiceInteraction.enumeration) {
-							question.enumeration = questionData.properties.question.choiceInteraction.enumeration;
-						}
-
-						this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-multiple-choice'));						
-						this.shadowRoot.querySelector('d2l-quiz-question-multiple-choice').setAttribute('question-data', JSON.stringify(question));
-						break;
-					
-					case QuestionTypeEnum.MULTIPLE_CHOICE:
-						question.bodyText = questionData.properties.question.choiceInteraction.prompt;
-
-						var choices = [];
-						for(const prop in questionData.properties.question.choiceInteraction.choices) {
-							if(questionData.properties.question.choiceInteraction.choices.hasOwnProperty(prop)) {								
-								var choice = {};
-								choice.text = questionData.properties.question.choiceInteraction.choices[prop].text;
-								choices.push(choice);
+					switch(questionData.properties.question.extension.questionType) {
+						case QuestionTypeEnum.TRUE_FALSE:			
+							question.bodyText = questionData.properties.question.choiceInteraction.prompt;			
+							question.choices = [{text: "True"}, {text: "False"}];
+							
+							if(questionData.properties.question.modalFeedback.hint.text) {
+								question.hint = questionData.properties.question.modalFeedback.hint.text;
 							}
-						}						
-						question.choices = choices;
-
-						question.randomization = questionData.properties.question.choiceInteraction.shuffle;
-
-						if(questionData.properties.question.modalFeedback.hint.text) {
-							question.hint = questionData.properties.question.modalFeedback.hint.text;
-						}
-						
-						if(questionData.properties.question.choiceInteraction.enumeration) {
-							question.enumeration = questionData.properties.question.choiceInteraction.enumeration;
-						}
-
-						this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-multiple-choice'));						
-						this.shadowRoot.querySelector('d2l-quiz-question-multiple-choice').setAttribute('question-data', JSON.stringify(question));
-						break;
-
-					case QuestionTypeEnum.SHORT_ANSWER:
-						question.bodyText = questionData.properties.question.interaction.prompt;
-
-						if(questionData.properties.question.modalFeedback.hint.text) {
-							question.hint = questionData.properties.question.modalFeedback.hint.text;
-						}
-
-						var answers = [];
-						for(const prop in questionData.properties.question.response.responseItems) {
-							if(questionData.properties.question.response.responseItems.hasOwnProperty(prop)) {								
-								var answer = {};								
-								answers.push(answer);
+							
+							if(questionData.properties.question.choiceInteraction.enumeration) {
+								question.enumeration = questionData.properties.question.choiceInteraction.enumeration;
 							}
-						}
-						question.answers = answers;
 
-						this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-short-answer'));						
-						this.shadowRoot.querySelector('d2l-quiz-question-short-answer').setAttribute('question-data', JSON.stringify(question));
-						break;
+							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-multiple-choice'));						
+							this.shadowRoot.querySelector('d2l-quiz-question-multiple-choice').setAttribute('question-data', JSON.stringify(question));
+							break;
+						
+						case QuestionTypeEnum.MULTIPLE_CHOICE:
+							question.bodyText = questionData.properties.question.choiceInteraction.prompt;
 
-					default:
-						// call generic renderer
-						break;
+							var choices = [];
+							for(const prop in questionData.properties.question.choiceInteraction.choices) {
+								if(questionData.properties.question.choiceInteraction.choices.hasOwnProperty(prop)) {								
+									var choice = {};
+									choice.text = questionData.properties.question.choiceInteraction.choices[prop].text;
+									choices.push(choice);
+								}
+							}						
+							question.choices = choices;
+
+							question.randomization = questionData.properties.question.choiceInteraction.shuffle;
+
+							if(questionData.properties.question.modalFeedback.hint.text) {
+								question.hint = questionData.properties.question.modalFeedback.hint.text;
+							}
+							
+							if(questionData.properties.question.choiceInteraction.enumeration) {
+								question.enumeration = questionData.properties.question.choiceInteraction.enumeration;
+							}
+
+							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-multiple-choice'));						
+							this.shadowRoot.querySelector('d2l-quiz-question-multiple-choice').setAttribute('question-data', JSON.stringify(question));
+							break;
+
+						case QuestionTypeEnum.SHORT_ANSWER:
+							question.bodyText = questionData.properties.question.interaction.prompt;
+
+							if(questionData.properties.question.modalFeedback.hint.text) {
+								question.hint = questionData.properties.question.modalFeedback.hint.text;
+							}
+
+							var answers = [];
+							for(const prop in questionData.properties.question.response.responseItems) {
+								if(questionData.properties.question.response.responseItems.hasOwnProperty(prop)) {								
+									var answer = {};								
+									answers.push(answer);
+								}
+							}
+							question.answers = answers;
+
+							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-short-answer'));						
+							this.shadowRoot.querySelector('d2l-quiz-question-short-answer').setAttribute('question-data', JSON.stringify(question));
+							break;
+
+						default:
+							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
+							break;
+					}					
+				}
+				catch(error) {
+					this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));		
 				}
 			}
 
