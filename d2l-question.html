@@ -1,8 +1,9 @@
 <link rel="import" href="./bower_components/polymer/polymer-element.html">
 <link rel="import" href="./bower_components/d2l-fetch-siren-entity-behavior/d2l-fetch-siren-entity-behavior.html">
-<link rel="import" href="./quiz/d2l-quiz-question-true-false.html">
 <link rel="import" href="./quiz/d2l-quiz-question-multiple-choice.html">
 <link rel="import" href="./quiz/d2l-quiz-question-short-answer.html">
+<link rel="import" href="./bower_components/d2l-fetch-auth/d2l-fetch-auth.html">
+<link rel="import" href="./bower_components/d2l-fetch-auth/d2l-fetch-auth-framed.html">
 
 <!--
 'd2l-question'
@@ -12,16 +13,16 @@ Polymer-based web component for D2L questions
 -->
 
 <dom-module id="d2l-question">
-	<template>
-		<style>
-			:host {
-				display: block;
-			}
-		</style>
-	</template>
-	<script>
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+  </template>
+  <script>
 
-		const tf_response = `{
+    const tf_response = `{
   "properties": {
     "question": {
       "extension": {
@@ -78,141 +79,141 @@ Polymer-based web component for D2L questions
   "properties": {
     "title": {
       "type": "string",
-	  "title": "Short Description",
-	  "maxLength": 256
+    "title": "Short Description",
+    "maxLength": 256
     },
-	"extension": {
-		"difficulty": {
-		  "type": "integer"
-		},
-		"questionType": {
-		  "type": "integer",
-		  "default": 1,
-		  "oneOf": [
-		  {
-			  "enum": [
-			  1
-			  ],
-			  "title": "Multiple Choice"
-		  },
-		  {
-			  "enum": [
-			  2
-			  ],
-			  "title": "True or False"
-		  },
-		  {
-			  "enum": [
-			  3
-			  ],
-			  "title": "Fill in the Blanks"
-		  },
-		  {
-			  "enum": [
-			  4
-			  ],
-			  "title": "Multi-Select"
-		  },
-		  {
-			  "enum": [
-			  5
-			  ],
-			  "title": "Matching"
-		  },
-		  {
-			  "enum": [
-			  6
-			  ],
-			  "title": "Ordering"
-		  },
-		  {
-			  "enum": [
-			  7
-			  ],
-			  "title": "Written Response"
-		  },
-		  {
-			  "enum": [
-			  8
-			  ],
-			  "title": "Short Answer"
-		  },
-		  {
-			  "enum": [
-			  9
-			  ],
-			  "title": "Likert"
-		  },
-		  {
-			  "enum": [
-			  10
-			  ],
-			  "title": "Image Information"
-		  },
-		  {
-			  "enum": [
-			  11
-			  ],
-			  "title": "Text Information"
-		  },
-		  {
-			  "enum": [
-			  12
-			  ],
-			  "title": "Arithmetic"
-		  },
-		  {
-			  "enum": [
-			  13
-			  ],
-			  "title": "Significant Figures"
-		  },
-		  {
-			  "enum": [
-			  14
-			  ],
-			  "title": "Multi-Short Answer"
-		  }
-		  ]
-		}
-	},
+  "extension": {
+    "difficulty": {
+      "type": "integer"
+    },
+    "questionType": {
+      "type": "integer",
+      "default": 1,
+      "oneOf": [
+      {
+        "enum": [
+        1
+        ],
+        "title": "Multiple Choice"
+      },
+      {
+        "enum": [
+        2
+        ],
+        "title": "True or False"
+      },
+      {
+        "enum": [
+        3
+        ],
+        "title": "Fill in the Blanks"
+      },
+      {
+        "enum": [
+        4
+        ],
+        "title": "Multi-Select"
+      },
+      {
+        "enum": [
+        5
+        ],
+        "title": "Matching"
+      },
+      {
+        "enum": [
+        6
+        ],
+        "title": "Ordering"
+      },
+      {
+        "enum": [
+        7
+        ],
+        "title": "Written Response"
+      },
+      {
+        "enum": [
+        8
+        ],
+        "title": "Short Answer"
+      },
+      {
+        "enum": [
+        9
+        ],
+        "title": "Likert"
+      },
+      {
+        "enum": [
+        10
+        ],
+        "title": "Image Information"
+      },
+      {
+        "enum": [
+        11
+        ],
+        "title": "Text Information"
+      },
+      {
+        "enum": [
+        12
+        ],
+        "title": "Arithmetic"
+      },
+      {
+        "enum": [
+        13
+        ],
+        "title": "Significant Figures"
+      },
+      {
+        "enum": [
+        14
+        ],
+        "title": "Multi-Short Answer"
+      }
+      ]
+    }
+  },
     "response": {
       "type": "object",
       "properties": {
         "maxScore": {
           "type": "string",
           "title": "Default Points",
-		  "readOnly": false
+      "readOnly": false
         },
-		"responseItems": {
-		  "type": "object",
-		  "additionalProperties": {
-		    "type": "object",
-			"properties": {
-				"processing": {
-				  "type": "string",
-				  "default": "match_correct",
-				  "enum": [
-					"match_correct",
-					"map_response"
-				  ]
-				},
-				"correctResponse": {
-				  "type": "array",
-				  "items": {
-					"type": "string"
-				  }
-				}
-			}
-		  }
-		}        		
+    "responseItems": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+      "properties": {
+        "processing": {
+          "type": "string",
+          "default": "match_correct",
+          "enum": [
+          "match_correct",
+          "map_response"
+          ]
+        },
+        "correctResponse": {
+          "type": "array",
+          "items": {
+          "type": "string"
+          }
+        }
+      }
+      }
+    }           
       }
     },
     "choiceInteraction": {
       "type": "object",
       "properties": {
         "enumeration": {
-		  "title": "Enumeration",
+      "title": "Enumeration",
           "type": "number",
           "default": 4,
           "oneOf": [
@@ -270,10 +271,10 @@ Polymer-based web component for D2L questions
               },
               "text": {
                 "type": "string",
-				"readOnly": true
+        "readOnly": true
               },
               "feedback": {
-				"title": "Feedback",
+        "title": "Feedback",
                 "type": "object",
                 "properties": {
                   "text": {
@@ -293,7 +294,7 @@ Polymer-based web component for D2L questions
       "type": "object",
       "properties": {
         "hint": {
-		  "title": "Hint",
+      "title": "Hint",
           "type": "object",
           "properties": {
             "title": {
@@ -305,7 +306,7 @@ Polymer-based web component for D2L questions
           }
         },
         "general": {
-		  "title": "Feedback",
+      "title": "Feedback",
           "type": "object",
           "properties": {
             "title": {
@@ -432,7 +433,7 @@ Polymer-based web component for D2L questions
   "title": "Creating Question"
 }`;
 
-		const mc_response = `{
+    const mc_response = `{
   "properties": {
     "question": {
       "extension": {
@@ -501,153 +502,153 @@ Polymer-based web component for D2L questions
   "properties": {
     "title": {
       "type": "string",
-	  "title": "Short Description",
-	  "maxLength": 256
+    "title": "Short Description",
+    "maxLength": 256
     },
-	"extension": {
-		"difficulty": {
-		  "type": "integer"
-		},
-		"questionType": {
-		  "type": "integer",
-		  "default": 1,
-		  "oneOf": [
-		  {
-			  "enum": [
-			  1
-			  ],
-			  "title": "Multiple Choice"
-		  },
-		  {
-			  "enum": [
-			  2
-			  ],
-			  "title": "True or False"
-		  },
-		  {
-			  "enum": [
-			  3
-			  ],
-			  "title": "Fill in the Blanks"
-		  },
-		  {
-			  "enum": [
-			  4
-			  ],
-			  "title": "Multi-Select"
-		  },
-		  {
-			  "enum": [
-			  5
-			  ],
-			  "title": "Matching"
-		  },
-		  {
-			  "enum": [
-			  6
-			  ],
-			  "title": "Ordering"
-		  },
-		  {
-			  "enum": [
-			  7
-			  ],
-			  "title": "Written Response"
-		  },
-		  {
-			  "enum": [
-			  8
-			  ],
-			  "title": "Short Answer"
-		  },
-		  {
-			  "enum": [
-			  9
-			  ],
-			  "title": "Likert"
-		  },
-		  {
-			  "enum": [
-			  10
-			  ],
-			  "title": "Image Information"
-		  },
-		  {
-			  "enum": [
-			  11
-			  ],
-			  "title": "Text Information"
-		  },
-		  {
-			  "enum": [
-			  12
-			  ],
-			  "title": "Arithmetic"
-		  },
-		  {
-			  "enum": [
-			  13
-			  ],
-			  "title": "Significant Figures"
-		  },
-		  {
-			  "enum": [
-			  14
-			  ],
-			  "title": "Multi-Short Answer"
-		  }
-		  ]
-		}
-	},
+  "extension": {
+    "difficulty": {
+      "type": "integer"
+    },
+    "questionType": {
+      "type": "integer",
+      "default": 1,
+      "oneOf": [
+      {
+        "enum": [
+        1
+        ],
+        "title": "Multiple Choice"
+      },
+      {
+        "enum": [
+        2
+        ],
+        "title": "True or False"
+      },
+      {
+        "enum": [
+        3
+        ],
+        "title": "Fill in the Blanks"
+      },
+      {
+        "enum": [
+        4
+        ],
+        "title": "Multi-Select"
+      },
+      {
+        "enum": [
+        5
+        ],
+        "title": "Matching"
+      },
+      {
+        "enum": [
+        6
+        ],
+        "title": "Ordering"
+      },
+      {
+        "enum": [
+        7
+        ],
+        "title": "Written Response"
+      },
+      {
+        "enum": [
+        8
+        ],
+        "title": "Short Answer"
+      },
+      {
+        "enum": [
+        9
+        ],
+        "title": "Likert"
+      },
+      {
+        "enum": [
+        10
+        ],
+        "title": "Image Information"
+      },
+      {
+        "enum": [
+        11
+        ],
+        "title": "Text Information"
+      },
+      {
+        "enum": [
+        12
+        ],
+        "title": "Arithmetic"
+      },
+      {
+        "enum": [
+        13
+        ],
+        "title": "Significant Figures"
+      },
+      {
+        "enum": [
+        14
+        ],
+        "title": "Multi-Short Answer"
+      }
+      ]
+    }
+  },
     "response": {
       "type": "object",
       "properties": {
         "maxScore": {
           "type": "string",
           "title": "Default Points",
-		  "readOnly": false
+      "readOnly": false
         },
-		"responseItems": {
-		  "type": "object",
-		  "additionalProperties": {
-		    "type": "object",
-			"properties": {
-				"processing": {
-				  "type": "string",
-				  "default": "match_correct",
-				  "enum": [
-					"match_correct",
-					"map_response"
-				  ]
-				},
-				"correctResponse": {
-				  "type": "array",
-				  "items": {
-					"type": "string"
-				  }
-				},
-				"mapping": {
-				  "type": "object",
-				  "title": "Custom Weights",
-				  "properties": {
-					"mapEntry": {
-					  "type": "object",
-					  "additionalProperties": {
-						"type": "string"
-					  }
-					}
-				  }
-				}
-			}
-		  }
-		} 
+    "responseItems": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+      "properties": {
+        "processing": {
+          "type": "string",
+          "default": "match_correct",
+          "enum": [
+          "match_correct",
+          "map_response"
+          ]
+        },
+        "correctResponse": {
+          "type": "array",
+          "items": {
+          "type": "string"
+          }
+        },
+        "mapping": {
+          "type": "object",
+          "title": "Custom Weights",
+          "properties": {
+          "mapEntry": {
+            "type": "object",
+            "additionalProperties": {
+            "type": "string"
+            }
+          }
+          }
+        }
+      }
+      }
+    } 
       }
     },
     "choiceInteraction": {
       "type": "object",
       "properties": {
         "enumeration": {
-		  "title": "Enumeration",
+      "title": "Enumeration",
           "type": "number",
           "default": 4,
           "oneOf": [
@@ -684,7 +685,7 @@ Polymer-based web component for D2L questions
           ]
         },
         "shuffle": {
-		  "title": "Randomize answers for each student",
+      "title": "Randomize answers for each student",
           "type": "boolean"
         },
         "orientation": {
@@ -711,7 +712,7 @@ Polymer-based web component for D2L questions
                 "type": "string"
               },
               "feedback": {
-				"title": "Feedback",
+        "title": "Feedback",
                 "type": "object",
                 "properties": {
                   "text": {
@@ -731,7 +732,7 @@ Polymer-based web component for D2L questions
       "type": "object",
       "properties": {
         "hint": {
-		  "title": "Hint",
+      "title": "Hint",
           "type": "object",
           "properties": {
             "title": {
@@ -743,7 +744,7 @@ Polymer-based web component for D2L questions
           }
         },
         "general": {
-		  "title": "Feedback",
+      "title": "Feedback",
           "type": "object",
           "properties": {
             "title": {
@@ -880,7 +881,7 @@ Polymer-based web component for D2L questions
   "title": "Creating Question"
 }`;
 
-		const sa_response = `{
+    const sa_response = `{
   "properties": {
     "question": {
       "extension": {
@@ -932,140 +933,140 @@ Polymer-based web component for D2L questions
   "properties": {
     "title": {
       "type": "string",
-	  "title": "Short Description",
-	  "maxLength": 256
+    "title": "Short Description",
+    "maxLength": 256
     },
-	"extension": {
-		"difficulty": {
-		  "type": "integer"
-		},
-		"questionType": {
-		  "type": "integer",
-		  "default": 1,
-		  "oneOf": [
-		  {
-			  "enum": [
-			  1
-			  ],
-			  "title": "Multiple Choice"
-		  },
-		  {
-			  "enum": [
-			  2
-			  ],
-			  "title": "True or False"
-		  },
-		  {
-			  "enum": [
-			  3
-			  ],
-			  "title": "Fill in the Blanks"
-		  },
-		  {
-			  "enum": [
-			  4
-			  ],
-			  "title": "Multi-Select"
-		  },
-		  {
-			  "enum": [
-			  5
-			  ],
-			  "title": "Matching"
-		  },
-		  {
-			  "enum": [
-			  6
-			  ],
-			  "title": "Ordering"
-		  },
-		  {
-			  "enum": [
-			  7
-			  ],
-			  "title": "Written Response"
-		  },
-		  {
-			  "enum": [
-			  8
-			  ],
-			  "title": "Short Answer"
-		  },
-		  {
-			  "enum": [
-			  9
-			  ],
-			  "title": "Likert"
-		  },
-		  {
-			  "enum": [
-			  10
-			  ],
-			  "title": "Image Information"
-		  },
-		  {
-			  "enum": [
-			  11
-			  ],
-			  "title": "Text Information"
-		  },
-		  {
-			  "enum": [
-			  12
-			  ],
-			  "title": "Arithmetic"
-		  },
-		  {
-			  "enum": [
-			  13
-			  ],
-			  "title": "Significant Figures"
-		  },
-		  {
-			  "enum": [
-			  14
-			  ],
-			  "title": "Multi-Short Answer"
-		  }
-		  ]
-		}
-	},
+  "extension": {
+    "difficulty": {
+      "type": "integer"
+    },
+    "questionType": {
+      "type": "integer",
+      "default": 1,
+      "oneOf": [
+      {
+        "enum": [
+        1
+        ],
+        "title": "Multiple Choice"
+      },
+      {
+        "enum": [
+        2
+        ],
+        "title": "True or False"
+      },
+      {
+        "enum": [
+        3
+        ],
+        "title": "Fill in the Blanks"
+      },
+      {
+        "enum": [
+        4
+        ],
+        "title": "Multi-Select"
+      },
+      {
+        "enum": [
+        5
+        ],
+        "title": "Matching"
+      },
+      {
+        "enum": [
+        6
+        ],
+        "title": "Ordering"
+      },
+      {
+        "enum": [
+        7
+        ],
+        "title": "Written Response"
+      },
+      {
+        "enum": [
+        8
+        ],
+        "title": "Short Answer"
+      },
+      {
+        "enum": [
+        9
+        ],
+        "title": "Likert"
+      },
+      {
+        "enum": [
+        10
+        ],
+        "title": "Image Information"
+      },
+      {
+        "enum": [
+        11
+        ],
+        "title": "Text Information"
+      },
+      {
+        "enum": [
+        12
+        ],
+        "title": "Arithmetic"
+      },
+      {
+        "enum": [
+        13
+        ],
+        "title": "Significant Figures"
+      },
+      {
+        "enum": [
+        14
+        ],
+        "title": "Multi-Short Answer"
+      }
+      ]
+    }
+  },
     "response": {
       "type": "object",
       "properties": {
         "maxScore": {
           "type": "string",
           "title": "Default Points",
-		  "readOnly": false
+      "readOnly": false
         },
-		"grading": {
+    "grading": {
           "type": "string"
         },
-		"responseItems": {
-		  "type": "object",
-		  "additionalProperties": {
-		    "type": "object",
-			"properties": {
-				"processing": {
-				  "type": "string",
-				  "default": "match_correct",
-				  "enum": [
-					"match_correct",
-					"map_response"
-				  ]
-				},		
-				"evaluation": {
-				  "type": "string"
-				},
-				"correctResponse": {
-				  "type": "array",
-				  "items": {
-					"type": "string"
-				  }
-				}
-			}
-		  }
-		} 
+    "responseItems": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+      "properties": {
+        "processing": {
+          "type": "string",
+          "default": "match_correct",
+          "enum": [
+          "match_correct",
+          "map_response"
+          ]
+        },    
+        "evaluation": {
+          "type": "string"
+        },
+        "correctResponse": {
+          "type": "array",
+          "items": {
+          "type": "string"
+          }
+        }
+      }
+      }
+    } 
       }
     },
     "interaction": {
@@ -1080,7 +1081,7 @@ Polymer-based web component for D2L questions
       "type": "object",
       "properties": {
         "hint": {
-		  "title": "Hint",
+      "title": "Hint",
           "type": "object",
           "properties": {
             "title": {
@@ -1092,7 +1093,7 @@ Polymer-based web component for D2L questions
           }
         },
         "general": {
-		  "title": "Feedback",
+      "title": "Feedback",
           "type": "object",
           "properties": {
             "title": {
@@ -1215,118 +1216,120 @@ Polymer-based web component for D2L questions
 }`;
 
 
-		/* -------------------------------------------------------------------------------- */
-		const QuestionTypeEnum = {
-			MULTIPLE_CHOICE: 1,
-			TRUE_FALSE : 2,
-			SHORT_ANSWER : 8
-		};
+    /* -------------------------------------------------------------------------------- */
+    const QuestionTypeEnum = {
+      MULTIPLE_CHOICE: 1,
+      TRUE_FALSE : 2,
+      SHORT_ANSWER : 8
+    };
 
-		class D2LQuestion extends Polymer.mixinBehaviors(D2L.PolymerBehaviors.FetchSirenEntityBehavior, Polymer.Element) {
-			static get is() {
-				return 'd2l-question';
-			}
+    class D2LQuestion extends Polymer.mixinBehaviors(D2L.PolymerBehaviors.FetchSirenEntityBehavior, Polymer.Element) {
+      static get is() {
+        return 'd2l-question';
+      }
 
-			constructor() {
-				super();
-			}
+      constructor() {
+        super();
+        window.d2lfetch.use({name: 'auth', fn: window.d2lfetch.auth});
+      }
 
-			static get properties() {
-				return {
-					href: {
-						type: String,
-						observer: '_getQuestionData'
-					}
-				};
-			}
+      static get properties() {
+        return {
+          href: {
+            type: String,
+            observer: '_getQuestionData'
+          }
+        };
+      }
 
-			_appendQuestionType(questionData) {
-				try {
-					var question = {};
+      _appendQuestionType(questionData) {
+        try {
+          var question = {};
 
-					switch(questionData.properties.question.extension.questionType) {
-						case QuestionTypeEnum.TRUE_FALSE:			
-							question.bodyText = questionData.properties.question.choiceInteraction.prompt;			
-							question.choices = [{text: "True"}, {text: "False"}];
-							
-							if(questionData.properties.question.modalFeedback.hint.text) {
-								question.hint = questionData.properties.question.modalFeedback.hint.text;
-							}
-							
-							if(questionData.properties.question.choiceInteraction.enumeration) {
-								question.enumeration = questionData.properties.question.choiceInteraction.enumeration;
-							}
+          switch(questionData.properties.question.extension.questionType) {
+            case QuestionTypeEnum.TRUE_FALSE:     
+              question.bodyText = questionData.properties.question.choiceInteraction.prompt;      
+              question.choices = [{text: "True"}, {text: "False"}];
+              
+              if(questionData.properties.question.modalFeedback.hint.text) {
+                question.hint = questionData.properties.question.modalFeedback.hint.text;
+              }
+              
+              if(questionData.properties.question.choiceInteraction.enumeration) {
+                question.enumeration = questionData.properties.question.choiceInteraction.enumeration;
+              }
 
-							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-multiple-choice'));						
-							this.shadowRoot.querySelector('d2l-quiz-question-multiple-choice').setAttribute('question-data', JSON.stringify(question));
-							break;
-						
-						case QuestionTypeEnum.MULTIPLE_CHOICE:
-							question.bodyText = questionData.properties.question.choiceInteraction.prompt;
+              this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-multiple-choice'));           
+              this.shadowRoot.querySelector('d2l-quiz-question-multiple-choice').setAttribute('question-data', JSON.stringify(question));
+              break;
+            
+            case QuestionTypeEnum.MULTIPLE_CHOICE:
+              question.bodyText = questionData.properties.question.choiceInteraction.prompt;
 
-							var choices = [];
-							for(const prop in questionData.properties.question.choiceInteraction.choices) {
-								if(questionData.properties.question.choiceInteraction.choices.hasOwnProperty(prop)) {								
-									var choice = {};
-									choice.text = questionData.properties.question.choiceInteraction.choices[prop].text;
-									choices.push(choice);
-								}
-							}						
-							question.choices = choices;
+              var choices = [];
+              for(const prop in questionData.properties.question.choiceInteraction.choices) {
+                if(questionData.properties.question.choiceInteraction.choices.hasOwnProperty(prop)) {               
+                  var choice = {};
+                  choice.text = questionData.properties.question.choiceInteraction.choices[prop].text;
+                  choices.push(choice);
+                }
+              }           
+              question.choices = choices;
 
-							question.randomization = questionData.properties.question.choiceInteraction.shuffle;
+              question.randomization = questionData.properties.question.choiceInteraction.shuffle;
 
-							if(questionData.properties.question.modalFeedback.hint.text) {
-								question.hint = questionData.properties.question.modalFeedback.hint.text;
-							}
-							
-							if(questionData.properties.question.choiceInteraction.enumeration) {
-								question.enumeration = questionData.properties.question.choiceInteraction.enumeration;
-							}
+              if(questionData.properties.question.modalFeedback.hint.text) {
+                question.hint = questionData.properties.question.modalFeedback.hint.text;
+              }
+              
+              if(questionData.properties.question.choiceInteraction.enumeration) {
+                question.enumeration = questionData.properties.question.choiceInteraction.enumeration;
+              }
 
-							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-multiple-choice'));						
-							this.shadowRoot.querySelector('d2l-quiz-question-multiple-choice').setAttribute('question-data', JSON.stringify(question));
-							break;
+              this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-multiple-choice'));           
+              this.shadowRoot.querySelector('d2l-quiz-question-multiple-choice').setAttribute('question-data', JSON.stringify(question));
+              break;
 
-						case QuestionTypeEnum.SHORT_ANSWER:
-							question.bodyText = questionData.properties.question.interaction.prompt;
+            case QuestionTypeEnum.SHORT_ANSWER:
+              question.bodyText = questionData.properties.question.interaction.prompt;
 
-							if(questionData.properties.question.modalFeedback.hint.text) {
-								question.hint = questionData.properties.question.modalFeedback.hint.text;
-							}
+              if(questionData.properties.question.modalFeedback.hint.text) {
+                question.hint = questionData.properties.question.modalFeedback.hint.text;
+              }
 
-							var answers = [];
-							for(const prop in questionData.properties.question.response.responseItems) {
-								if(questionData.properties.question.response.responseItems.hasOwnProperty(prop)) {								
-									var answer = {};								
-									answers.push(answer);
-								}
-							}
-							question.answers = answers;
+              var answers = [];
+              for(const prop in questionData.properties.question.response.responseItems) {
+                if(questionData.properties.question.response.responseItems.hasOwnProperty(prop)) {                
+                  var answer = {};                
+                  answers.push(answer);
+                }
+              }
+              question.answers = answers;
 
-							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-short-answer'));						
-							this.shadowRoot.querySelector('d2l-quiz-question-short-answer').setAttribute('question-data', JSON.stringify(question));
-							break;
+              this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-short-answer'));            
+              this.shadowRoot.querySelector('d2l-quiz-question-short-answer').setAttribute('question-data', JSON.stringify(question));
+              break;
 
-						default:
-							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
-							break;
-					}					
-				}
-				catch(error) {
-					this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));		
-				}
-			}
+            default:
+              this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
+              break;
+          }         
+        }
+        catch(error) {
+          this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));   
+        }
+      }
 
-			_getQuestionData() {
-				if (this.href) {
-					//this._fetchEntity(this.href)
-					//.then((questionData) => {this._appendQuestionType(questionData);}, () => {console.log('FAIL'); this._appendQuestionType();});
-					var str = JSON.parse(sa_response);
-					this._appendQuestionType(str);
-				}
-			}
-		}
-		customElements.define(D2LQuestion.is, D2LQuestion);
-	</script>
+      _getQuestionData() {
+        if (this.href) {
+          this._fetchEntity(this.href)
+          .then((questionData) => {this._appendQuestionType(questionData);}, () => {console.log('FAIL'); this._appendQuestionType();});
+          //var str = JSON.parse(sa_response);
+          //this._appendQuestionType(str);
+        }
+      }
+    }
+    
+    customElements.define(D2LQuestion.is, D2LQuestion);
+  </script>
 </dom-module>
