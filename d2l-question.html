@@ -52,6 +52,17 @@ Polymer-based web component for D2L questions
 				try {
 					var question = {};
 
+					var childNodes = this.shadowRoot.childNodes;					
+					if (childNodes) {
+						for (var i = 0; i < childNodes.length; i++) {
+							if (childNodes[i].nodeName === 'D2L-QUIZ-QUESTION-MULTIPLE-CHOICE' ||
+								childNodes[i].nodeName === 'D2L-QUIZ-QUESTION-SHORT-ANSWER' ||
+								childNodes[i].nodeName === 'D2L-QUIZ-QUESTION-NOT-SUPPORTED' ) {
+								this.shadowRoot.removeChild(childNodes[i]);
+							}
+						}
+					}
+
 					switch (questionData.properties.question.extension.questionType) {
 						case QuestionTypeEnum.TRUE_FALSE:
 							question.bodyText = questionData.properties.question.choiceInteraction.prompt;
