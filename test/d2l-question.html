@@ -23,51 +23,51 @@
 
 				describe('basic', function() {
 					it('should instantiate the element', function() {
-						var question = fixture('basic');	
+						var question = fixture('basic');
 						expect(question.tagName).to.equal('D2L-QUESTION');
 					});
 				});
-				
-				describe('fetch', function() {
-					it('should fetch and display true false question', function() {	
-						var question = fixture('basic');	
-						sinon.stub(question, '_fetchEntity');	
-						var promise = Promise.resolve(tf_question);
-						question._fetchEntity.returns(promise);
-						question.setAttribute("href", "/d2l/fetch/true_false");
 
-						window.setTimeout(function(){
-							expect(question.shadowRoot.querySelector("d2l-quiz-question-multiple-choice").tagName).to.equal('D2L-QUIZ-QUESTION-MULTIPLE-CHOICE')
-							expect(question.shadowRoot.querySelector("d2l-quiz-question-multiple-choice").getAttribute("question-data")).to.equal('{"bodyText":"<p>True or False</p>","choices":[{"text":"True"},{"text":"False"}],"hint":"<p>Hint</p>","enumeration":2}');
-						}, 1000);							
+				describe('fetch', function() {
+					it('should fetch and display true false question', function() {
+						var question = fixture('basic');
+						sinon.stub(question, '_fetchEntity');
+						var promise = Promise.resolve(tf_question); // eslint-disable-line
+						question._fetchEntity.returns(promise);
+						question.setAttribute('href', '/d2l/fetch/true_false');
+
+						window.setTimeout(function() {
+							expect(question.shadowRoot.querySelector('d2l-quiz-question-multiple-choice').tagName).to.equal('D2L-QUIZ-QUESTION-MULTIPLE-CHOICE');
+							expect(question.shadowRoot.querySelector('d2l-quiz-question-multiple-choice').getAttribute('question-data')).to.equal('{"bodyText":"<p>True or False</p>","choices":[{"text":"True"},{"text":"False"}],"hint":"<p>Hint</p>","enumeration":2}');
+						}, 1000);
 					});
 
 					it('should fetch and display multiple choice question', function() {
-						var question = fixture('basic');	
-						sinon.stub(question, '_fetchEntity');	
-						var promise = Promise.resolve(mc_question);
-						question._fetchEntity.returns(promise);
-						question.setAttribute("href", "/d2l/fetch/multiple_choice");
-
-						window.setTimeout(function(){
-							expect(question.shadowRoot.querySelector("d2l-quiz-question-multiple-choice").tagName).to.equal('D2L-QUIZ-QUESTION-MULTIPLE-CHOICE');
-							expect(question.shadowRoot.querySelector("d2l-quiz-question-multiple-choice").getAttribute("question-data")).to.equal('{"bodyText":"<p>Multiple Choice</p>","choices":[{"text":"<p>A</p>"},{"text":"<p>B</p>"},{"text":"<p>C</p>"},{"text":"<p>D</p>"}],"randomization":true,"hint":"<p>Hint</p>","enumeration":4}');
-						}, 1000);							
-					});
-
-					it('should fetch and display short answer question', function() {	
-						var question = fixture('basic');	
+						var question = fixture('basic');
 						sinon.stub(question, '_fetchEntity');
-						var promise = Promise.resolve(sa_question);
+						var promise = Promise.resolve(mc_question); // eslint-disable-line
 						question._fetchEntity.returns(promise);
-						question.setAttribute("href", "/d2l/fetch/short_answer");
+						question.setAttribute('href', '/d2l/fetch/multiple_choice');
 
-						window.setTimeout(function(){
-							expect(question.shadowRoot.querySelector("d2l-quiz-question-short-answer").tagName).to.equal('D2L-QUIZ-QUESTION-SHORT-ANSWER');
-							expect(question.shadowRoot.querySelector("d2l-quiz-question-short-answer").getAttribute("question-data")).to.equal('{"bodyText":"<p>Short Answer</p>","answers":[{},{}]}');
-						}, 1000);							
+						window.setTimeout(function() {
+							expect(question.shadowRoot.querySelector('d2l-quiz-question-multiple-choice').tagName).to.equal('D2L-QUIZ-QUESTION-MULTIPLE-CHOICE');
+							expect(question.shadowRoot.querySelector('d2l-quiz-question-multiple-choice').getAttribute('question-data')).to.equal('{"bodyText":"<p>Multiple Choice</p>","choices":[{"text":"<p>A</p>"},{"text":"<p>B</p>"},{"text":"<p>C</p>"},{"text":"<p>D</p>"}],"randomization":true,"hint":"<p>Hint</p>","enumeration":4}');
+						}, 1000);
 					});
-				});				
+
+					it('should fetch and display short answer question', function() {
+						var question = fixture('basic');
+						sinon.stub(question, '_fetchEntity');
+						var promise = Promise.resolve(sa_question); // eslint-disable-line
+						question._fetchEntity.returns(promise);
+						question.setAttribute('href', '/d2l/fetch/short_answer');
+
+						window.setTimeout(function() {
+							expect(question.shadowRoot.querySelector('d2l-quiz-question-short-answer').tagName).to.equal('D2L-QUIZ-QUESTION-SHORT-ANSWER');
+							expect(question.shadowRoot.querySelector('d2l-quiz-question-short-answer').getAttribute('question-data')).to.equal('{"bodyText":"<p>Short Answer</p>","answers":[{},{}]}');
+						}, 1000);
+					});
+				});
 			});
 		</script>
 	</body>
