@@ -12,15 +12,17 @@
 				display: block;
 			}
 
+			#d2l-quiz-question-body {
+				margin-bottom: 1rem;
+			}
+
 			#d2l-quiz-question-hint {
 				margin: 1rem 0 0 0;
 			}			
 		</style>
 
-		<div id="d2l-quiz-question-body">
-			<div>
-				<p>[[questionData.bodyText]]</p>
-			</div>		
+		<div id="d2l-quiz-question">
+			<div id="d2l-quiz-question-body">[[questionData.bodyText]]</div>		
 			<div>
 				<template is="dom-repeat" items="[[questionData.answers]]">
 					<div>

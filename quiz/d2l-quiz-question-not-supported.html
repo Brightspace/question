@@ -10,11 +10,32 @@
 		<style>
 			:host {
 				display: block;
-			}			
+			}
+
+			#d2l-quiz-question-body {
+				height: 180px;
+				width: 405px;
+				border-radius: 6px;
+				border: solid 2px #dce1e8;
+			}
+
+			.center {
+				text-align: center;
+				width: 80%;
+				margin-left: auto;
+				margin-right: auto;
+				position: relative;
+				top: 50%;
+				transform: translateY(-50%);
+			}
 		</style>
 
-		<div>
-			<p>This question type is not supported.</p>
+		<div id="d2l-quiz-question">
+			<div id="d2l-quiz-question-body">
+				<div class="center">
+					The preview for question type is not supported yet!
+				</div>
+			</div>
 		</div>
 	</template>
 

@@ -12,8 +12,12 @@
 				display: block;
 			}
 
-			#d2l-quiz-question-body {
+			#d2l-quiz-question {
 				counter-reset: choices;
+			}
+
+			#d2l-quiz-question-body {
+				margin-bottom: 1rem;
 			}
 
 			.answer-radio {
@@ -58,10 +62,8 @@
 			}
 		</style>
 
-		<div id="d2l-quiz-question-body">
-			<div>
-				<p>[[questionData.bodyText]]</p>
-			</div>
+		<div id="d2l-quiz-question">
+			<div id="d2l-quiz-question-body">[[questionData.bodyText]]</div>
 			<div>
 				<template is="dom-repeat" items="[[_choices]]">
 					<label class="answer-radio"><input type="radio" name="answer" value="[[item.text]]"/>
