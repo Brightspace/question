@@ -26,9 +26,20 @@ Polymer-based web component for D2L questions
 
   <script>
 		const QuestionTypeEnum = {
-			MULTIPLE_CHOICE: 1,
-			TRUE_FALSE : 2,
-			SHORT_ANSWER : 8
+			MULTIPLE_CHOICE: {value: 1, string: 'Multiple Choice'},
+			TRUE_FALSE :  {value: 2, string: 'True or False'},
+			FILL_IN_BLANKS :  {value: 3, string: 'Fill in the Blanks'},
+			MULTI_SELECT :  {value: 4, string: 'Multi Select'},
+			MATCHING :  {value: 5, string: 'Matching'},
+			ORDERING :  {value: 6, string: 'Ordering'},
+			WRITTEN_RESPONSE :  {value: 7, string: 'Written Response'},
+			SHORT_ANSWER :  {value: 8, string: 'Short Answer'},
+			LIKERT :  {value: 9, string: 'Likert'},
+			IMAGE_INFORMATION :  {value: 10, string: 'Image Information'},
+			TEXT_INFORMATION :  {value: 11, string: 'Text Information'},
+			ARITHMETIC :  {value: 12, string: 'Arithmetic'},
+			SIGNIFICANT_FIGURES :  {value: 13, string: 'Significant Figures'},
+			MULTI_SHORT_ANSWER : {value: 14, string: 'Multi Short Answer'}
 		};
 
 		class D2LQuestion extends Polymer.mixinBehaviors(D2L.PolymerBehaviors.FetchSirenEntityBehavior, Polymer.Element) {
@@ -66,7 +77,7 @@ Polymer-based web component for D2L questions
 					}
 
 					switch (questionData.properties.question.extension.questionType) {
-						case QuestionTypeEnum.TRUE_FALSE:
+						case QuestionTypeEnum.TRUE_FALSE.value:
 							question.bodyText = questionData.properties.question.choiceInteraction.prompt;
 							question.choices = [{text: 'True'}, {text: 'False'}];
 
@@ -82,7 +93,7 @@ Polymer-based web component for D2L questions
 							this.shadowRoot.querySelector('d2l-quiz-question-multiple-choice').setAttribute('question-data', JSON.stringify(question));
 							break;
 
-						case QuestionTypeEnum.MULTIPLE_CHOICE:
+						case QuestionTypeEnum.MULTIPLE_CHOICE.value:
 							question.bodyText = questionData.properties.question.choiceInteraction.prompt;
 
 							var choices = [];
@@ -109,7 +120,7 @@ Polymer-based web component for D2L questions
 							this.shadowRoot.querySelector('d2l-quiz-question-multiple-choice').setAttribute('question-data', JSON.stringify(question));
 							break;
 
-						case QuestionTypeEnum.SHORT_ANSWER:
+						case QuestionTypeEnum.SHORT_ANSWER.value:
 							question.bodyText = questionData.properties.question.interaction.prompt;
 
 							if (questionData.properties.question.modalFeedback.hint.text) {
@@ -127,6 +138,61 @@ Polymer-based web component for D2L questions
 
 							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-short-answer'));
 							this.shadowRoot.querySelector('d2l-quiz-question-short-answer').setAttribute('question-data', JSON.stringify(question));
+							break;
+
+						case QuestionTypeEnum.FILL_IN_BLANKS.value: 
+							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
+							this.shadowRoot.querySelector('d2l-quiz-question-not-supported').setAttribute('question-type', QuestionTypeEnum.FILL_IN_BLANKS.string);
+							break;
+
+						case QuestionTypeEnum.MULTI_SELECT.value: 
+							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
+							this.shadowRoot.querySelector('d2l-quiz-question-not-supported').setAttribute('question-type', QuestionTypeEnum.MULTI_SELECT.string);
+							break;
+
+						case QuestionTypeEnum.MATCHING.value: 
+							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
+							this.shadowRoot.querySelector('d2l-quiz-question-not-supported').setAttribute('question-type', QuestionTypeEnum.MATCHING.string);
+							break;
+
+						case QuestionTypeEnum.ORDERING.value: 
+							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
+							this.shadowRoot.querySelector('d2l-quiz-question-not-supported').setAttribute('question-type', QuestionTypeEnum.ORDERING.string);
+							break;
+
+						case QuestionTypeEnum.WRITTEN_RESPONSE.value: 
+							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
+							this.shadowRoot.querySelector('d2l-quiz-question-not-supported').setAttribute('question-type', QuestionTypeEnum.WRITTEN_RESPONSE.string);
+							break;
+
+						case QuestionTypeEnum.LIKERT.value: 
+							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
+							this.shadowRoot.querySelector('d2l-quiz-question-not-supported').setAttribute('question-type', QuestionTypeEnum.LIKERT.string);
+							break;
+
+						case QuestionTypeEnum.IMAGE_INFORMATION.value: 
+							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
+							this.shadowRoot.querySelector('d2l-quiz-question-not-supported').setAttribute('question-type', QuestionTypeEnum.IMAGE_INFORMATION.string);
+							break;
+
+						case QuestionTypeEnum.TEXT_INFORMATION.value: 
+							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
+							this.shadowRoot.querySelector('d2l-quiz-question-not-supported').setAttribute('question-type', QuestionTypeEnum.TEXT_INFORMATION.string);
+							break;
+
+						case QuestionTypeEnum.ARITHMETIC.value: 
+							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
+							this.shadowRoot.querySelector('d2l-quiz-question-not-supported').setAttribute('question-type', QuestionTypeEnum.ARITHMETIC.string);
+							break;
+
+						case QuestionTypeEnum.SIGNIFICANT_FIGURES.value: 
+							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
+							this.shadowRoot.querySelector('d2l-quiz-question-not-supported').setAttribute('question-type', QuestionTypeEnum.SIGNIFICANT_FIGURES.string);
+							break;
+
+						case QuestionTypeEnum.MULTI_SHORT_ANSWER.value: 
+							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
+							this.shadowRoot.querySelector('d2l-quiz-question-not-supported').setAttribute('question-type', QuestionTypeEnum.MULTI_SHORT_ANSWER.string);
 							break;
 
 						default:

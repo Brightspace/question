@@ -34,7 +34,7 @@
 		<div id="d2l-quiz-question">
 			<div id="d2l-quiz-question-body">
 				<div class="center">
-					The preview for question type is not supported yet!
+					The preview for [[questionType]] questions is not supported yet!
 				</div>
 			</div>
 		</div>
@@ -45,6 +45,16 @@
 			static get is() {
 				return "d2l-quiz-question-not-supported";
 			}
+
+			static get properties() {
+	      		return {
+	        		questionType: {
+	          			type: String,
+	          			readOnly: false,
+			  			value: 'this question type'
+	        		}
+	      		}
+	    	}
 
 			constructor() {
 				super();
