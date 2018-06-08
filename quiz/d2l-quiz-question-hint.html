@@ -1,0 +1,93 @@
+<link rel="import" href="../../polymer/polymer-element.html">
+<link rel="import" href="../../d2l-icons/d2l-icon.html">
+<link rel="import" href="../../d2l-icons/tier1-icons.html">
+
+<!--
+'d2l-quiz-question-hint'
+
+-->
+
+<dom-module id="d2l-quiz-question-hint">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+
+			.toggle-hint-link:hover .toggle-hint-button, .toggle-hint-link:focus .toggle-hint-button {
+				border-color: #b9c2d0;
+			}
+
+			.toggle-hint-button {
+				align-items: center;
+				border: 1px solid transparent;
+				border-radius: 0.3rem;	
+				display: inline-flex;
+				justify-content: center;
+				margin-right: 5px;
+				padding: 0.3rem;
+				vertical-align: middle;
+			}
+
+			.toggle-hint-text {
+				color: #005694;
+			}
+
+			.hidden{
+				display: none;
+			}
+		</style>
+
+		<div id="d2l-quiz-question-hint">
+			<div>
+				<a id="toggle-on-hint-link" class="toggle-hint-link" on-click="_toggle">
+					<span class="toggle-hint-button">
+						<d2l-icon icon="d2l-tier1:arrow-expand"></d2l-icon>
+					</span>
+					<span class="toggle-hint-text">
+						View hint
+					</span>					
+				</a>
+				<a id="toggle-off-hint-link" class="toggle-hint-link hidden" on-click="_toggle">
+					<span class="toggle-hint-button">
+						<d2l-icon icon="d2l-tier1:arrow-collapse"></d2l-icon>
+					</span>
+					<span class="toggle-hint-text">
+						Hide hint
+					</span>					
+				</a>
+			</div>
+			<p id="hint" class="hidden" inner-h-t-m-l="[[hint]]"></p>
+		</div>
+	</template>
+
+	<script>
+		class D2LQuizQuestionHint extends Polymer.Element {
+			static get is() {
+				return "d2l-quiz-question-hint";
+			}
+
+			static get properties() {
+	      		return {
+	        		hint: {
+	          			type: String,
+	          			readOnly: false,
+			  			value: "This is a hint"
+	        		}
+	      		}
+	    	}
+
+			constructor() {
+				super();
+			}
+
+			_toggle() {
+				this.shadowRoot.querySelector("#toggle-on-hint-link").classList.toggle("hidden");
+				this.shadowRoot.querySelector("#toggle-off-hint-link").classList.toggle("hidden");
+				this.shadowRoot.querySelector("#hint").classList.toggle("hidden");
+			}
+		}
+
+		customElements.define(D2LQuizQuestionHint.is, D2LQuizQuestionHint);
+	</script>
+</dom-module>

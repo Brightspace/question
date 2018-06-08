@@ -1,4 +1,5 @@
 <link rel="import" href="../../polymer/polymer-element.html">
+<link rel="import" href="./d2l-quiz-question-hint.html">
 <link rel="import" href="../../d2l-icons/d2l-icon.html">
 <link rel="import" href="../../d2l-icons/tier1-icons.html">
 
@@ -88,10 +89,7 @@
 				</template>
 			</div>
 			<template is="dom-if" if="[[questionData.hint]]">
-				<div id="d2l-quiz-question-hint">
-					<b>Hint:</b>
-					<p inner-h-t-m-l="[[questionData.hint]]"></p>
-				</div>
+				<d2l-quiz-question-hint hint="[[questionData.hint]]"></d2l-quiz-question-hint>
 			</template>
 		</div>
 	</template>
