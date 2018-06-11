@@ -21,7 +21,8 @@
     "d2l-typography": "^6.1.2",
     "d2l-fetch-siren-entity-behavior": "Brightspace/d2l-fetch-siren-entity-behavior#^4.0.2",
     "d2l-icons": "^4.11.0",
-    "d2l-fetch-auth": "brightspace/d2l-fetch-auth#^0.9.0"
+    "d2l-fetch-auth": "brightspace/d2l-fetch-auth#^0.9.0",
+    "lil-uuid": "^0.1.1"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^2.0.0",

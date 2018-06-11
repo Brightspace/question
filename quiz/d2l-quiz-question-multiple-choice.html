@@ -1,5 +1,6 @@
 <link rel="import" href="../../polymer/polymer-element.html">
 <link rel="import" href="./d2l-quiz-question-hint.html">
+<script src="../../lil-uuid/uuid.js"></script>
 
 <!--
 'd2l-quiz-question-multiple-choice'
@@ -122,7 +123,7 @@
 				<template is="dom-repeat" items="[[_choices]]">
 					<label class="choice">
 						<div class="radio-button-container">
-							<input type="radio" class="radio-button" value="[[item.text]]"/>
+							<input type="radio" class="radio-button" name="[[_generateUUID()]]" value="[[item.text]]"/>
 						</div>
 						<div class="choice-content-container">											
 							<div class$="[[_enumerationType(questionData.enumeration)]]" inner-h-t-m-l=" [[item.text]]"></div>
@@ -138,6 +139,7 @@
 
 	<script>
 		class D2LQuizQuestionMultipleChoice extends Polymer.Element {
+
 			static get is() {
 				return "d2l-quiz-question-multiple-choice";
 			}
@@ -159,6 +161,7 @@
 
 			constructor() {
 				super();
+				this.uuid = lil.uuid();
 			}
 
 			_enumerationType(enumerationValue) {
@@ -194,6 +197,9 @@
 				}
 			}
 
+			_generateUUID() {		
+				return this.uuid;
+			}
 		}
 
 		customElements.define(D2LQuizQuestionMultipleChoice.is, D2LQuizQuestionMultipleChoice);
