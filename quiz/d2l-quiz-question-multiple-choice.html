@@ -32,7 +32,7 @@
 				width: 90%;
 			}
 
-			.choice > .choice-content-container > div > * {
+			.choice > .choice-content-container > div > .choice-text > * {
 				display: inline;
 			}
 
@@ -88,28 +88,38 @@
 			}
 
 			.preview-counters-decimal::before {
+				vertical-align: top;
 				counter-increment: choices;
 				content: counter(choices, decimal) ") ";
 			}
 
 			.preview-counters-lower-roman::before {
+				vertical-align: top;
 				counter-increment: choices;
 				content: counter(choices, lower-roman) ") ";
 			}
 
 			.preview-counters-upper-roman::before {
+				vertical-align: top;
 				counter-increment: choices;
 				content: counter(choices, upper-roman) ") ";
 			}
 
 			.preview-counters-lower-alpha::before {
+				vertical-align: top;
 				counter-increment: choices;
 				content: counter(choices, lower-alpha) ") ";
 			}
 
 			.preview-counters-upper-alpha::before {
+				vertical-align: top;
 				counter-increment: choices;
 				content: counter(choices, upper-alpha) ") ";
+			}
+
+			.choice-text {
+				display: inline-block;
+				width: 90%;
 			}
 
 			#d2l-quiz-question-hint {
@@ -126,7 +136,10 @@
 							<input type="radio" class="radio-button" name="[[_generateUUID()]]" value="[[item.text]]"/>
 						</div>
 						<div class="choice-content-container">											
-							<div class$="[[_enumerationType(questionData.enumeration)]]" inner-h-t-m-l=" [[item.text]]"></div>
+							<div class$="[[_enumerationType(questionData.enumeration)]]">
+								<div class="choice-text" inner-h-t-m-l=" [[item.text]]">
+								</div>
+							</div>
 						</div>
 					</label>
 				</template>
