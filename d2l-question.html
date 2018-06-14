@@ -6,6 +6,7 @@
 <link rel="import" href="./quiz/d2l-quiz-question-multiple-choice.html">
 <link rel="import" href="./quiz/d2l-quiz-question-short-answer.html">
 <link rel="import" href="./quiz/d2l-quiz-question-multi-select.html">
+<link rel="import" href="./quiz/d2l-quiz-question-written-response.html">
 <link rel="import" href="./quiz/d2l-quiz-question-not-supported.html">
 
 <!--
@@ -64,12 +65,15 @@ Polymer-based web component for D2L questions
 			_appendQuestionType(questionData) {
 				try {
 					const question = {};
+					const config = {};
 
 					const childNodes = this.shadowRoot.childNodes;
 					if (childNodes) {
 						for (let i = 0; i < childNodes.length; i++) {
 							if (childNodes[i].nodeName === 'D2L-QUIZ-QUESTION-MULTIPLE-CHOICE' ||
 								childNodes[i].nodeName === 'D2L-QUIZ-QUESTION-SHORT-ANSWER' ||
+								childNodes[i].nodeName === 'D2L-QUIZ-QUESTION-MULTI-SELECT' ||
+								childNodes[i].nodeName === 'D2L-QUIZ-QUESTION-WRITTEN-RESPONSE' ||
 								childNodes[i].nodeName === 'D2L-QUIZ-QUESTION-NOT-SUPPORTED' ) {
 								this.shadowRoot.removeChild(childNodes[i]);
 							}
@@ -142,11 +146,6 @@ Polymer-based web component for D2L questions
 							break;
 						}
 
-						case QuestionTypeEnum.FILL_IN_BLANKS.value:
-							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
-							this.shadowRoot.querySelector('d2l-quiz-question-not-supported').setAttribute('question-type', QuestionTypeEnum.FILL_IN_BLANKS.string);
-							break;
-
 						case QuestionTypeEnum.MULTI_SELECT.value: {
 							question.bodyText = questionData.properties.question.choiceInteraction.prompt;
 
@@ -175,6 +174,28 @@ Polymer-based web component for D2L questions
 							break;
 						}
 
+						case QuestionTypeEnum.WRITTEN_RESPONSE.value: {
+							question.bodyText = questionData.properties.question.extendedTextInteraction.prompt;
+
+							if (questionData.properties.question.modalFeedback.hint.text) {
+								question.hint = questionData.properties.question.modalFeedback.hint.text;
+							}
+
+							question.answer = '';
+
+							config.htmlEditorUrl = questionData.properties.htmlEditorPreview.href;
+
+							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-written-response'));
+							this.shadowRoot.querySelector('d2l-quiz-question-written-response').setAttribute('question-data', JSON.stringify(question));
+							this.shadowRoot.querySelector('d2l-quiz-question-written-response').setAttribute('config-data', JSON.stringify(config));
+							break;
+						}
+
+						case QuestionTypeEnum.FILL_IN_BLANKS.value:
+							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
+							this.shadowRoot.querySelector('d2l-quiz-question-not-supported').setAttribute('question-type', QuestionTypeEnum.FILL_IN_BLANKS.string);
+							break;
+
 						case QuestionTypeEnum.MATCHING.value:
 							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
 							this.shadowRoot.querySelector('d2l-quiz-question-not-supported').setAttribute('question-type', QuestionTypeEnum.MATCHING.string);
@@ -183,11 +204,6 @@ Polymer-based web component for D2L questions
 						case QuestionTypeEnum.ORDERING.value:
 							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
 							this.shadowRoot.querySelector('d2l-quiz-question-not-supported').setAttribute('question-type', QuestionTypeEnum.ORDERING.string);
-							break;
-
-						case QuestionTypeEnum.WRITTEN_RESPONSE.value:
-							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
-							this.shadowRoot.querySelector('d2l-quiz-question-not-supported').setAttribute('question-type', QuestionTypeEnum.WRITTEN_RESPONSE.string);
 							break;
 
 						case QuestionTypeEnum.LIKERT.value:
