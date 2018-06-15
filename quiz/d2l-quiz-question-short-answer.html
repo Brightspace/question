@@ -73,16 +73,16 @@
 		<div id="d2l-quiz-question">
 			<div id="d2l-quiz-question-body" inner-h-t-m-l="[[questionData.bodyText]]" tabindex="0"></div>		
 			<div>
-				<template is="dom-if" if="[[_isEqualTo(questionData.answers.length, 1)]]">
+				<template is="dom-if" if="[[__isEqualTo(questionData.answers.length, 1)]]">
 					<div>
 						<input class="text-field single-text-field" row='1'/>
 						<d2l-icon class="spell-check" icon="d2l-tier1:spellcheck"></d2l-icon>
 					</div>
 				</template>
-				<template is="dom-if" if="[[_isGreaterThan(questionData.answers.length, 1)]]">
+				<template is="dom-if" if="[[__isGreaterThan(questionData.answers.length, 1)]]">
 					<template is="dom-repeat" items="[[questionData.answers]]">
 						<div class="blank">
-							<label>Blank # [[_displayIndex(index)]]</label> <input class="text-field" row='1'/>
+							<label>Blank # [[__displayIndex(index)]]</label> <input class="text-field" row='1'/>
 							<d2l-icon class="spell-check" icon="d2l-tier1:spellcheck"></d2l-icon>
 						</div>
 					</template>
@@ -114,15 +114,15 @@
 				super();
 			}
 
-			_displayIndex(index) {
+			__displayIndex(index) {
 				return index + 1;
 			}
 
-			_isEqualTo(a, b) {
+			__isEqualTo(a, b) {
 				return a === b;
 			}
 
-			_isGreaterThan(a, b) {
+			__isGreaterThan(a, b) {
 				return a > b;
 			}
 		}

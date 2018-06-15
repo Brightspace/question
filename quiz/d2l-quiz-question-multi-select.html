@@ -135,7 +135,7 @@
 							<input type="checkbox" class="check-box" value="[[item.text]]"/>
 						</div>
 						<div class="choice-content-container">											
-							<div class$="[[_enumerationType(questionData.enumeration)]]">
+							<div class$="[[__enumerationType(questionData.enumeration)]]">
 								<div class="choice-text" inner-h-t-m-l=" [[item.text]]">
 								</div>
 							</div>
@@ -165,7 +165,7 @@
 
 	        		_choices: {
 	        			type: Function,
-	        			computed: "_getChoices(questionData.choices, questionData.randomization)"
+	        			computed: "__getChoices(questionData.choices, questionData.randomization)"
 	        		}
 	      		}
 	    	}
@@ -174,7 +174,7 @@
 				super();
 			}
 
-			_enumerationType(enumerationValue) {
+			__enumerationType(enumerationValue) {
 				if (!enumerationValue) {
 					return '';
 				} else if (enumerationValue.toString() === "1") {
@@ -190,19 +190,19 @@
 				}
 			}
 
-			_randomizeArray(array) {
+			__randomizeArray(array) {
 			    for (let i = array.length - 1; i > 0; i--) {
 			        let j = Math.floor(Math.random() * (i + 1));
 			        [array[i], array[j]] = [array[j], array[i]];
 			    }
 			}
 
-			_getChoices(choices, randomization) {
+			__getChoices(choices, randomization) {
 				if(!randomization) {
 					return choices;
 				}
 				else {
-					this._randomizeArray(choices);
+					this.__randomizeArray(choices);
 					return choices;
 				}
 			}

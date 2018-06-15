@@ -60,14 +60,22 @@
 			.spell-check {
 				margin-left: 0.5rem;
 			}
+
+			#html-editor {
+				border: 0px;
+			}
 		</style>
 
 		<div id="d2l-quiz-question">
 			<div id="d2l-quiz-question-body" inner-h-t-m-l="[[questionData.bodyText]]" tabindex="0"></div>		
 			<div>
-				<iframe src="[[configData.htmlEditorUrl]]">
-				</iframe>
-				<d2l-icon class="spell-check" icon="d2l-tier1:spellcheck"></d2l-icon>
+				<template is="dom-if" if="[[__isHtmlEditor(configData.htmlEditorUrl)]]">
+					<iframe id="html-editor" scrolling="no" height="[[__getEditorIframeHeight(configData.htmlEditorUrl)]]" width="[[__getEitorIframeWidth(configData.htmlEditorUrl)]]" src="[[configData.htmlEditorUrl]]"></iframe>
+				</template>
+				<template is="dom-if" if="[[__isTextEditor(configData.htmlEditorUrl)]]">
+					<textarea></textarea>
+					<d2l-icon class="spell-check" icon="d2l-tier1:spellcheck"></d2l-icon>
+				</template>
 			</div>
 			<template is="dom-if" if="[[questionData.hint]]">
 				<d2l-quiz-question-hint hint="[[questionData.hint]]"></d2l-quiz-question-hint>
@@ -91,7 +99,8 @@
 
 	        		configData: {
 	        			type: Object,
-	        			readOnly:false,
+	        			readOnly: false,
+	        			notify: true,
 	        			value: () => { return {'htmlEditorUrl':null, 'editorRows':1, 'editorCols':100}}	
 	        		}
 	      		}
@@ -101,12 +110,29 @@
 				super();
 			}
 
-			_isEqualTo(a, b) {
-				return a === b;
+			__isHtmlEditor(url) {
+				return url ? true : false;
 			}
 
-			_isGreaterThan(a, b) {
-				return a > b;
+			__isTextEditor(url) {
+				return url ? false : true;
+			}
+
+			__getEditorIframeHeight(url) {
+				return +this.__getParameterByName('height', url) + +26;
+			}
+
+			__getEitorIframeWidth(url) {
+				return +this.__getParameterByName('width', url) + +2;
+			}
+
+			__getParameterByName(name, url) {			    
+			    name = name.replace(/[\[\]]/g, "\\$&");
+			    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
+			    var results = regex.exec(url);
+			    if (!results) return null;
+			    if (!results[2]) return '';
+			    return decodeURIComponent(results[2].replace(/\+/g, " "));
 			}
 		}
 
