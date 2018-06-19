@@ -15,26 +15,39 @@
 				display: block;
 			}
 
+			#d2l-quiz-question {
+				max-width: var(--d2l-quiz-question-written-response-max-width, 400px);
+				width: var(--d2l-quiz-question-written-response-max-width, 400px);
+			}
+
 			#d2l-quiz-question-body {
 				margin-bottom: 1rem;
 			}			
 
+			#editor-container {
+				display: inline-block;
+			}
+
 			#d2l-quiz-question-hint {
 				margin: 1rem 0 0 0;
 			}
+		
+			.spell-check {
+				display: inline-block;
+				margin-left: 0.5rem;
+			}
 
-			.text-field {
-				background-color: #fff;
+			#html-editor {
+				border: 0px;				
+			}
+
+			.text-area {
 				border-radius: 0.3rem;
 				border-style: solid;
-				border-color: #d3d9e3;
-  				border-width: 1px;
 				box-sizing: border-box;
-				box-shadow: inset 0 2px 0 0 rgba(185, 194, 208, 0.2);
 				display: inline-block;
 				height: auto;
-				width: 70%;
-				min-width: calc(2rem + 1em);
+				margin: 0;
 				vertical-align: middle;
 				transition-duration: 0.5s;
 				transition-timing-function: ease;
@@ -44,39 +57,23 @@
 				font-size: 0.8rem;
 				font-weight: 400;
 				letter-spacing: 0.02rem;
-				line-height: 1.2rem;
-  				outline-width: 0;
-  				margin: 0 0 0 0.5rem;
-  				padding: 0.4rem 0.75rem				
+				line-height: normal;
+				overflow: auto;
 			}
 
-			.text-field:hover, .text-field:focus {
-  				border-color: #006fbf;
-  				border-width: 2px;
-  				outline-width: 0;
-  				padding: calc(0.4rem - 1px) calc(0.75rem - 1px);
-			}
-
-			.spell-check {
-				margin-left: 0.5rem;
-			}
-
-			#html-editor {
-				border: 0px;
+			.text-area:hover, .text-area:focus {
+				border-color: #006fbf;
+				border-width: 2px;
+				outline-width: 0;
 			}
 		</style>
 
 		<div id="d2l-quiz-question">
 			<div id="d2l-quiz-question-body" inner-h-t-m-l="[[questionData.bodyText]]" tabindex="0"></div>		
-			<div>
-				<template is="dom-if" if="[[__isHtmlEditor(configData.htmlEditorUrl)]]">
-					<iframe id="html-editor" scrolling="no" height="[[__getEditorIframeHeight(configData.htmlEditorUrl)]]" width="[[__getEitorIframeWidth(configData.htmlEditorUrl)]]" src="[[configData.htmlEditorUrl]]"></iframe>
-				</template>
-				<template is="dom-if" if="[[__isTextEditor(configData.htmlEditorUrl)]]">
-					<textarea></textarea>
-					<d2l-icon class="spell-check" icon="d2l-tier1:spellcheck"></d2l-icon>
-				</template>
-			</div>
+			<div id="editor-container"></div>
+			<template is="dom-if" if="[[__isTextEditor(configData.htmlEditorUrl)]]">
+				<d2l-icon class="spell-check" icon="d2l-tier1:spellcheck"></d2l-icon>
+			</template>
 			<template is="dom-if" if="[[questionData.hint]]">
 				<d2l-quiz-question-hint hint="[[questionData.hint]]"></d2l-quiz-question-hint>
 			</template>
@@ -100,8 +97,8 @@
 	        		configData: {
 	        			type: Object,
 	        			readOnly: false,
-	        			notify: true,
-	        			value: () => { return {'htmlEditorUrl':null, 'editorRows':1, 'editorCols':100}}	
+	        			observer: '_config'
+	        			//value: () => { return {'htmlEditorUrl':null, 'editorRows':1, 'editorCols':100}}      			
 	        		}
 	      		}
 	    	}
@@ -109,23 +106,39 @@
 			constructor() {
 				super();
 			}
-
-			__isHtmlEditor(url) {
-				return url ? true : false;
+			
+			_config() {
+				const maxWidth = parseInt(getComputedStyle(this).getPropertyValue('--d2l-quiz-question-written-response-max-width'));
+				if(this.configData.htmlEditorUrl) {
+					const editorWidth = this.__getParameterByName('width', this.configData.htmlEditorUrl);				
+					const actualWidth = editorWidth > maxWidth ? maxWidth : editorWidth;
+					const editor = document.createElement('iframe');
+					editor.setAttribute('id', 'html-editor');
+					editor.setAttribute('scrolling', 'no');
+					const editorContainer = this.shadowRoot.querySelector('#editor-container').appendChild(editor);
+					editor.width = actualWidth + 2;
+					editor.height = +this.__getParameterByName('height', this.configData.htmlEditorUrl) + +28;
+					const url = this.configData.htmlEditorUrl.replace('width=' + editorWidth, 'width=' + actualWidth);
+					editor.src = url;
+				}
+				else {
+					const editorCols = this.configData.editorCols;
+					const editorWidth = editorCols == 20 ? 169 : editorCols == 40 ? 309 : editorCols == 60 ? 449 : editorCols == 80 ? 589 : editorCols == 100 ? 729 : editorCols * 6.38;
+					console.log(editorWidth);
+					const actualWidth = editorWidth > maxWidth ? maxWidth : editorWidth;
+					const editor = document.createElement('textarea');
+					editor.setAttribute('id', 'text-editor');
+					editor.classList.add('text-area');
+					editor.setAttribute('rows', this.configData.editorRows);
+					editor.style.width = (actualWidth - 30) + 'px';					
+					const editorContainer = this.shadowRoot.querySelector('#editor-container').appendChild(editor);					
+				}
 			}
 
 			__isTextEditor(url) {
-				return url ? false : true;
-			}
-
-			__getEditorIframeHeight(url) {
-				return +this.__getParameterByName('height', url) + +26;
-			}
-
-			__getEitorIframeWidth(url) {
-				return +this.__getParameterByName('width', url) + +2;
-			}
-
+                return url ? false : true;
+            }
+			
 			__getParameterByName(name, url) {			    
 			    name = name.replace(/[\[\]]/g, "\\$&");
 			    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");

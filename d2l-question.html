@@ -21,6 +21,7 @@ Polymer-based web component for D2L questions
     <style>
       :host {
         display: block;
+        --d2l-quiz-question-written-response-max-width: var(--d2l-question-max-width, 400px);
       }
     </style>
   </template>
@@ -184,6 +185,8 @@ Polymer-based web component for D2L questions
 							question.answer = '';
 
 							config.htmlEditorUrl = questionData.properties.htmlEditorPreview.href;
+							config.editorRows = questionData.properties.htmlEditorPreview.legacyRows;
+							config.editorCols = questionData.properties.htmlEditorPreview.legacyCols;
 
 							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-written-response'));
 							this.shadowRoot.querySelector('d2l-quiz-question-written-response').setAttribute('question-data', JSON.stringify(question));
