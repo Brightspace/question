@@ -15,6 +15,11 @@
 				display: block;
 			}
 
+			#d2l-quiz-question {
+				max-width: var(--d2l-quiz-question-short-answer-max-width-in-px, 500px);
+				width: var(--d2l-quiz-question-short-answer-max-width-in-px, 500px);
+			}
+
 			#d2l-quiz-question-body {
 				margin-bottom: 1rem;
 			}			
@@ -23,7 +28,7 @@
 				margin: 1rem 0 0 0;
 			}
 
-			.text-field {
+			.text-area {
 				background-color: #fff;
 				border-radius: 0.3rem;
 				border-style: solid;
@@ -32,8 +37,6 @@
 				box-sizing: border-box;
 				box-shadow: inset 0 2px 0 0 rgba(185, 194, 208, 0.2);
 				display: inline-block;
-				height: auto;
-				width: 70%;
 				min-width: calc(2rem + 1em);
 				vertical-align: middle;
 				transition-duration: 0.5s;
@@ -50,14 +53,14 @@
   				padding: 0.4rem 0.75rem				
 			}
 
-			.text-field:hover, .text-field:focus {
+			.text-area:hover, .text-area:focus {
   				border-color: #006fbf;
   				border-width: 2px;
   				outline-width: 0;
   				padding: calc(0.4rem - 1px) calc(0.75rem - 1px);
 			}
 
-			.single-text-field {
+			.single-row-text-area {
 				margin-left: 0;
 			}	
 
@@ -75,14 +78,14 @@
 			<div>
 				<template is="dom-if" if="[[__isEqualTo(questionData.answers.length, 1)]]">
 					<div>
-						<input class="text-field single-text-field" row='1'/>
+						<textarea class="text-area single-row-text-area" rows="1" style$="width:[[__convertColsToPx(questionData.answers.first.cols, true)]];"></textarea>
 						<d2l-icon class="spell-check" icon="d2l-tier1:spellcheck"></d2l-icon>
 					</div>
 				</template>
 				<template is="dom-if" if="[[__isGreaterThan(questionData.answers.length, 1)]]">
 					<template is="dom-repeat" items="[[questionData.answers]]">
 						<div class="blank">
-							<label>Blank # [[__displayIndex(index)]]</label> <input class="text-field" row='1'/>
+							<label>Blank # [[__displayIndex(index)]]</label> <textarea class="text-area" rows="[[item.rows]]" style$="width:[[__convertColsToPx(item.cols, false)]];"></textarea>
 							<d2l-icon class="spell-check" icon="d2l-tier1:spellcheck"></d2l-icon>
 						</div>
 					</template>
@@ -105,7 +108,7 @@
 	        		questionData: {
 	          			type: Object,
 	          			readOnly: false,
-			  			value: () => { return {'bodyText':'I am a test question', 'hint':'this is a hint', 'answers':[{},{},{}]}}
+			  			value: () => { return {'bodyText':'I am a test question', 'hint':'this is a hint', 'answers':[{'rows':1, 'cols':20},{'rows':1, 'cols':20},{'rows':1, 'cols':20}]}}
 	        		}
 	      		}
 	    	}
@@ -124,6 +127,20 @@
 
 			__isGreaterThan(a, b) {
 				return a > b;
+			}
+
+			__convertColsToPx(cols, singleRow) {
+				const maxWidth = parseInt(getComputedStyle(this).getPropertyValue('--d2l-quiz-question-short-answer-max-width-in-px'));
+				const desiredWidth = cols == 20 ? 169 : cols == 40 ? 309 : cols == 60 ? 449 : cols * 6.38;
+				let actualWidth;
+				if (singleRow) {
+					actualWidth = (desiredWidth + 30 > maxWidth ? maxWidth - 30 : desiredWidth) + 'px';
+				}
+				else {
+					actualWidth = (desiredWidth + 120 > maxWidth ? maxWidth - 120 : desiredWidth) + 'px';
+				}
+
+				return actualWidth;
 			}
 		}
 

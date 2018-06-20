@@ -16,8 +16,8 @@
 			}
 
 			#d2l-quiz-question {
-				max-width: var(--d2l-quiz-question-written-response-max-width, 400px);
-				width: var(--d2l-quiz-question-written-response-max-width, 400px);
+				max-width: var(--d2l-quiz-question-written-response-max-width-in-px, 500px);
+				width: var(--d2l-quiz-question-written-response-max-width-in-px, 500px);
 			}
 
 			#d2l-quiz-question-body {
@@ -37,7 +37,7 @@
 				margin-left: 0.5rem;
 			}
 
-			#html-editor {
+			.html-editor {
 				border: 0px;				
 			}
 
@@ -65,6 +65,7 @@
 				border-color: #006fbf;
 				border-width: 2px;
 				outline-width: 0;
+				padding: calc(0.4rem - 1px) calc(0.75rem - 1px);
 			}
 		</style>
 
@@ -98,7 +99,7 @@
 	        			type: Object,
 	        			readOnly: false,
 	        			observer: '_config'
-	        			//value: () => { return {'htmlEditorUrl':null, 'editorRows':1, 'editorCols':100}}      			
+	        			//value: () => { return {'htmlEditorUrl':null, 'rows':1, 'cols':100}}      			
 	        		}
 	      		}
 	    	}
@@ -108,13 +109,13 @@
 			}
 			
 			_config() {
-				const maxWidth = parseInt(getComputedStyle(this).getPropertyValue('--d2l-quiz-question-written-response-max-width'));
+				const maxWidth = parseInt(getComputedStyle(this).getPropertyValue('--d2l-quiz-question-written-response-max-width-in-px'));
 				if(this.configData.htmlEditorUrl) {
 					const editorWidth = this.__getParameterByName('width', this.configData.htmlEditorUrl);				
 					const actualWidth = editorWidth > maxWidth ? maxWidth : editorWidth;
-					const editor = document.createElement('iframe');
-					editor.setAttribute('id', 'html-editor');
+					const editor = document.createElement('iframe');					
 					editor.setAttribute('scrolling', 'no');
+					editor.classList.add('html-editor');
 					const editorContainer = this.shadowRoot.querySelector('#editor-container').appendChild(editor);
 					editor.width = actualWidth + 2;
 					editor.height = +this.__getParameterByName('height', this.configData.htmlEditorUrl) + +28;
@@ -122,16 +123,15 @@
 					editor.src = url;
 				}
 				else {
-					const editorCols = this.configData.editorCols;
-					const editorWidth = editorCols == 20 ? 169 : editorCols == 40 ? 309 : editorCols == 60 ? 449 : editorCols == 80 ? 589 : editorCols == 100 ? 729 : editorCols * 6.38;
+					const cols = this.configData.cols;
+					const editorWidth = cols == 20 ? 169 : cols == 40 ? 309 : cols == 60 ? 449 : cols == 80 ? 589 : cols == 100 ? 729 : cols * 6.38;
 					console.log(editorWidth);
 					const actualWidth = editorWidth > maxWidth ? maxWidth : editorWidth;
-					const editor = document.createElement('textarea');
-					editor.setAttribute('id', 'text-editor');
-					editor.classList.add('text-area');
-					editor.setAttribute('rows', this.configData.editorRows);
-					editor.style.width = (actualWidth - 30) + 'px';					
-					const editorContainer = this.shadowRoot.querySelector('#editor-container').appendChild(editor);					
+					const textArea = document.createElement('textarea');
+					textArea.classList.add('text-area');
+					textArea.setAttribute('rows', this.configData.rows);
+					textArea.style.width = (actualWidth - 30) + 'px';					
+					const editorContainer = this.shadowRoot.querySelector('#editor-container').appendChild(textArea);					
 				}
 			}
 
