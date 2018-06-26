@@ -15,6 +15,10 @@
 				display: block;
 			}
 
+			.toggle-hint-link {
+				text-decoration: none;
+			}
+			
 			.toggle-hint-link:hover .toggle-hint-button, .toggle-hint-link:focus .toggle-hint-button {
 				border-color: #b9c2d0;
 			}
@@ -41,7 +45,7 @@
 
 		<div id="d2l-quiz-question-hint">
 			<div>
-				<a id="toggle-on-hint-link" class="toggle-hint-link" on-click="__toggle">
+				<a id="toggle-on-hint-link" href="javascript://" class="toggle-hint-link" on-click="__toggle">
 					<span class="toggle-hint-button">
 						<d2l-icon icon="d2l-tier1:arrow-expand"></d2l-icon>
 					</span>
@@ -49,7 +53,7 @@
 						[[localize('view_hint')]]
 					</span>					
 				</a>
-				<a id="toggle-off-hint-link" class="toggle-hint-link hidden" on-click="__toggle">
+				<a id="toggle-off-hint-link" href="javascript://" class="toggle-hint-link hidden" on-click="__toggle">
 					<span class="toggle-hint-button">
 						<d2l-icon icon="d2l-tier1:arrow-collapse"></d2l-icon>
 					</span>

@@ -80,7 +80,7 @@
 			<div>
 				<template is="dom-if" if="[[__isEqualTo(questionData.answers.length, 1)]]">
 					<div>
-						<textarea class="text-area single-row-text-area" rows="1" style$="width:[[__convertColsToPx(questionData.answers.first.cols, true)]];"></textarea>
+						<textarea class="text-area single-row-text-area" rows="[[questionData.answers.0.rows]]" style$="width:[[__convertColsToPx(questionData.answers.0.cols, true)]];"></textarea>
 						<d2l-button-icon icon="d2l-tier1:spellcheck" class="spell-check" text=[[localize('spell_check')]]></d2l-button-icon>
 					</div>
 				</template>
