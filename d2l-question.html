@@ -8,6 +8,7 @@
 <link rel="import" href="./quiz/d2l-quiz-question-multi-select.html">
 <link rel="import" href="./quiz/d2l-quiz-question-written-response.html">
 <link rel="import" href="./quiz/d2l-quiz-question-not-supported.html">
+<link rel="import" href="localize-behavior.html">
 
 <!--
 'd2l-question'
@@ -29,23 +30,23 @@ Polymer-based web component for D2L questions
 
   <script>
 		const QuestionTypeEnum = {
-			MULTIPLE_CHOICE: {value: 1, string: 'Multiple Choice'},
-			TRUE_FALSE :  {value: 2, string: 'True or False'},
-			FILL_IN_BLANKS :  {value: 3, string: 'Fill in the Blanks'},
-			MULTI_SELECT :  {value: 4, string: 'Multi-Select'},
-			MATCHING :  {value: 5, string: 'Matching'},
-			ORDERING :  {value: 6, string: 'Ordering'},
-			WRITTEN_RESPONSE :  {value: 7, string: 'Written Response'},
-			SHORT_ANSWER :  {value: 8, string: 'Short Answer'},
-			LIKERT :  {value: 9, string: 'Likert'},
-			IMAGE_INFORMATION :  {value: 10, string: 'Image Information'},
-			TEXT_INFORMATION :  {value: 11, string: 'Text Information'},
-			ARITHMETIC :  {value: 12, string: 'Arithmetic'},
-			SIGNIFICANT_FIGURES :  {value: 13, string: 'Significant Figures'},
-			MULTI_SHORT_ANSWER : {value: 14, string: 'Multi-Short Answer'}
+			MULTIPLE_CHOICE: {value: 1, string: 'multiple_choice'},
+			TRUE_FALSE :  {value: 2, string: 'true_false'},
+			FILL_IN_BLANKS :  {value: 3, string: 'fill_in_blanks'},
+			MULTI_SELECT :  {value: 4, string: 'multi_select'},
+			MATCHING :  {value: 5, string: 'matching'},
+			ORDERING :  {value: 6, string: 'ordering'},
+			WRITTEN_RESPONSE :  {value: 7, string: 'written_response'},
+			SHORT_ANSWER :  {value: 8, string: 'short_answer'},
+			LIKERT :  {value: 9, string: 'likert'},
+			IMAGE_INFORMATION :  {value: 10, string: 'image_information'},
+			TEXT_INFORMATION :  {value: 11, string: 'text_information'},
+			ARITHMETIC :  {value: 12, string: 'arithmetic'},
+			SIGNIFICANT_FIGURES :  {value: 13, string: 'significant_figures'},
+			MULTI_SHORT_ANSWER : {value: 14, string: 'multi_short_answer'}
 		};
 
-		class D2LQuestion extends Polymer.mixinBehaviors(D2L.PolymerBehaviors.FetchSirenEntityBehavior, Polymer.Element) {
+		class D2LQuestion extends Polymer.mixinBehaviors([D2L.PolymerBehaviors.FetchSirenEntityBehavior, D2L.PolymerBehaviors.D2LQuestion.LocalizeBehavior], Polymer.Element) {
 			static get is() {
 				return 'd2l-question';
 			}
@@ -95,8 +96,9 @@ Polymer-based web component for D2L questions
 								question.enumeration = questionData.properties.question.choiceInteraction.enumeration;
 							}
 
-							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-multiple-choice'));
-							this.shadowRoot.querySelector('d2l-quiz-question-multiple-choice').setAttribute('question-data', JSON.stringify(question));
+							const element = document.createElement('d2l-quiz-question-multiple-choice');
+							element.setAttribute('question-data', JSON.stringify(question));
+							this.shadowRoot.appendChild(element);
 							break;
 
 						case QuestionTypeEnum.MULTIPLE_CHOICE.value: {
@@ -122,8 +124,9 @@ Polymer-based web component for D2L questions
 								question.enumeration = questionData.properties.question.choiceInteraction.enumeration;
 							}
 
-							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-multiple-choice'));
-							this.shadowRoot.querySelector('d2l-quiz-question-multiple-choice').setAttribute('question-data', JSON.stringify(question));
+							const element = document.createElement('d2l-quiz-question-multiple-choice');
+							element.setAttribute('question-data', JSON.stringify(question));
+							this.shadowRoot.appendChild(element);
 							break;
 						}
 
@@ -145,8 +148,9 @@ Polymer-based web component for D2L questions
 							}
 							question.answers = answers;
 
-							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-short-answer'));
-							this.shadowRoot.querySelector('d2l-quiz-question-short-answer').setAttribute('question-data', JSON.stringify(question));
+							const element = document.createElement('d2l-quiz-question-short-answer');
+							element.setAttribute('question-data', JSON.stringify(question));
+							this.shadowRoot.appendChild(element);
 							break;
 						}
 
@@ -173,8 +177,9 @@ Polymer-based web component for D2L questions
 								question.enumeration = questionData.properties.question.choiceInteraction.enumeration;
 							}
 
-							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-multi-select'));
-							this.shadowRoot.querySelector('d2l-quiz-question-multi-select').setAttribute('question-data', JSON.stringify(question));
+							const element = document.createElement('d2l-quiz-question-multi-select');
+							element.setAttribute('question-data', JSON.stringify(question));
+							this.shadowRoot.appendChild(element);
 							break;
 						}
 
@@ -191,64 +196,89 @@ Polymer-based web component for D2L questions
 							config.rows = questionData.properties.htmlEditorPreview.legacyRows;
 							config.cols = questionData.properties.htmlEditorPreview.legacyCols;
 
-							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-written-response'));
-							this.shadowRoot.querySelector('d2l-quiz-question-written-response').setAttribute('question-data', JSON.stringify(question));
-							this.shadowRoot.querySelector('d2l-quiz-question-written-response').setAttribute('config-data', JSON.stringify(config));
+							const element = document.createElement('d2l-quiz-question-written-response');
+							element.setAttribute('question-data', JSON.stringify(question));
+							element.setAttribute('config-data', JSON.stringify(config));
+							this.shadowRoot.appendChild(element);
 							break;
 						}
 
-						case QuestionTypeEnum.FILL_IN_BLANKS.value:
-							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
-							this.shadowRoot.querySelector('d2l-quiz-question-not-supported').setAttribute('question-type', QuestionTypeEnum.FILL_IN_BLANKS.string);
+						case QuestionTypeEnum.FILL_IN_BLANKS.value: {
+							const element = document.createElement('d2l-quiz-question-not-supported');
+							element.setAttribute('question-type', this.localize(QuestionTypeEnum.FILL_IN_BLANKS.string));
+							this.shadowRoot.appendChild(element);
 							break;
+						}
 
-						case QuestionTypeEnum.MATCHING.value:
-							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
-							this.shadowRoot.querySelector('d2l-quiz-question-not-supported').setAttribute('question-type', QuestionTypeEnum.MATCHING.string);
+						case QuestionTypeEnum.MATCHING.value: {
+							const element = document.createElement('d2l-quiz-question-not-supported');
+							element.setAttribute('question-type', this.localize(QuestionTypeEnum.MATCHING.string));
+							this.shadowRoot.appendChild(element);
 							break;
+						}
 
-						case QuestionTypeEnum.ORDERING.value:
-							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
-							this.shadowRoot.querySelector('d2l-quiz-question-not-supported').setAttribute('question-type', QuestionTypeEnum.ORDERING.string);
+						case QuestionTypeEnum.ORDERING.value: {						
+							const element = document.createElement('d2l-quiz-question-not-supported');
+							element.setAttribute('question-type', this.localize(QuestionTypeEnum.ORDERING.string));
+							this.shadowRoot.appendChild(element);
 							break;
+						}
 
-						case QuestionTypeEnum.LIKERT.value:
-							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
-							this.shadowRoot.querySelector('d2l-quiz-question-not-supported').setAttribute('question-type', QuestionTypeEnum.LIKERT.string);
+						case QuestionTypeEnum.LIKERT.value: {
+							const element = document.createElement('d2l-quiz-question-not-supported');
+							element.setAttribute('question-type', this.localize(QuestionTypeEnum.LIKERT.string));
+							this.shadowRoot.appendChild(element);
 							break;
+						}
 
-						case QuestionTypeEnum.IMAGE_INFORMATION.value:
-							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
-							this.shadowRoot.querySelector('d2l-quiz-question-not-supported').setAttribute('question-type', QuestionTypeEnum.IMAGE_INFORMATION.string);
+						case QuestionTypeEnum.IMAGE_INFORMATION.value: {
+							const element = document.createElement('d2l-quiz-question-not-supported');
+							element.setAttribute('question-type', this.localize(QuestionTypeEnum.IMAGE_INFORMATION.string));
+							this.shadowRoot.appendChild(element);
 							break;
+						}
 
-						case QuestionTypeEnum.TEXT_INFORMATION.value:
-							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
-							this.shadowRoot.querySelector('d2l-quiz-question-not-supported').setAttribute('question-type', QuestionTypeEnum.TEXT_INFORMATION.string);
+						case QuestionTypeEnum.TEXT_INFORMATION.value: {
+							const element = document.createElement('d2l-quiz-question-not-supported');
+							element.setAttribute('question-type', this.localize(QuestionTypeEnum.TEXT_INFORMATION.string));
+							this.shadowRoot.appendChild(element);
 							break;
+						}
 
-						case QuestionTypeEnum.ARITHMETIC.value:
-							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
-							this.shadowRoot.querySelector('d2l-quiz-question-not-supported').setAttribute('question-type', QuestionTypeEnum.ARITHMETIC.string);
+						case QuestionTypeEnum.ARITHMETIC.value: {
+							const element = document.createElement('d2l-quiz-question-not-supported');
+							element.setAttribute('question-type', this.localize(QuestionTypeEnum.ARITHMETIC.string));
+							this.shadowRoot.appendChild(element);
 							break;
+						}
 
-						case QuestionTypeEnum.SIGNIFICANT_FIGURES.value:
-							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
-							this.shadowRoot.querySelector('d2l-quiz-question-not-supported').setAttribute('question-type', QuestionTypeEnum.SIGNIFICANT_FIGURES.string);
+						case QuestionTypeEnum.SIGNIFICANT_FIGURES.value: {
+							const element = document.createElement('d2l-quiz-question-not-supported');
+							element.setAttribute('question-type', this.localize(QuestionTypeEnum.SIGNIFICANT_FIGURES.string));
+							this.shadowRoot.appendChild(element);
 							break;
+						}
 
-						case QuestionTypeEnum.MULTI_SHORT_ANSWER.value:
-							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
-							this.shadowRoot.querySelector('d2l-quiz-question-not-supported').setAttribute('question-type', QuestionTypeEnum.MULTI_SHORT_ANSWER.string);
+						case QuestionTypeEnum.MULTI_SHORT_ANSWER.value: {
+							const element = document.createElement('d2l-quiz-question-not-supported');
+							element.setAttribute('question-type', this.localize(QuestionTypeEnum.MULTI_SHORT_ANSWER.string));
+							this.shadowRoot.appendChild(element);
 							break;
+						}
 
-						default:
-							this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
+						default: {
+							const element = document.createElement('d2l-quiz-question-not-supported');
+							element.setAttribute('question-type', null);
+							this.shadowRoot.appendChild(element);
 							break;
+						}
+
 					}
 				}
 				catch (error) {
-					this.shadowRoot.appendChild(document.createElement('d2l-quiz-question-not-supported'));
+					const element = document.createElement('d2l-quiz-question-not-supported');
+					element.setAttribute('question-type', null);
+					this.shadowRoot.appendChild(element);
 				}
 			}
 

@@ -22,6 +22,7 @@
     "d2l-fetch-siren-entity-behavior": "Brightspace/d2l-fetch-siren-entity-behavior#^4.0.2",
     "d2l-icons": "^4.11.0",
     "d2l-fetch-auth": "brightspace/d2l-fetch-auth#^0.9.0",
+    "d2l-localize-behavior": "^1.1.1",
     "lil-uuid": "^0.1.1"
   },
   "devDependencies": {
