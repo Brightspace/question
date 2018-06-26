@@ -2,6 +2,8 @@
 <link rel="import" href="./d2l-quiz-question-hint.html">
 <link rel="import" href="../../d2l-icons/d2l-icon.html">
 <link rel="import" href="../../d2l-icons/tier1-icons.html">
+<link rel="import" href="../../d2l-button/d2l-button.html">
+<link rel="import" href="../localize-behavior.html">
 
 <!--
 'd2l-quiz-question-short-answer'
@@ -79,14 +81,14 @@
 				<template is="dom-if" if="[[__isEqualTo(questionData.answers.length, 1)]]">
 					<div>
 						<textarea class="text-area single-row-text-area" rows="1" style$="width:[[__convertColsToPx(questionData.answers.first.cols, true)]];"></textarea>
-						<d2l-icon class="spell-check" icon="d2l-tier1:spellcheck"></d2l-icon>
+						<d2l-button-icon icon="d2l-tier1:spellcheck" class="spell-check" text=[[localize('spell_check')]]></d2l-button-icon>
 					</div>
 				</template>
 				<template is="dom-if" if="[[__isGreaterThan(questionData.answers.length, 1)]]">
 					<template is="dom-repeat" items="[[questionData.answers]]">
 						<div class="blank">
-							<label>Blank # [[__displayIndex(index)]]</label> <textarea class="text-area" rows="[[item.rows]]" style$="width:[[__convertColsToPx(item.cols, false)]];"></textarea>
-							<d2l-icon class="spell-check" icon="d2l-tier1:spellcheck"></d2l-icon>
+							<label>[[localize('blank')]] [[__displayIndex(index)]]</label> <textarea class="text-area" rows="[[item.rows]]" style$="width:[[__convertColsToPx(item.cols, false)]];"></textarea>
+							<d2l-button-icon icon="d2l-tier1:spellcheck" class="spell-check" text=[[localize('spell_check')]]></d2l-button-icon>
 						</div>
 					</template>
 				</template>
@@ -98,7 +100,7 @@
 	</template>
 
 	<script>
-		class D2LQuizQuestionShortAnswer extends Polymer.Element {
+		class D2LQuizQuestionShortAnswer extends Polymer.mixinBehaviors(D2L.PolymerBehaviors.D2LQuestion.LocalizeBehavior, Polymer.Element) {
 			static get is() {
 				return "d2l-quiz-question-short-answer";
 			}
@@ -134,10 +136,10 @@
 				const desiredWidth = cols == 20 ? 169 : cols == 40 ? 309 : cols == 60 ? 449 : cols * 6.38;
 				let actualWidth;
 				if (singleRow) {
-					actualWidth = (desiredWidth + 30 > maxWidth ? maxWidth - 30 : desiredWidth) + 'px';
+					actualWidth = (desiredWidth + 55 > maxWidth ? maxWidth - 55 : desiredWidth) + 'px';
 				}
 				else {
-					actualWidth = (desiredWidth + 120 > maxWidth ? maxWidth - 120 : desiredWidth) + 'px';
+					actualWidth = (desiredWidth + 145 > maxWidth ? maxWidth - 145 : desiredWidth) + 'px';
 				}
 
 				return actualWidth;
