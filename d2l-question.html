@@ -85,7 +85,7 @@ Polymer-based web component for D2L questions
 					}
 
 					switch (questionData.properties.question.extension.questionType) {
-						case QuestionTypeEnum.TRUE_FALSE.value:
+						case QuestionTypeEnum.TRUE_FALSE.value: {
 							question.bodyText = questionData.properties.question.choiceInteraction.prompt;
 							question.choices = [{text: 'True'}, {text: 'False'}];
 
@@ -101,6 +101,7 @@ Polymer-based web component for D2L questions
 							element.setAttribute('question-data', JSON.stringify(question));
 							this.shadowRoot.appendChild(element);
 							break;
+						}
 
 						case QuestionTypeEnum.MULTIPLE_CHOICE.value: {
 							question.bodyText = questionData.properties.question.choiceInteraction.prompt;
@@ -218,7 +219,7 @@ Polymer-based web component for D2L questions
 							break;
 						}
 
-						case QuestionTypeEnum.ORDERING.value: {						
+						case QuestionTypeEnum.ORDERING.value: {
 							const element = document.createElement('d2l-quiz-question-not-supported');
 							element.setAttribute('question-type', this.localize(QuestionTypeEnum.ORDERING.string));
 							this.shadowRoot.appendChild(element);

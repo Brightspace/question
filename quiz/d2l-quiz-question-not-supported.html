@@ -51,8 +51,8 @@
 	        		questionType: {
 	          			type: String,
 	          			readOnly: false,
-	          			observer: '__displayMessage',
-			  			value: ''
+	          			observer: '__displayMessage'
+			  			//value: ''
 	        		}
 	      		}
 	    	}
@@ -66,7 +66,7 @@
 					this.shadowRoot.querySelector('#d2l-quiz-question-not-supported-message').textContent = this.localize('preview_not_supported', 'questionType', this.questionType);					
 				}
 				else {
-					this.shadowRoot.querySelector('#d2l-quiz-question-not-supported-message').textContent = this.localize('preview_not_supported', 'questionType', 'this question type');	
+					this.shadowRoot.querySelector('#d2l-quiz-question-not-supported-message').textContent = this.localize('preview_not_supported_generic');	
 				}
 			}
 		}
