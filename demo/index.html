@@ -8,10 +8,9 @@
 		<link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
 		<link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
 		<link rel="import" href="../../d2l-typography/d2l-typography.html">
-		<link rel="import" href="../d2l-question.html">
 		<link rel="import" href="../quiz/d2l-quiz-question-not-supported.html">
 		<link rel="import" href="../quiz/d2l-quiz-question-multiple-choice.html">
-		<link rel="import" href="../quiz/d2l-quiz-question-short-answer.html">
+		<link rel="import" href="../quiz/d2l-quiz-question-short-answer.html">		
 		<custom-style>
 			<style is="custom-style" include="demo-pages-shared-styles"></style>
 		</custom-style>
@@ -27,31 +26,31 @@
 	<body unresolved class="d2l-typography">
 		<div class="vertical-section-container centered">
 
-			<h3>Simple question</h3>
+			<h3>True false question</h3>
 			<demo-snippet>
 				<template>
-					<d2l-question href="c:/workspace/tf.json"></d2l-question>
+					<d2l-quiz-question-multiple-choice question-data='{"bodyText":"I am a test question", "hint":"this is a hint", "choices":[{"text":"true"}, {"text":"false"}]}'></d2l-quiz-question-multiple-choice>
 				</template>
 			</demo-snippet>
 
 			<h3>Multiple choice question</h3>
 			<demo-snippet>
 				<template>
-					<d2l-quiz-question-multiple-choice></d2l-quiz-question-multiple-choice>
+					<d2l-quiz-question-multiple-choice question-data='{"bodyText":"I am a test question", "hint":"this is a hint", "enumeration":"2", "randomization":true,"choices":[{"text":"123"}, {"text":"456"}]}'></d2l-quiz-question-multiple-choice>
 				</template>
 			</demo-snippet>
 
 			<h3>Short answer question</h3>
 			<demo-snippet>
 				<template>
-					<d2l-quiz-question-short-answer></d2l-quiz-question-short-answer>
+					<d2l-quiz-question-short-answer question-data='{"bodyText":"I am a test question", "hint":"this is a hint", "answers":[{"rows":1, "cols":20},{"rows":1, "cols":20},{"rows":1, "cols":20}]}'></d2l-quiz-question-short-answer>
 				</template>
 			</demo-snippet>
 
 			<h3>Not supported question</h3>
 			<demo-snippet>
 				<template>
-					<d2l-quiz-question-not-supported></d2l-quiz-question-not-supported>
+					<d2l-quiz-question-not-supported question-type="Ordering"></d2l-quiz-question-not-supported>
 				</template>
 			</demo-snippet>
 
