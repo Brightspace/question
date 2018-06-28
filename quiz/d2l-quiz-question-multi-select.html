@@ -129,7 +129,7 @@
 		<div id="d2l-quiz-question">
 			<div id="d2l-quiz-question-body" inner-h-t-m-l="[[questionData.bodyText]]" tabindex="0"></div>
 			<div>
-				<template is="dom-repeat" items="[[_choices]]">
+				<template is="dom-repeat" items="[[__getChoices(questionData.choices, questionData.randomization)]]">
 					<label class="choice">
 						<div class="check-box-container">
 							<input type="checkbox" class="check-box" value="[[item.text]]"/>
@@ -161,11 +161,6 @@
 	          			type: Object,
 	          			readOnly: false
 			  			//value: () => { return {'bodyText':'I am a test question', 'hint':'this is a hint', 'enumeration':'2', 'randomization':true,'choices':[{'text':'123'}, {'text':'456'}]}}
-	        		},
-
-	        		_choices: {
-	        			type: Function,
-	        			computed: "__getChoices(questionData.choices, questionData.randomization)"
 	        		}
 	      		}
 	    	}
