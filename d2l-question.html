@@ -62,6 +62,12 @@ Polymer-based web component for D2L questions
 					href: {
 						type: String,
 						observer: '_getQuestionData'
+					},
+
+					allowHint: {
+						type: Boolean,
+						readOnly: false,
+						value: false
 					}
 				};
 			}
@@ -89,7 +95,7 @@ Polymer-based web component for D2L questions
 							question.bodyText = questionData.properties.question.choiceInteraction.prompt;
 							question.choices = [{text: this.localize('true')}, {text: this.localize('false')}];
 
-							if (questionData.properties.question.modalFeedback.hint.text && questionData.properties.config.allowHint) {
+							if (questionData.properties.question.modalFeedback.hint.text && this.allowHint) {
 								question.hint = questionData.properties.question.modalFeedback.hint.text;
 							}
 
@@ -118,7 +124,7 @@ Polymer-based web component for D2L questions
 
 							question.randomization = questionData.properties.question.choiceInteraction.shuffle;
 
-							if (questionData.properties.question.modalFeedback.hint.text && questionData.properties.config.allowHint) {
+							if (questionData.properties.question.modalFeedback.hint.text && this.allowHint) {
 								question.hint = questionData.properties.question.modalFeedback.hint.text;
 							}
 
@@ -135,7 +141,7 @@ Polymer-based web component for D2L questions
 						case QuestionTypeEnum.SHORT_ANSWER.value: {
 							question.bodyText = questionData.properties.question.interaction.prompt;
 
-							if (questionData.properties.question.modalFeedback.hint.text && questionData.properties.config.allowHint) {
+							if (questionData.properties.question.modalFeedback.hint.text && this.allowHint) {
 								question.hint = questionData.properties.question.modalFeedback.hint.text;
 							}
 
@@ -171,7 +177,7 @@ Polymer-based web component for D2L questions
 
 							question.randomization = questionData.properties.question.choiceInteraction.shuffle;
 
-							if (questionData.properties.question.modalFeedback.hint.text && questionData.properties.config.allowHint) {
+							if (questionData.properties.question.modalFeedback.hint.text && this.allowHint) {
 								question.hint = questionData.properties.question.modalFeedback.hint.text;
 							}
 
@@ -188,7 +194,7 @@ Polymer-based web component for D2L questions
 						case QuestionTypeEnum.WRITTEN_RESPONSE.value: {
 							question.bodyText = questionData.properties.question.extendedTextInteraction.prompt;
 
-							if (questionData.properties.question.modalFeedback.hint.text && questionData.properties.config.allowHint) {
+							if (questionData.properties.question.modalFeedback.hint.text && this.allowHint) {
 								question.hint = questionData.properties.question.modalFeedback.hint.text;
 							}
 
