@@ -136,10 +136,10 @@
 				const desiredWidth = cols == 20 ? 169 : cols == 40 ? 309 : cols == 60 ? 449 : cols * 6.38;
 				let actualWidth;
 				if (singleRow) {
-					actualWidth = (desiredWidth + 55 > maxWidth ? maxWidth - 55 : desiredWidth) + 'px';
+					actualWidth = (desiredWidth + 60 > maxWidth ? maxWidth - 60 : desiredWidth) + 'px';
 				}
 				else {
-					actualWidth = (desiredWidth + 145 > maxWidth ? maxWidth - 145 : desiredWidth) + 'px';
+					actualWidth = (desiredWidth + 150 > maxWidth ? maxWidth - 150 : desiredWidth) + 'px';
 				}
 
 				return actualWidth;
