@@ -150,11 +150,11 @@ Polymer-based web component for D2L questions
 							for (const prop in questionData.properties.question.textEntryInteraction.textEntries) {
 								if (questionData.properties.question.textEntryInteraction.textEntries.hasOwnProperty(prop)) {
 									const bodyItem = {};
-									if (props.text) {
-										bodyItem.type = "text";
-										bodyItem.value = props.text;
+									if (prop.text) {
+										bodyItem.type = 'text';
+										bodyItem.value = prop.text;
 									} else {
-										bodyItem.type = "blank";
+										bodyItem.type = 'blank';
 										bodyItem.cols = questionData.properties.question.response.responseItems[prop].legacyCols;
 									}
 									body.push(bodyItem);
