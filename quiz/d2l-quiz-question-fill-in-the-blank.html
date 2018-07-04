@@ -18,8 +18,8 @@
 			}
 
 			#d2l-quiz-question {
-				max-width: var(--d2l-quiz-question-short-answer-max-width-in-px, 500px);
-				width: var(--d2l-quiz-question-short-answer-max-width-in-px, 500px);
+				max-width: var(--d2l-quiz-question-fill-in-the-blank-max-width-in-px, 500px);
+				width: var(--d2l-quiz-question-fill-in-the-blank-max-width-in-px, 500px);
 			}		
 
 			#d2l-quiz-question-hint {
@@ -75,7 +75,7 @@
 						<span>[[item.value]]</span>
 					</template>
 					<template is="dom-if" if="[[__isEqualTo(item.type, 'blank')]]">
-						<textarea class="text-area" rows="1" style$="width:[[__convertColsToPx(item.cols, false)]];"></textarea>
+						<textarea class="text-area" rows="1" style$="width:[[__convertColsToPx(item.cols)]];"></textarea>
 						<d2l-button-icon icon="d2l-tier1:spellcheck" class="spell-check" text=[[localize('spell_check')]]></d2l-button-icon>
 					</template>
 				</template>
@@ -97,6 +97,7 @@
 	        		questionData: {
 	          			type: Object,
 	          			readOnly: false
+	          			//value: () => { return {"body":[{"type":"text","value":"This is some text"},{"type":"blank", "cols":20},{"type":"text","value":"and some middle text"},{"type":"blank","cols":30},{"type":"text","value":"and this is the end."}], "hint":"this is a hint"}}
 	        		}
 	      		}
 	    	}
@@ -109,17 +110,10 @@
 				return a === b;
 			}
 
-			__convertColsToPx(cols, singleRow) {
-				const maxWidth = parseInt(getComputedStyle(this).getPropertyValue('--d2l-quiz-question-short-answer-max-width-in-px'));
+			__convertColsToPx(cols) {
+				const maxWidth = parseInt(getComputedStyle(this).getPropertyValue('--d2l-quiz-question-fill-in-the-blank-max-width-in-px'));
 				const desiredWidth = cols == 20 ? 169 : cols == 40 ? 309 : cols == 60 ? 449 : cols * 6.38;
-				let actualWidth;
-				if (singleRow) {
-					actualWidth = (desiredWidth + 60 > maxWidth ? maxWidth - 60 : desiredWidth) + 'px';
-				}
-				else {
-					actualWidth = (desiredWidth + 150 > maxWidth ? maxWidth - 150 : desiredWidth) + 'px';
-				}
-
+				let actualWidth = (desiredWidth + 60 > maxWidth ? maxWidth - 60 : desiredWidth) + 'px';
 				return actualWidth;
 			}
 		}
