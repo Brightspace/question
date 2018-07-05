@@ -26,6 +26,10 @@
 				margin: 1rem 0 0 0;
 			}
 
+			.text-group {
+				display: inline-block;
+			}
+
 			.text-area {
 				background-color: #fff;
 				border-radius: 0.3rem;
@@ -59,13 +63,14 @@
   				padding: calc(0.4rem - 1px) calc(0.75rem - 1px);
 			}
 
+			.spell-check {
+				margin-right: 0.3rem;
+			}
+
 			.hint-spacing {
 				margin-top: 0.5rem;
 			}
 
-			.spell-check {
-				margin-right: 0.3rem;
-			}
 		</style>
 
 		<div id="d2l-quiz-question">		
@@ -75,8 +80,10 @@
 						<span>[[item.value]]</span>
 					</template>
 					<template is="dom-if" if="[[__isEqualTo(item.type, 'blank')]]">
-						<textarea class="text-area" rows="1" style$="width:[[__convertColsToPx(item.cols)]];"></textarea>
-						<d2l-button-icon icon="d2l-tier1:spellcheck" class="spell-check" text=[[localize('spell_check')]]></d2l-button-icon>
+						<div class="text-group">
+							<textarea class="text-area" rows="1" style$="width:[[__convertColsToPx(item.cols)]];"></textarea>
+							<d2l-button-icon icon="d2l-tier1:spellcheck" class="spell-check" text=[[localize('spell_check')]]></d2l-button-icon>
+						</div>
 					</template>
 				</template>
 			</div>
