@@ -83,7 +83,7 @@ Polymer-based web component for D2L questions
 					if (childNodes) {
 						for (let i = 0; i < childNodes.length; i++) {
 							if (childNodes[i].nodeName === 'D2L-QUIZ-QUESTION-MULTIPLE-CHOICE' ||
-								childNodes[i].nodeName === 'D2L-QUIZ-QUESTION-FILL-IN-BLANKS' ||
+								childNodes[i].nodeName === 'D2L-QUIZ-QUESTION-FILL-IN-THE-BLANK' ||
 								childNodes[i].nodeName === 'D2L-QUIZ-QUESTION-SHORT-ANSWER' ||
 								childNodes[i].nodeName === 'D2L-QUIZ-QUESTION-MULTI-SELECT' ||
 								childNodes[i].nodeName === 'D2L-QUIZ-QUESTION-WRITTEN-RESPONSE' ||
@@ -150,19 +150,20 @@ Polymer-based web component for D2L questions
 							const body = [];
 							for (const prop in questionData.properties.question.textEntryInteraction.textEntries) {
 								if (questionData.properties.question.textEntryInteraction.textEntries.hasOwnProperty(prop)) {
+									var i = 0;
 									const bodyItem = {};
-									if (prop.text) {
+									if (questionData.properties.question.textEntryInteraction.textEntries[prop].text) {
 										bodyItem.type = 'text';
-										bodyItem.value = prop.text;
+										bodyItem.value = questionData.properties.question.textEntryInteraction.textEntries[prop].text;
 									} else {
 										bodyItem.type = 'blank';
-										bodyItem.cols = questionData.properties.question.response.responseItems[prop].legacyCols;
+										bodyItem.cols = questionData.properties.question.response.responseItems[i].legacyCols;
+										i++;
 									}
 									body.push(bodyItem);
 								}
 							}
 							question.body = body;
-
 							const element = document.createElement('d2l-quiz-question-fill-in-the-blank');
 							element.setAttribute('question-data', JSON.stringify(question));
 							this.shadowRoot.appendChild(element);
