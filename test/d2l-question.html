@@ -8,7 +8,9 @@
 		<script src="../../web-component-tester/browser.js"></script>
 		<script src="./fixtures/tf_question.js"></script>
 		<script src="./fixtures/mc_question.js"></script>
+		<script src="./fixtures/ms_question.js"></script>
 		<script src="./fixtures/sa_question.js"></script>
+		<script src="./fixtures/fib_question.js"></script>
 		<link rel="import" href="../d2l-question.html">
 	</head>
 	<body>
@@ -55,6 +57,19 @@
 						}, 1000);
 					});
 
+					it('should fetch and display multi select question', function() {
+						var question = fixture('basic');
+						sinon.stub(question, '_fetchEntity');
+						var promise = Promise.resolve(ms_question); // eslint-disable-line
+						question._fetchEntity.returns(promise);
+						question.setAttribute('href', '/d2l/fetch/multi_select');
+
+						window.setTimeout(function() {
+							expect(question.shadowRoot.querySelector('d2l-quiz-question-multi-select').tagName).to.equal('D2L-QUIZ-QUESTION-MULTI-SELECT');
+							expect(question.shadowRoot.querySelector('d2l-quiz-question-multi-select').getAttribute('question-data')).to.equal('{"bodyText":"<p>Multi Select</p>","choices":[{"text":"<p>A</p>"},{"text":"<p>B</p>"},{"text":"<p>C</p>"},{"text":"<p>D</p>"}],"randomization":true,"hint":"<p>Hint</p>","enumeration":4}');
+						}, 1000);
+					});
+
 					it('should fetch and display short answer question', function() {
 						var question = fixture('basic');
 						sinon.stub(question, '_fetchEntity');
@@ -65,6 +80,19 @@
 						window.setTimeout(function() {
 							expect(question.shadowRoot.querySelector('d2l-quiz-question-short-answer').tagName).to.equal('D2L-QUIZ-QUESTION-SHORT-ANSWER');
 							expect(question.shadowRoot.querySelector('d2l-quiz-question-short-answer').getAttribute('question-data')).to.equal('{"bodyText":"<p>Short Answer</p>","answers":[{},{}]}');
+						}, 1000);
+					});
+
+					it('should fetch and display fill in the blank question', function() {
+						var question = fixture('basic');
+						sinon.stub(question, '_fetchEntity');
+						var promise = Promise.resolve(fib_question); // eslint-disable-line
+						question._fetchEntity.returns(promise);
+						question.setAttribute('href', '/d2l/fetch/fill_in_blanks');
+
+						window.setTimeout(function() {
+							expect(question.shadowRoot.querySelector('d2l-quiz-question-fill-in-the-blank').tagName).to.equal('D2L-QUIZ-QUESTION-FILL-IN-BLANKS');
+							expect(question.shadowRoot.querySelector('d2l-quiz-question-fill-in-the-blank').getAttribute('question-data')).to.equal('{"body":[{"type":"text","value":"This is some text"},{"type":"blank", "cols":20}]');
 						}, 1000);
 					});
 				});

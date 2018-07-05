@@ -6,6 +6,7 @@
 <link rel="import" href="../d2l-fetch-auth/d2l-fetch-auth-framed.html">
 <link rel="import" href="./quiz/d2l-quiz-question-multiple-choice.html">
 <link rel="import" href="./quiz/d2l-quiz-question-short-answer.html">
+<link rel="import" href="./quiz/d2l-quiz-question-fill-in-the-blank.html">
 <link rel="import" href="./quiz/d2l-quiz-question-multi-select.html">
 <link rel="import" href="./quiz/d2l-quiz-question-written-response.html">
 <link rel="import" href="./quiz/d2l-quiz-question-not-supported.html">
@@ -25,6 +26,7 @@ Polymer-based web component for D2L questions
         display: block;
         --d2l-quiz-question-written-response-max-width-in-px: var(--d2l-question-max-width, 500px);
         --d2l-quiz-question-short-answer-max-width-in-px: var(--d2l-question-max-width, 500px);
+        --d2l-quiz-question-fill-in-the-blank-max-width-in-px: var(--d2l-question-max-width, 500px);
       }
     </style>
   </template>
@@ -81,6 +83,7 @@ Polymer-based web component for D2L questions
 					if (childNodes) {
 						for (let i = 0; i < childNodes.length; i++) {
 							if (childNodes[i].nodeName === 'D2L-QUIZ-QUESTION-MULTIPLE-CHOICE' ||
+								childNodes[i].nodeName === 'D2L-QUIZ-QUESTION-FILL-IN-BLANKS' ||
 								childNodes[i].nodeName === 'D2L-QUIZ-QUESTION-SHORT-ANSWER' ||
 								childNodes[i].nodeName === 'D2L-QUIZ-QUESTION-MULTI-SELECT' ||
 								childNodes[i].nodeName === 'D2L-QUIZ-QUESTION-WRITTEN-RESPONSE' ||
@@ -133,6 +136,34 @@ Polymer-based web component for D2L questions
 							}
 
 							const element = document.createElement('d2l-quiz-question-multiple-choice');
+							element.setAttribute('question-data', JSON.stringify(question));
+							this.shadowRoot.appendChild(element);
+							break;
+						}
+
+						case QuestionTypeEnum.FILL_IN_BLANKS.value: {
+
+							if (questionData.properties.question.modalFeedback.hint.text && this.allowHint) {
+								question.hint = questionData.properties.question.modalFeedback.hint.text;
+							}
+
+							const body = [];
+							for (const prop in questionData.properties.question.textEntryInteraction.textEntries) {
+								if (questionData.properties.question.textEntryInteraction.textEntries.hasOwnProperty(prop)) {
+									const bodyItem = {};
+									if (prop.text) {
+										bodyItem.type = 'text';
+										bodyItem.value = prop.text;
+									} else {
+										bodyItem.type = 'blank';
+										bodyItem.cols = questionData.properties.question.response.responseItems[prop].legacyCols;
+									}
+									body.push(bodyItem);
+								}
+							}
+							question.body = body;
+
+							const element = document.createElement('d2l-quiz-question-fill-in-the-blank');
 							element.setAttribute('question-data', JSON.stringify(question));
 							this.shadowRoot.appendChild(element);
 							break;
@@ -207,13 +238,6 @@ Polymer-based web component for D2L questions
 							const element = document.createElement('d2l-quiz-question-written-response');
 							element.setAttribute('question-data', JSON.stringify(question));
 							element.setAttribute('config-data', JSON.stringify(config));
-							this.shadowRoot.appendChild(element);
-							break;
-						}
-
-						case QuestionTypeEnum.FILL_IN_BLANKS.value: {
-							const element = document.createElement('d2l-quiz-question-not-supported');
-							element.setAttribute('question-type', this.localize(QuestionTypeEnum.FILL_IN_BLANKS.string));
 							this.shadowRoot.appendChild(element);
 							break;
 						}

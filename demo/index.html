@@ -10,7 +10,9 @@
 		<link rel="import" href="../../d2l-typography/d2l-typography.html">
 		<link rel="import" href="../quiz/d2l-quiz-question-not-supported.html">
 		<link rel="import" href="../quiz/d2l-quiz-question-multiple-choice.html">
-		<link rel="import" href="../quiz/d2l-quiz-question-short-answer.html">		
+		<link rel="import" href="../quiz/d2l-quiz-question-multi-select.html">
+		<link rel="import" href="../quiz/d2l-quiz-question-short-answer.html">
+		<link rel="import" href="../quiz/d2l-quiz-question-fill-in-the-blank.html">		
 		<custom-style>
 			<style is="custom-style" include="demo-pages-shared-styles"></style>
 		</custom-style>
@@ -36,7 +38,14 @@
 			<h3>Multiple choice question</h3>
 			<demo-snippet>
 				<template>
-					<d2l-quiz-question-multiple-choice question-data='{"bodyText":"I am a test question", "hint":"this is a hint", "enumeration":"2", "randomization":true,"choices":[{"text":"123"}, {"text":"456"}]}'></d2l-quiz-question-multiple-choice>
+					<d2l-quiz-question-multiple-choice question-data='{"bodyText":"I am a test question", "hint":"this is a hint", "enumeration":"2", "randomization":true,"choices":[{"text":"123"}, {"text":"456"}, {"text":"789"}]}'></d2l-quiz-question-multiple-choice>
+				</template>
+			</demo-snippet>
+
+			<h3>Multi select question</h3>
+			<demo-snippet>
+				<template>
+					<d2l-quiz-question-multi-select question-data='{"bodyText":"I am a test question", "hint":"HAHAHAHHAHA", "enumeration":"4", "randomization":true,"choices":[{"text":"Test answer 1"}, {"text":"Test answer 2"}, {"text":"Test answer 3"}]}'></d2l-quiz-question-multi-select>
 				</template>
 			</demo-snippet>
 
@@ -44,6 +53,13 @@
 			<demo-snippet>
 				<template>
 					<d2l-quiz-question-short-answer question-data='{"bodyText":"I am a test question", "hint":"this is a hint", "answers":[{"rows":1, "cols":20},{"rows":1, "cols":20},{"rows":1, "cols":20}]}'></d2l-quiz-question-short-answer>
+				</template>
+			</demo-snippet>
+
+			<h3>Fill in the blank question</h3>
+			<demo-snippet>
+				<template>
+					<d2l-quiz-question-fill-in-the-blank question-data='{"body":[{"type":"text","value":"This is some text"},{"type":"blank", "cols":20},{"type":"text","value":"and some middle text"},{"type":"blank","cols":30},{"type":"text","value":"and this is the end."}], "hint":"this is a hint"}'></d2l-quiz-question-fill-in-the-blank>
 				</template>
 			</demo-snippet>
 
