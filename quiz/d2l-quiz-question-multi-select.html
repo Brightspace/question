@@ -28,7 +28,7 @@
 
 			.choice-content-container {
 				display: inline-block;
-				width: 90%;
+				width: 85%;
 			}
 
 			.choice > .choice-content-container > div > .choice-text > * {
@@ -39,6 +39,12 @@
 				display: inline-block;
 				vertical-align: top;
 				margin-right: 0.5rem;
+			}
+
+			:host-context([dir='rtl']) .check-box-container {
+				display: inline-block;
+				vertical-align: top;
+				margin-left: 0.5rem;
 			}
 
 			.check-box {
