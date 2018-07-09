@@ -301,7 +301,7 @@ Polymer-based web component for D2L questions
 
 						default: {
 							const element = document.createElement('d2l-quiz-question-not-supported');
-							element.setAttribute('question-type', null);
+							element.setAttribute('question-type', '');
 							this.shadowRoot.appendChild(element);
 							break;
 						}
@@ -310,7 +310,7 @@ Polymer-based web component for D2L questions
 				}
 				catch (error) {
 					const element = document.createElement('d2l-quiz-question-not-supported');
-					element.setAttribute('question-type', null);
+					element.setAttribute('question-type', '');
 					this.shadowRoot.appendChild(element);
 				}
 			}
