@@ -128,26 +128,49 @@
 				width: 90%;
 			}
 
+			#d2l-quiz-question.horizontal {
+				width: max-content;
+			}
+
+			.horizontal {
+				display: inline-block;
+			}
+
+			.horizontal > .choice > .choice-content-container {
+				width: auto;
+				margin-right: 1.5rem;
+			}
+
+			.horizontal > .choice > .choice-content-container .choice-text {
+				width: auto;
+			}
+
 			#d2l-quiz-question-hint {
 				margin: 1rem 0 0 0;
 			}
 		</style>
 
-		<div id="d2l-quiz-question">
+		<div id="d2l-quiz-question" class$="[[__orientationClass(questionData.orientation)]]">
 			<div id="d2l-quiz-question-body" inner-h-t-m-l="[[questionData.bodyText]]" tabindex="0"></div>
 			<div>
-				<template is="dom-repeat" items="[[__getChoices(questionData.choices, questionData.randomization)]]">
-					<label class="choice">
-						<div class="radio-button-container">
-							<input type="radio" class="radio-button" name="[[__generateUUID()]]" value="[[item.text]]"/>
-						</div>
-						<div class="choice-content-container">											
-							<div class$="[[__enumerationType(questionData.enumeration)]]">
-								<div class="choice-text" inner-h-t-m-l=" [[item.text]]">
+				<template is="dom-if" if="[[__isDropdown(questionData.orientation)]]">
+				</template>
+				<template is="dom-if" if="[[__isNotDropdown(questionData.orientation)]]">
+					<template is="dom-repeat" items="[[__getChoices(questionData.choices, questionData.randomization)]]">
+						<div class$="[[__orientationClass(questionData.orientation)]]">
+							<label class="choice">
+								<div class="radio-button-container">
+									<input type="radio" class="radio-button" name="[[__generateUUID()]]" value="[[item.text]]"/>
 								</div>
-							</div>
+								<div class="choice-content-container">											
+									<div class$="[[__enumerationType(questionData.enumeration)]]">
+										<div class="choice-text" inner-h-t-m-l=" [[item.text]]">
+										</div>
+									</div>
+								</div>
+							</label>
 						</div>
-					</label>
+					</template>
 				</template>
 			</div>
 			<template is="dom-if" if="[[questionData.hint]]">
@@ -169,7 +192,7 @@
 	          			type: Object,
 	          			readOnly: false
 	          			//value: null
-			  			//value: () => { return {'bodyText':'I am a test question', 'hint':'this is a hint', 'enumeration':'2', 'randomization':true,'choices':[{'text':'123'}, {'text':'456'}]}}
+			  			//value: () => { return {'bodyText':'I am a test question', 'hint':'this is a hint', 'enumeration':'2', 'randomization':true, 'orientation':'Vertical', choices':[{'text':'123'}, {'text':'456'}]}}
 	        		}
 	      		}
 	    	}
@@ -214,6 +237,23 @@
 
 			__generateUUID() {		
 				return this.uuid;
+			}
+
+			__isDropdown(orientation) {
+				return orientation === 'Dropdown';
+			}
+
+			__isNotDropdown(orientation) {
+				return orientation !== 'Dropdown';
+			}
+
+			__orientationClass(orientation) {
+				if (orientation === 'Horizontal') {
+					return 'horizontal';
+				}
+				else {
+					return '';
+				}
 			}
 		}
 

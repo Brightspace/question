@@ -96,6 +96,7 @@ Polymer-based web component for D2L questions
 					switch (questionData.properties.question.extension.questionType) {
 						case QuestionTypeEnum.TRUE_FALSE.value: {
 							question.bodyText = questionData.properties.question.choiceInteraction.prompt;
+							question.orientation = questionData.properties.question.choiceInteraction.orientation;
 							question.choices = [{text: this.localize('true')}, {text: this.localize('false')}];
 
 							if (questionData.properties.question.modalFeedback.hint.text && this.allowHint) {
@@ -114,6 +115,7 @@ Polymer-based web component for D2L questions
 
 						case QuestionTypeEnum.MULTIPLE_CHOICE.value: {
 							question.bodyText = questionData.properties.question.choiceInteraction.prompt;
+							question.orientation = questionData.properties.question.choiceInteraction.orientation;
 
 							const choices = [];
 							for (const prop in questionData.properties.question.choiceInteraction.choices) {
@@ -196,6 +198,7 @@ Polymer-based web component for D2L questions
 
 						case QuestionTypeEnum.MULTI_SELECT.value: {
 							question.bodyText = questionData.properties.question.choiceInteraction.prompt;
+							question.orientation = questionData.properties.question.choiceInteraction.orientation;
 
 							const choices = [];
 							for (const prop in questionData.properties.question.choiceInteraction.choices) {
