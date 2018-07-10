@@ -26,6 +26,10 @@
 				margin: 1rem 0 0 0;
 			}
 
+			p {
+				margin-top: 0;
+			}
+
 			.text-group {
 				display: inline-block;
 			}
@@ -82,7 +86,7 @@
 			<div>
 				<template is="dom-repeat" items="[[questionData.body]]">
 					<template is="dom-if" if="[[__isEqualTo(item.type, 'text')]]">
-						<span>[[item.value]]</span>
+						<span inner-h-t-m-l="[[item.value]]"></span>
 					</template>
 					<template is="dom-if" if="[[__isEqualTo(item.type, 'blank')]]">
 						<div class="text-group">
