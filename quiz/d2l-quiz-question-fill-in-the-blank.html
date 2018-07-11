@@ -20,7 +20,7 @@
 			#d2l-quiz-question {
 				max-width: var(--d2l-quiz-question-fill-in-the-blank-max-width-in-px, 500px);
 				width: var(--d2l-quiz-question-fill-in-the-blank-max-width-in-px, 500px);
-			}		
+			}
 
 			#d2l-quiz-question-hint {
 				margin: 1rem 0 0 0;
@@ -62,7 +62,7 @@
   				outline-width: 0;
   				margin: 0.3rem 0 0.3rem 0.5rem;
   				padding: 0.4rem 0.75rem;
-  				overflow: hidden;		
+  				overflow: hidden;
 			}
 
 			.text-area:hover, .text-area:focus {
@@ -82,8 +82,9 @@
 
 		</style>
 
-		<div id="d2l-quiz-question">		
+		<div id="d2l-quiz-question">
 			<div>
+				<slot></slot>
 				<template is="dom-repeat" items="[[questionData.body]]">
 					<template is="dom-if" if="[[__isEqualTo(item.type, 'text')]]">
 						<span inner-h-t-m-l="[[item.value]]"></span>
