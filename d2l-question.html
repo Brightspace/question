@@ -146,7 +146,7 @@ Polymer-based web component for D2L questions
 							if (questionData.properties.question.modalFeedback.hint.text && this.allowHint) {
 								question.hint = questionData.properties.question.modalFeedback.hint.text;
 							}
-							
+
 							const promptImage = this._checkPromptForImage(questionData.properties.question.textEntryInteraction.prompt);
 
 							const body = [];
@@ -168,14 +168,13 @@ Polymer-based web component for D2L questions
 							question.body = body;
 							const element = document.createElement('d2l-quiz-question-fill-in-the-blank');
 							element.setAttribute('question-data', JSON.stringify(question));
-							
+
 							if (promptImage) {
 								const divElement = document.createElement('div');
 								divElement.innerHTML = promptImage;
-								console.log(divElement);
 								this.shadowRoot.appendChild(divElement);
 							}
-							
+
 							this.shadowRoot.appendChild(element);
 							break;
 						}
@@ -324,12 +323,12 @@ Polymer-based web component for D2L questions
 					this.shadowRoot.appendChild(element);
 				}
 			}
-			
+
 			_checkPromptForImage(prompt) {
 				if (prompt.indexOf('<img') > 3 || prompt.indexOf('<img') === -1) {
 					return '';
 				}
-				let endOfImage = prompt.indexOf('/>') + 2;
+				const endOfImage = prompt.indexOf('/>') + 2;
 				return prompt.substring(3, endOfImage);
 			}
 
