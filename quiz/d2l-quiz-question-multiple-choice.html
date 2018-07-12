@@ -1,5 +1,6 @@
 <link rel="import" href="../../polymer/polymer-element.html">
 <link rel="import" href="./d2l-quiz-question-hint.html">
+<link rel="import" href="../localize-behavior.html">
 <script src="../../lil-uuid/uuid.js"></script>
 
 <!--
@@ -128,26 +129,105 @@
 				width: 90%;
 			}
 
+			#d2l-quiz-question.horizontal {
+				width: max-content;
+			}
+
+			.horizontal {
+				display: inline-block;
+			}
+
+			.horizontal > .choice > .choice-content-container {
+				width: auto;
+				margin-right: 1.5rem;
+			}
+
+			.horizontal > .choice > .choice-content-container .choice-text {
+				width: auto;
+			}
+
+			select.select {
+				border-radius: 0.3rem;
+				border-style: solid;
+				box-sizing: border-box;
+				display: inline-block;
+				height: auto;
+				margin: 0;
+				vertical-align: middle;
+				width: auto;
+				transition-duration: 0.5s;
+				transition-timing-function: ease;
+				transition-property: background-color, border-color;
+				color: #565a5c;
+				font-family: inherit;
+				font-size: 0.8rem;
+				font-weight: 400;
+				letter-spacing: 0.02rem;
+				line-height: 1.2rem;
+				-webkit-appearance: none;
+				-moz-appearance: none;
+				appearance: none;
+				background-position: right center;
+				background-repeat: no-repeat;
+				background-size: contain;
+				max-height: calc(2rem + 2px);
+				background-image: url("data:image/svg+xml,%3Csvg%20width%3D%2242%22%20height%3D%2242%22%20viewBox%3D%220%200%2042%2042%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20fill%3D%22%23f2f3f5%22%20d%3D%22M0%200h42v42H0z%22%2F%3E%3Cpath%20stroke%3D%22%23d3d9e3%22%20d%3D%22M0%200v42%22%2F%3E%3Cpath%20d%3D%22M14.99%2019.582l4.95%204.95a1.5%201.5%200%200%200%202.122%200l4.95-4.95a1.5%201.5%200%200%200-2.122-2.122L21%2021.35l-3.888-3.89a1.5%201.5%200%200%200-2.12%202.122z%22%20fill%3D%22%23565A5C%22%2F%3E%3C%2Fsvg%3E");
+				padding-right: calc(0.75rem + 42px);
+				max-width: calc(100vw - 80px);
+				min-width: 11.5rem;
+			}
+
+			select.select, select.select:hover:disabled {
+				background-color: #fff;
+				border-color: #d3d9e3;
+				border-width: 1px;
+				box-shadow: inset 0 2px 0 0 rgba(185, 194, 208, 0.2);
+				padding: 0.4rem 0.75rem;
+			}
+
+			select.select:hover, select.select:focus  {
+				border-color: #006fbf;
+				border-width: 2px;
+				outline-width: 0;
+				padding: calc(0.4rem - 1px) calc(0.75rem - 1px);
+			}
+
+			select.select option {
+				font-weight: 400;
+			}
+
 			#d2l-quiz-question-hint {
 				margin: 1rem 0 0 0;
 			}
 		</style>
 
-		<div id="d2l-quiz-question">
+		<div id="d2l-quiz-question" class$="[[__orientationClass(questionData.orientation)]]">
 			<div id="d2l-quiz-question-body" inner-h-t-m-l="[[questionData.bodyText]]" tabindex="0"></div>
 			<div>
-				<template is="dom-repeat" items="[[__getChoices(questionData.choices, questionData.randomization)]]">
-					<label class="choice">
-						<div class="radio-button-container">
-							<input type="radio" class="radio-button" name="[[__generateUUID()]]" value="[[item.text]]"/>
-						</div>
-						<div class="choice-content-container">											
-							<div class$="[[__enumerationType(questionData.enumeration)]]">
-								<div class="choice-text" inner-h-t-m-l=" [[item.text]]">
+				<template is="dom-if" if="[[__isDropdown(questionData.orientation)]]">
+					<select class="select">
+						<option>[[localize('select_option')]]</option>
+						<template is="dom-repeat" items="[[__getChoices(questionData.choices, questionData.randomization)]]">
+							<option inner-h-t-m-l="[[item.text]]"></option>
+						</template>
+					</select>
+				</template>
+				<template is="dom-if" if="[[__isNotDropdown(questionData.orientation)]]">
+					<template is="dom-repeat" items="[[__getChoices(questionData.choices, questionData.randomization)]]">
+						<div class$="[[__orientationClass(questionData.orientation)]]">
+							<label class="choice">
+								<div class="radio-button-container">
+									<input type="radio" class="radio-button" name="[[__generateUUID()]]" value="[[item.text]]"/>
 								</div>
-							</div>
+								<div class="choice-content-container">											
+									<div class$="[[__enumerationType(questionData.enumeration)]]">
+										<div class="choice-text" inner-h-t-m-l=" [[item.text]]">
+										</div>
+									</div>
+								</div>
+							</label>
 						</div>
-					</label>
+					</template>
 				</template>
 			</div>
 			<template is="dom-if" if="[[questionData.hint]]">
@@ -157,7 +237,7 @@
 	</template>
 
 	<script>
-		class D2LQuizQuestionMultipleChoice extends Polymer.Element {
+		class D2LQuizQuestionMultipleChoice extends Polymer.mixinBehaviors(D2L.PolymerBehaviors.D2LQuestion.LocalizeBehavior, Polymer.Element) {
 
 			static get is() {
 				return "d2l-quiz-question-multiple-choice";
@@ -169,7 +249,7 @@
 	          			type: Object,
 	          			readOnly: false
 	          			//value: null
-			  			//value: () => { return {'bodyText':'I am a test question', 'hint':'this is a hint', 'enumeration':'2', 'randomization':true,'choices':[{'text':'123'}, {'text':'456'}]}}
+			  			//value: () => { return {'bodyText':'I am a test question', 'hint':'this is a hint', 'enumeration':'2', 'randomization':true, 'orientation':'Vertical', choices':[{'text':'123'}, {'text':'456'}]}}
 	        		}
 	      		}
 	    	}
@@ -214,6 +294,23 @@
 
 			__generateUUID() {		
 				return this.uuid;
+			}
+
+			__isDropdown(orientation) {
+				return orientation === 'Dropdown';
+			}
+
+			__isNotDropdown(orientation) {
+				return orientation !== 'Dropdown';
+			}
+
+			__orientationClass(orientation) {
+				if (orientation === 'Horizontal') {
+					return 'horizontal';
+				}
+				else {
+					return '';
+				}
 			}
 		}
 
