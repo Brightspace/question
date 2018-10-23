@@ -238,6 +238,10 @@ Polymer-based web component for D2L questions
 						case QuestionTypeEnum.WRITTEN_RESPONSE.value: {
 							question.bodyText = questionData.properties.question.extendedTextInteraction.prompt;
 
+							if (questionData.properties.question.extendedTextInteraction.initialText) {
+								question.initialText = questionData.properties.question.extendedTextInteraction.initialText;
+							}
+
 							if (questionData.properties.question.modalFeedback.hint.text && this.allowHint) {
 								question.hint = questionData.properties.question.modalFeedback.hint.text;
 							}
