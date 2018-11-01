@@ -12,6 +12,7 @@
 		<link rel="import" href="../quiz/d2l-quiz-question-multiple-choice.html">
 		<link rel="import" href="../quiz/d2l-quiz-question-multi-select.html">
 		<link rel="import" href="../quiz/d2l-quiz-question-short-answer.html">
+		<link rel="import" href="../quiz/d2l-quiz-question-written-response.html">
 		<link rel="import" href="../quiz/d2l-quiz-question-fill-in-the-blank.html">		
 		<custom-style>
 			<style is="custom-style" include="demo-pages-shared-styles"></style>
@@ -53,6 +54,14 @@
 			<demo-snippet>
 				<template>
 					<d2l-quiz-question-short-answer question-data='{"bodyText":"I am a test question", "hint":"this is a hint", "answers":[{"rows":1, "cols":20},{"rows":1, "cols":20},{"rows":1, "cols":20}]}'></d2l-quiz-question-short-answer>
+				</template>
+			</demo-snippet>
+
+			<h3>Written response question</h3>
+			<demo-snippet>
+				<template>
+					<d2l-quiz-question-written-response question-data='{"bodyText":"I am a test question", "hint":"this is a hint", "answer":null, "initialText":"how now brown cow"}'
+					config-data='{"rows":1, "cols":100}'></d2l-quiz-question-written-response>
 				</template>
 			</demo-snippet>
 

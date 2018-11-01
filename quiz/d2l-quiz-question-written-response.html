@@ -1,7 +1,9 @@
 <link rel="import" href="../../polymer/polymer-element.html">
 <link rel="import" href="./d2l-quiz-question-hint.html">
+<link rel="import" href="../../d2l-html-editor/d2l-html-editor.html">
 <link rel="import" href="../../d2l-icons/d2l-icon.html">
 <link rel="import" href="../../d2l-icons/tier1-icons.html">
+<link rel="import" href="../../d2l-inputs/d2l-input-shared-styles.html">
 <link rel="import" href="../../d2l-button/d2l-button-icon.html">
 <link rel="import" href="../localize-behavior.html">
 
@@ -73,11 +75,41 @@
 				outline-width: 0;
 				padding: calc(0.4rem - 1px) calc(0.75rem - 1px);
 			}
+
+			.d2l-richtext-editor-container {
+				transition-duration: 0s;
+				@apply --d2l-input;
+				@apply --d2l-input-textarea;
+			}
+
+			.d2l-richtext-editor-container, body.d2l-richtext-editor-body {
+				margin-top: 0;
+				margin-bottom: 0;
+			}
 		</style>
 
 		<div id="d2l-quiz-question">
 			<div id="d2l-quiz-question-body" inner-h-t-m-l="[[questionData.bodyText]]" tabindex="0"></div>		
 			<div id="editor-container"></div>
+			<template is="dom-if" if="[[questionData.initialText]]">
+				<d2l-html-editor
+					editor-id="written-response-html-editor"
+				    app-root="http://vlx2-vkarras:3000/app/bower_components/root/"
+				    lang-tag="en-us"
+				    min-rows="1"
+					max-rows="1000"
+					inline="1"
+				    content="show this text in editor on load"
+				     toolbar="bold italic bullist d2l_isf">
+				    <div id$="written-response-html-editor-toolbar" hidden class="toolbar"></div>
+					<div id$="toolbar-shortcut-written-response-html-editor" hidden></div>
+				    <div
+				        class='d2l-richtext-editor-container'
+				        id="written-response-html-editor"
+				        role="textbox">
+				    </div>
+				</d2l-html-editor>
+			</template>
 			<template is="dom-if" if="[[__isTextEditor(configData.htmlEditorUrl)]]">
 				<d2l-button-icon icon="d2l-tier1:spellcheck" class="spell-check" text=[[localize('spell_check')]]></d2l-button-icon>
 			</template>
@@ -117,16 +149,18 @@
 			_config() {
 				const maxWidth = parseInt(getComputedStyle(this).getPropertyValue('--d2l-quiz-question-written-response-max-width-in-px'));
 				if(this.configData.htmlEditorUrl) {
-					const editorWidth = this.__getParameterByName('width', this.configData.htmlEditorUrl);				
-					const actualWidth = editorWidth > maxWidth ? maxWidth : editorWidth;
-					const editor = document.createElement('iframe');					
-					editor.setAttribute('scrolling', 'no');
-					editor.classList.add('html-editor');
-					const editorContainer = this.shadowRoot.querySelector('#editor-container').appendChild(editor);
-					editor.width = actualWidth + 2;
-					editor.height = +this.__getParameterByName('height', this.configData.htmlEditorUrl) + +30;
-					const url = this.configData.htmlEditorUrl.replace('width=' + editorWidth, 'width=' + actualWidth);
-					editor.src = url;
+					if (!this.questionData.initialText) {
+						const editorWidth = this.__getParameterByName('width', this.configData.htmlEditorUrl);				
+						const actualWidth = editorWidth > maxWidth ? maxWidth : editorWidth;
+						const editor = document.createElement('iframe');					
+						editor.setAttribute('scrolling', 'no');
+						editor.classList.add('html-editor');
+						const editorContainer = this.shadowRoot.querySelector('#editor-container').appendChild(editor);
+						editor.width = actualWidth + 2;
+						editor.height = +this.__getParameterByName('height', this.configData.htmlEditorUrl) + +30;
+						const url = this.configData.htmlEditorUrl.replace('width=' + editorWidth, 'width=' + actualWidth);
+						editor.src = url;
+					}
 				}
 				else {
 					const cols = this.configData.cols;
