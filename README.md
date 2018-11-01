@@ -31,7 +31,7 @@ To start a [local web server](https://www.polymer-project.org/2.0/docs/tools/pol
 polymer serve
 ```
 
-To access demo page, type http://127.0.0.1:8081/components/d2l-question/test/ in browser
+To access demo page, type http://127.0.0.1:8081/components/d2l-question/demo/ in browser
 
 To lint ([eslint](http://eslint.org/) and [Polymer lint](https://www.polymer-project.org/2.0/docs/tools/polymer-cli-commands#lint)):
 
