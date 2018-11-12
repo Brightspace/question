@@ -136,6 +136,9 @@
 					textArea.classList.add('text-area');
 					textArea.setAttribute('rows', this.configData.rows);
 					textArea.style.width = (actualWidth - 55) + 'px';					
+					if (this.questionData.initialText) {
+						textArea.value = this.questionData.initialText;
+					}
 					const editorContainer = this.shadowRoot.querySelector('#editor-container').appendChild(textArea);					
 				}
 			}
