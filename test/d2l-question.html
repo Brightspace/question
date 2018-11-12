@@ -11,6 +11,10 @@
 		<script src="./fixtures/ms_question.js"></script>
 		<script src="./fixtures/sa_question.js"></script>
 		<script src="./fixtures/fib_question.js"></script>
+
+		<script src="../node_modules/attest/attest.js"></script>
+		<script src="./ally-test-script.js"></script>
+
 		<link rel="import" href="../d2l-question.html">
 	</head>
 	<body>
@@ -94,6 +98,18 @@
 							expect(question.shadowRoot.querySelector('d2l-quiz-question-fill-in-the-blank').tagName).to.equal('D2L-QUIZ-QUESTION-FILL-IN-BLANKS');
 							expect(question.shadowRoot.querySelector('d2l-quiz-question-fill-in-the-blank').getAttribute('question-data')).to.equal('{"body":[{"type":"text","value":"This is some text"},{"type":"blank", "cols":20}]');
 						}, 1000);
+					});
+				});
+
+				describe('Ally Test', function() {
+					before(function() {
+						if (!isAttestInstalled()) {
+							this.skip();
+						}
+					});
+
+					it('should pass d2l-question ally checks', function() {
+						return ally_tests();
 					});
 				});
 			});
