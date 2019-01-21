@@ -4,70 +4,99 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 		<title>d2l-question demo</title>
-		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-		<link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-		<link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-		<link rel="import" href="../../d2l-typography/d2l-typography.html">
-		<link rel="import" href="../quiz/d2l-quiz-question-not-supported.html">
-		<link rel="import" href="../quiz/d2l-quiz-question-multiple-choice.html">
-		<link rel="import" href="../quiz/d2l-quiz-question-multi-select.html">
-		<link rel="import" href="../quiz/d2l-quiz-question-short-answer.html">
-		<link rel="import" href="../quiz/d2l-quiz-question-fill-in-the-blank.html">
-		<link rel="import" href="../quiz/d2l-quiz-question-written-response.html">
-		<custom-style>
+		<script src="../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+		<script type="module" src="../../@polymer/iron-demo-helpers/demo-pages-shared-styles.js"></script>
+		<script type="module" src="../../@polymer/iron-demo-helpers/demo-snippet.js"></script>
+		<script type="module" src="../../d2l-typography/d2l-typography.js"></script>
+		<script type="module" src="../quiz/d2l-quiz-question-not-supported.js"></script>
+		<script type="module" src="../quiz/d2l-quiz-question-multiple-choice.js"></script>
+		<script type="module" src="../quiz/d2l-quiz-question-multi-select.js"></script>
+		<script type="module" src="../quiz/d2l-quiz-question-short-answer.js"></script>
+		<script type="module" src="../quiz/d2l-quiz-question-fill-in-the-blank.js"></script>
+		<script type="module" src="../quiz/d2l-quiz-question-written-response.js"></script>
+		<!-- FIXME(polymer-modulizer):
+		These imperative modules that innerHTML your HTML are
+		a hacky way to be sure that any mixins in included style
+		modules are ready before any elements that reference them are
+		instantiated, otherwise the CSS @apply mixin polyfill won't be
+		able to expand the underlying CSS custom properties.
+		See: https://github.com/Polymer/polymer-modulizer/issues/154
+		-->
+	<script type="module">
+const $_documentContainer = document.createElement('template');
+
+$_documentContainer.innerHTML = `<custom-style>
 			<style is="custom-style" include="demo-pages-shared-styles"></style>
-		</custom-style>
-		<custom-style include="d2l-typography">
+		</custom-style>`;
+
+document.body.appendChild($_documentContainer.content);
+</script>
+		<script type="module">
+const $_documentContainer = document.createElement('template');
+
+$_documentContainer.innerHTML = `<custom-style include="d2l-typography">
 			<style is="custom-style" include="d2l-typography"></style>
-		</custom-style>
-		<style>
+		</custom-style>`;
+
+document.body.appendChild($_documentContainer.content);
+</script>
+		<script type="module">
+const $_documentContainer = document.createElement('template');
+
+$_documentContainer.innerHTML = `<style>
 		html {
 			font-size: 20px;
 		}
-		</style>
+		</style>`;
+
+document.body.appendChild($_documentContainer.content);
+</script>
 	</head>
 	<body unresolved class="d2l-typography">
-		<div class="vertical-section-container centered">
+		<script type="module">
+const $_documentContainer = document.createElement('template');
+
+$_documentContainer.innerHTML = `<div class="vertical-section-container centered">
 
 			<h3>True false question</h3>
 			<demo-snippet>
 				<template>
-					<d2l-quiz-question-multiple-choice question-data='{"bodyText":"I am a test question", "hint":"this is a hint", "choices":[{"text":"true"}, {"text":"false"}]}'></d2l-quiz-question-multiple-choice>
+					<d2l-quiz-question-multiple-choice question-data="{&quot;bodyText&quot;:&quot;I am a test question&quot;, &quot;hint&quot;:&quot;this is a hint&quot;, &quot;choices&quot;:[{&quot;text&quot;:&quot;true&quot;}, {&quot;text&quot;:&quot;false&quot;}]}"></d2l-quiz-question-multiple-choice>
 				</template>
 			</demo-snippet>
 
 			<h3>Multiple choice question</h3>
 			<demo-snippet>
 				<template>
-					<d2l-quiz-question-multiple-choice question-data='{"bodyText":"I am a test question", "hint":"this is a hint", "enumeration":"2", "randomization":true,"choices":[{"text":"123"}, {"text":"456"}, {"text":"789"}]}'></d2l-quiz-question-multiple-choice>
+					<d2l-quiz-question-multiple-choice question-data="{&quot;bodyText&quot;:&quot;I am a test question&quot;, &quot;hint&quot;:&quot;this is a hint&quot;, &quot;enumeration&quot;:&quot;2&quot;, &quot;randomization&quot;:true,&quot;choices&quot;:[{&quot;text&quot;:&quot;123&quot;}, {&quot;text&quot;:&quot;456&quot;}, {&quot;text&quot;:&quot;789&quot;}]}"></d2l-quiz-question-multiple-choice>
 				</template>
 			</demo-snippet>
 
 			<h3>Multi select question</h3>
 			<demo-snippet>
 				<template>
-					<d2l-quiz-question-multi-select question-data='{"bodyText":"I am a test question", "hint":"HAHAHAHHAHA", "enumeration":"4", "randomization":true,"choices":[{"text":"Test answer 1"}, {"text":"Test answer 2"}, {"text":"Test answer 3"}]}'></d2l-quiz-question-multi-select>
+					<d2l-quiz-question-multi-select question-data="{&quot;bodyText&quot;:&quot;I am a test question&quot;, &quot;hint&quot;:&quot;HAHAHAHHAHA&quot;, &quot;enumeration&quot;:&quot;4&quot;, &quot;randomization&quot;:true,&quot;choices&quot;:[{&quot;text&quot;:&quot;Test answer 1&quot;}, {&quot;text&quot;:&quot;Test answer 2&quot;}, {&quot;text&quot;:&quot;Test answer 3&quot;}]}"></d2l-quiz-question-multi-select>
 				</template>
 			</demo-snippet>
 
 			<h3>Short answer question</h3>
 			<demo-snippet>
 				<template>
-					<d2l-quiz-question-short-answer question-data='{"bodyText":"I am a test question", "hint":"this is a hint", "answers":[{"rows":1, "cols":20},{"rows":1, "cols":20},{"rows":1, "cols":20}]}'></d2l-quiz-question-short-answer>
+					<d2l-quiz-question-short-answer question-data="{&quot;bodyText&quot;:&quot;I am a test question&quot;, &quot;hint&quot;:&quot;this is a hint&quot;, &quot;answers&quot;:[{&quot;rows&quot;:1, &quot;cols&quot;:20},{&quot;rows&quot;:1, &quot;cols&quot;:20},{&quot;rows&quot;:1, &quot;cols&quot;:20}]}"></d2l-quiz-question-short-answer>
 				</template>
 			</demo-snippet>
 
 			<h3>Fill in the blank question</h3>
 			<demo-snippet>
 				<template>
-					<d2l-quiz-question-fill-in-the-blank question-data='{"body":[{"type":"text","value":"This is some text"},{"type":"blank", "cols":20},{"type":"text","value":"and some middle text"},{"type":"blank","cols":30},{"type":"text","value":"and this is the end."}], "hint":"this is a hint"}'></d2l-quiz-question-fill-in-the-blank>
+					<d2l-quiz-question-fill-in-the-blank question-data="{&quot;body&quot;:[{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot;This is some text&quot;},{&quot;type&quot;:&quot;blank&quot;, &quot;cols&quot;:20},{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot;and some middle text&quot;},{&quot;type&quot;:&quot;blank&quot;,&quot;cols&quot;:30},{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot;and this is the end.&quot;}], &quot;hint&quot;:&quot;this is a hint&quot;}"></d2l-quiz-question-fill-in-the-blank>
 				</template>
 			</demo-snippet>
 
 			<h3>Written response question</h3>
 			<demo-snippet>
 				<template>
-					<d2l-quiz-question-written-response question-data='{"bodyText":"I am a test question", "hint":"this is a hint"}' config-data='{"htmlEditorUrl":null, "rows":6, "cols":60}'></d2l-quiz-question-written-response>
+					<d2l-quiz-question-written-response question-data="{&quot;bodyText&quot;:&quot;I am a test question&quot;, &quot;hint&quot;:&quot;this is a hint&quot;}" config-data="{&quot;htmlEditorUrl&quot;:null, &quot;rows&quot;:6, &quot;cols&quot;:60}"></d2l-quiz-question-written-response>
 				</template>
 			</demo-snippet>
 
@@ -78,6 +107,9 @@
 				</template>
 			</demo-snippet>
 
-		</div>
+		</div>`;
+
+document.body.appendChild($_documentContainer.content);
+</script>
 	</body>
 </html>
