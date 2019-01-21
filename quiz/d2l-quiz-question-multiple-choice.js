@@ -13,7 +13,7 @@ import './d2l-quiz-question-hint.js';
 import '../localize-behavior.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
-import 'lil-uuid/uuid.js';
+
 class D2LQuizQuestionMultipleChoice extends mixinBehaviors(D2L.PolymerBehaviors.D2LQuestion.LocalizeBehavior, PolymerElement) {
   static get template() {
 	return html`
@@ -261,7 +261,10 @@ class D2LQuizQuestionMultipleChoice extends mixinBehaviors(D2L.PolymerBehaviors.
 
   constructor() {
 	  super();
-	  this.uuid = lil.uuid();
+	  this.uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
   }
 
   __enumerationType(enumerationValue) {
@@ -317,6 +320,7 @@ class D2LQuizQuestionMultipleChoice extends mixinBehaviors(D2L.PolymerBehaviors.
 		  return '';
 	  }
   }
+
 }
 
 customElements.define(D2LQuizQuestionMultipleChoice.is, D2LQuizQuestionMultipleChoice);
