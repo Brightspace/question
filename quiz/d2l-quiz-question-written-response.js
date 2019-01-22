@@ -55,7 +55,7 @@ class D2LQuizQuestionWrittenResponse extends mixinBehaviors(D2L.PolymerBehaviors
 				border-radius: 0.3rem;
 				border-style: solid;
 				border-color: #d3d9e3;
-				  border-width: 1px;
+				border-width: 1px;
 				box-sizing: border-box;
 				box-shadow: inset 0 2px 0 0 rgba(185, 194, 208, 0.2);
 				display: inline-block;
@@ -70,8 +70,8 @@ class D2LQuizQuestionWrittenResponse extends mixinBehaviors(D2L.PolymerBehaviors
 				font-weight: 400;
 				letter-spacing: 0.02rem;
 				line-height: 1.2rem;
-				  outline-width: 0;
-				  padding: 0.4rem 0.75rem	
+				outline-width: 0;
+				padding: 0.4rem 0.75rem	
 			}
 
 			.text-area:hover, .text-area:focus {

@@ -54,8 +54,8 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 			}
 
 			.check-box {
-				  border-color: #d3d9e3;
-				  border-width: 1px;	
+				border-color: #d3d9e3;
+				border-width: 1px;	
 				border-radius: 0.3rem;
 				border-style: solid;
 				box-sizing: border-box;
@@ -78,11 +78,11 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 			}
 
 			.check-box:hover, .check-box:focus {
-				  background-color: #e6eaf0;
-				  border-color: #006fbf;
-				  border-width: 2px;
-				  outline-width: 0;
-				  padding: 0;
+				background-color: #e6eaf0;
+				border-color: #006fbf;
+				border-width: 2px;
+				outline-width: 0;
+				padding: 0;
 			}
 
 			.check-box:checked {

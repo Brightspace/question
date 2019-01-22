@@ -51,7 +51,7 @@ class D2LQuizQuestionFillInTheBlank extends mixinBehaviors(D2L.PolymerBehaviors.
 				border-radius: 0.3rem;
 				border-style: solid;
 				border-color: #d3d9e3;
-				  border-width: 1px;
+				border-width: 1px;
 				box-sizing: border-box;
 				box-shadow: inset 0 2px 0 0 rgba(185, 194, 208, 0.2);
 				display: inline-block;
@@ -66,17 +66,17 @@ class D2LQuizQuestionFillInTheBlank extends mixinBehaviors(D2L.PolymerBehaviors.
 				font-weight: 400;
 				letter-spacing: 0.02rem;
 				line-height: 1.2rem;
-				  outline-width: 0;
-				  margin: 0.3rem 0 0.3rem 0.5rem;
-				  padding: 0.4rem 0.75rem;
-				  overflow: hidden;
+				outline-width: 0;
+				margin: 0.3rem 0 0.3rem 0.5rem;
+				padding: 0.4rem 0.75rem;
+				overflow: hidden;
 			}
 
 			.text-area:hover, .text-area:focus {
-				  border-color: #006fbf;
-				  border-width: 2px;
-				  outline-width: 0;
-				  padding: calc(0.4rem - 1px) calc(0.75rem - 1px);
+				border-color: #006fbf;
+				border-width: 2px;
+				outline-width: 0;
+				padding: calc(0.4rem - 1px) calc(0.75rem - 1px);
 			}
 
 			.spell-check {
