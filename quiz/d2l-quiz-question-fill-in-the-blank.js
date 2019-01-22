@@ -1,12 +1,3 @@
-/*
-'d2l-quiz-question-fill-in-the-blank'
-
-*/
-/*
-  FIXME(polymer-modulizer): the above comments were extracted
-  from HTML and may be out of place here. Review them and
-  then delete this comment!
-*/
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 
 import './d2l-quiz-question-hint.js';
@@ -17,8 +8,8 @@ import '../localize-behavior.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 class D2LQuizQuestionFillInTheBlank extends mixinBehaviors(D2L.PolymerBehaviors.D2LQuestion.LocalizeBehavior, PolymerElement) {
-  static get template() {
-	return html`
+	static get template() {
+		return html`
 		<style>
 			:host {
 				display: block;
@@ -109,36 +100,36 @@ class D2LQuizQuestionFillInTheBlank extends mixinBehaviors(D2L.PolymerBehaviors.
 			</template>
 		</div>
 `;
-  }
+	}
 
-  static get is() {
-	  return "d2l-quiz-question-fill-in-the-blank";
-  }
+	static get is() {
+		return 'd2l-quiz-question-fill-in-the-blank';
+	}
 
-  static get properties() {
+	static get properties() {
 		return {
-		  questionData: {
+			questionData: {
 				type: Object,
 				readOnly: false
 				//value: () => { return {"body":[{"type":"text","value":"This is some text"},{"type":"blank", "cols":20},{"type":"text","value":"and some middle text"},{"type":"blank","cols":30},{"type":"text","value":"and this is the end."}], "hint":"this is a hint"}}
-		  }
-		}
-  }
+			}
+		};
+	}
 
-  constructor() {
-	  super();
-  }
+	constructor() {
+		super();
+	}
 
-  __isEqualTo(a, b) {
-	  return a === b;
-  }
+	__isEqualTo(a, b) {
+		return a === b;
+	}
 
-  __convertColsToPx(cols) {
-	  const maxWidth = parseInt(getComputedStyle(this).getPropertyValue('--d2l-quiz-question-fill-in-the-blank-max-width-in-px'));
-	  const desiredWidth = cols == 20 ? 169 : cols == 40 ? 309 : cols == 60 ? 449 : cols * 6.38;
-	  let actualWidth = (desiredWidth + 60 > maxWidth ? maxWidth - 60 : desiredWidth) + 'px';
-	  return actualWidth;
-  }
+	__convertColsToPx(cols) {
+		const maxWidth = parseInt(getComputedStyle(this).getPropertyValue('--d2l-quiz-question-fill-in-the-blank-max-width-in-px'));
+		const desiredWidth = cols === 20 ? 169 : cols === 40 ? 309 : cols === 60 ? 449 : cols * 6.38;
+		const actualWidth = (desiredWidth + 60 > maxWidth ? maxWidth - 60 : desiredWidth) + 'px';
+		return actualWidth;
+	}
 }
 
 customElements.define(D2LQuizQuestionFillInTheBlank.is, D2LQuizQuestionFillInTheBlank);

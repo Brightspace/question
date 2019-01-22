@@ -1,12 +1,3 @@
-/*
-'d2l-quiz-question-multiple-choice'
-
-*/
-/*
-  FIXME(polymer-modulizer): the above comments were extracted
-  from HTML and may be out of place here. Review them and
-  then delete this comment!
-*/
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 
 import './d2l-quiz-question-hint.js';
@@ -15,8 +6,8 @@ import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 
 class D2LQuizQuestionMultipleChoice extends mixinBehaviors(D2L.PolymerBehaviors.D2LQuestion.LocalizeBehavior, PolymerElement) {
-  static get template() {
-	return html`
+	static get template() {
+		return html`
 		<style>
 			:host {
 				display: block;
@@ -242,84 +233,84 @@ class D2LQuizQuestionMultipleChoice extends mixinBehaviors(D2L.PolymerBehaviors.
 			</template>
 		</div>
 `;
-  }
+	}
 
-  static get is() {
-	  return "d2l-quiz-question-multiple-choice";
-  }
+	static get is() {
+		return 'd2l-quiz-question-multiple-choice';
+	}
 
-  static get properties() {
+	static get properties() {
 		return {
-		  questionData: {
+			questionData: {
 				type: Object,
 				readOnly: false
 				//value: null
 				//value: () => { return {'bodyText':'I am a test question', 'hint':'this is a hint', 'enumeration':'2', 'randomization':true, 'orientation':'Vertical', choices':[{'text':'123'}, {'text':'456'}]}}
-		  }
+			}
+		};
+	}
+
+	constructor() {
+		super();
+		this.uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+			var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+			return v.toString(16);
+		});
+	}
+
+	__enumerationType(enumerationValue) {
+		if (!enumerationValue) {
+			return '';
+		} else if (enumerationValue.toString() === '1') {
+			return 'preview-counters preview-counters-decimal';
+		} else if (enumerationValue.toString() === '2') {
+			return 'preview-counters preview-counters-lower-roman';
+		} else if (enumerationValue.toString() === '3') {
+			return 'preview-counters preview-counters-upper-roman';
+		} else if (enumerationValue.toString() === '4') {
+			return 'preview-counters preview-counters-lower-alpha';
+		} else if (enumerationValue.toString() === '5') {
+			return 'preview-counters preview-counters-upper-alpha';
 		}
-  }
+	}
 
-  constructor() {
-	  super();
-	  this.uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
-        });
-  }
+	__randomizeArray(array) {
+		for (let i = array.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[array[i], array[j]] = [array[j], array[i]];
+		}
+	}
 
-  __enumerationType(enumerationValue) {
-	  if (!enumerationValue) {
-		  return '';
-	  } else if (enumerationValue.toString() === "1") {
-		  return "preview-counters preview-counters-decimal";
-	  } else if (enumerationValue.toString() === "2") {
-		  return "preview-counters preview-counters-lower-roman";
-	  } else if (enumerationValue.toString() === "3") {
-		  return "preview-counters preview-counters-upper-roman";
-	  } else if (enumerationValue.toString() === "4") {
-		  return "preview-counters preview-counters-lower-alpha";
-	  } else if (enumerationValue.toString() === "5") {
-		  return "preview-counters preview-counters-upper-alpha";
-	  }
-  }
+	__getChoices(choices, randomization) {
+		if (!randomization) {
+			return choices;
+		}
+		else {
+			this.__randomizeArray(choices);
+			return choices;
+		}
+	}
 
-  __randomizeArray(array) {
-	  for (let i = array.length - 1; i > 0; i--) {
-		  let j = Math.floor(Math.random() * (i + 1));
-		  [array[i], array[j]] = [array[j], array[i]];
-	  }
-  }
+	__generateUUID() {
+		return this.uuid;
+	}
 
-  __getChoices(choices, randomization) {
-	  if(!randomization) {
-		  return choices;
-	  }
-	  else {
-		  this.__randomizeArray(choices);
-		  return choices;
-	  }
-  }
+	__isDropdown(orientation) {
+		return orientation === 'Dropdown';
+	}
 
-  __generateUUID() {		
-	  return this.uuid;
-  }
+	__isNotDropdown(orientation) {
+		return orientation !== 'Dropdown';
+	}
 
-  __isDropdown(orientation) {
-	  return orientation === 'Dropdown';
-  }
-
-  __isNotDropdown(orientation) {
-	  return orientation !== 'Dropdown';
-  }
-
-  __orientationClass(orientation) {
-	  if (orientation === 'Horizontal') {
-		  return 'horizontal';
-	  }
-	  else {
-		  return '';
-	  }
-  }
+	__orientationClass(orientation) {
+		if (orientation === 'Horizontal') {
+			return 'horizontal';
+		}
+		else {
+			return '';
+		}
+	}
 
 }
 

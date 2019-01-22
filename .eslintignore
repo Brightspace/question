@@ -1,2 +1,3 @@
 test/acceptance/*
+test/fixtures/*
 reports

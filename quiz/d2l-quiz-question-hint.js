@@ -1,12 +1,3 @@
-/*
-'d2l-quiz-question-hint'
-
-*/
-/*
-  FIXME(polymer-modulizer): the above comments were extracted
-  from HTML and may be out of place here. Review them and
-  then delete this comment!
-*/
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 
 import 'd2l-icons/d2l-icon.js';
@@ -15,8 +6,8 @@ import '../localize-behavior.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 class D2LQuizQuestionHint extends mixinBehaviors(D2L.PolymerBehaviors.D2LQuestion.LocalizeBehavior, PolymerElement) {
-  static get template() {
-	return html`
+	static get template() {
+		return html`
 		<style>
 			:host {
 				display: block;
@@ -72,31 +63,31 @@ class D2LQuizQuestionHint extends mixinBehaviors(D2L.PolymerBehaviors.D2LQuestio
 			<p id="hint" class="hidden" tabindex="0" inner-h-t-m-l="[[hint]]"></p>
 		</div>
 `;
-  }
+	}
 
-  static get is() {
-	  return "d2l-quiz-question-hint";
-  }
+	static get is() {
+		return 'd2l-quiz-question-hint';
+	}
 
-  static get properties() {
+	static get properties() {
 		return {
-		  hint: {
+			hint: {
 				type: String,
 				readOnly: false
 				//value: ''
-		  }
-		}
-  }
+			}
+		};
+	}
 
-  constructor() {
-	  super();
-  }
+	constructor() {
+		super();
+	}
 
-  __toggle() {
-	  this.shadowRoot.querySelector("#toggle-on-hint-link").classList.toggle("hidden");
-	  this.shadowRoot.querySelector("#toggle-off-hint-link").classList.toggle("hidden");
-	  this.shadowRoot.querySelector("#hint").classList.toggle("hidden");
-  }
+	__toggle() {
+		this.shadowRoot.querySelector('#toggle-on-hint-link').classList.toggle('hidden');
+		this.shadowRoot.querySelector('#toggle-off-hint-link').classList.toggle('hidden');
+		this.shadowRoot.querySelector('#hint').classList.toggle('hidden');
+	}
 }
 
 customElements.define(D2LQuizQuestionHint.is, D2LQuizQuestionHint);

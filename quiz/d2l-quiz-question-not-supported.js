@@ -1,20 +1,11 @@
-/*
-'d2l-quiz-question-not-supported'
-
-*/
-/*
-  FIXME(polymer-modulizer): the above comments were extracted
-  from HTML and may be out of place here. Review them and
-  then delete this comment!
-*/
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 
 import '../localize-behavior.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 class D2LQuizQuestionNotSupported extends mixinBehaviors(D2L.PolymerBehaviors.D2LQuestion.LocalizeBehavior, PolymerElement) {
-  static get template() {
-	return html`
+	static get template() {
+		return html`
 		<style>
 			:host {
 				display: block;				
@@ -46,35 +37,35 @@ class D2LQuizQuestionNotSupported extends mixinBehaviors(D2L.PolymerBehaviors.D2
 			</div>
 		</div>
 `;
-  }
+	}
 
-  static get is() {
-	  return "d2l-quiz-question-not-supported";
-  }
+	static get is() {
+		return 'd2l-quiz-question-not-supported';
+	}
 
-  static get properties() {
+	static get properties() {
 		return {
-		  questionType: {
+			questionType: {
 				type: String,
 				readOnly: false,
 				observer: '__displayMessage'
 				//value: ''
-		  }
+			}
+		};
+	}
+
+	constructor() {
+		super();
+	}
+
+	__displayMessage() {
+		if (this.questionType) {
+			this.shadowRoot.querySelector('#d2l-quiz-question-not-supported-message').textContent = this.localize('preview_not_supported', 'questionType', this.questionType);
 		}
-  }
-
-  constructor() {
-	  super();
-  }
-
-  __displayMessage() {
-	  if (this.questionType) {
-		  this.shadowRoot.querySelector('#d2l-quiz-question-not-supported-message').textContent = this.localize('preview_not_supported', 'questionType', this.questionType);					
-	  }
-	  else {
-		  this.shadowRoot.querySelector('#d2l-quiz-question-not-supported-message').textContent = this.localize('preview_not_supported_generic');	
-	  }
-  }
+		else {
+			this.shadowRoot.querySelector('#d2l-quiz-question-not-supported-message').textContent = this.localize('preview_not_supported_generic');
+		}
+	}
 }
 
 customElements.define(D2LQuizQuestionNotSupported.is, D2LQuizQuestionNotSupported);

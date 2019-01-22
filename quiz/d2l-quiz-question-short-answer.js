@@ -1,12 +1,3 @@
-/*
-'d2l-quiz-question-short-answer'
-
-*/
-/*
-  FIXME(polymer-modulizer): the above comments were extracted
-  from HTML and may be out of place here. Review them and
-  then delete this comment!
-*/
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 
 import './d2l-quiz-question-hint.js';
@@ -17,8 +8,8 @@ import '../localize-behavior.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 class D2LQuizQuestionShortAnswer extends mixinBehaviors(D2L.PolymerBehaviors.D2LQuestion.LocalizeBehavior, PolymerElement) {
-  static get template() {
-	return html`
+	static get template() {
+		return html`
 		<style>
 			:host {
 				display: block;
@@ -105,51 +96,51 @@ class D2LQuizQuestionShortAnswer extends mixinBehaviors(D2L.PolymerBehaviors.D2L
 			</template>
 		</div>
 `;
-  }
+	}
 
-  static get is() {
-	  return "d2l-quiz-question-short-answer";
-  }
+	static get is() {
+		return 'd2l-quiz-question-short-answer';
+	}
 
-  static get properties() {
+	static get properties() {
 		return {
-		  questionData: {
+			questionData: {
 				type: Object,
 				readOnly: false
 				//value: () => { return {'bodyText':'I am a test question', 'hint':'this is a hint', 'answers':[{'rows':1, 'cols':20},{'rows':1, 'cols':20},{'rows':1, 'cols':20}]}}
-		  }
+			}
+		};
+	}
+
+	constructor() {
+		super();
+	}
+
+	__displayIndex(index) {
+		return index + 1;
+	}
+
+	__isEqualTo(a, b) {
+		return a === b;
+	}
+
+	__isGreaterThan(a, b) {
+		return a > b;
+	}
+
+	__convertColsToPx(cols, singleRow) {
+		const maxWidth = parseInt(getComputedStyle(this).getPropertyValue('--d2l-quiz-question-short-answer-max-width-in-px'));
+		const desiredWidth = cols === 20 ? 169 : cols === 40 ? 309 : cols === 60 ? 449 : cols * 6.38;
+		let actualWidth;
+		if (singleRow) {
+			actualWidth = (desiredWidth + 60 > maxWidth ? maxWidth - 60 : desiredWidth) + 'px';
 		}
-  }
+		else {
+			actualWidth = (desiredWidth + 150 > maxWidth ? maxWidth - 150 : desiredWidth) + 'px';
+		}
 
-  constructor() {
-	  super();
-  }
-
-  __displayIndex(index) {
-	  return index + 1;
-  }
-
-  __isEqualTo(a, b) {
-	  return a === b;
-  }
-
-  __isGreaterThan(a, b) {
-	  return a > b;
-  }
-
-  __convertColsToPx(cols, singleRow) {
-	  const maxWidth = parseInt(getComputedStyle(this).getPropertyValue('--d2l-quiz-question-short-answer-max-width-in-px'));
-	  const desiredWidth = cols == 20 ? 169 : cols == 40 ? 309 : cols == 60 ? 449 : cols * 6.38;
-	  let actualWidth;
-	  if (singleRow) {
-		  actualWidth = (desiredWidth + 60 > maxWidth ? maxWidth - 60 : desiredWidth) + 'px';
-	  }
-	  else {
-		  actualWidth = (desiredWidth + 150 > maxWidth ? maxWidth - 150 : desiredWidth) + 'px';
-	  }
-
-	  return actualWidth;
-  }
+		return actualWidth;
+	}
 }
 
 customElements.define(D2LQuizQuestionShortAnswer.is, D2LQuizQuestionShortAnswer);
