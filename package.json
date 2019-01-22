@@ -24,7 +24,9 @@
     "eslint-plugin-html": "^3.1.0",
     "polymer-cli": "^1.9.5",
     "sinon": "^2.0.0-pre",
-    "wct-browser-legacy": "^1.0.1"
+    "wct-browser-legacy": "^1.0.1",
+    "async": "^1.5.2",
+    "lodash": "^3.10.1"
   },
   "resolutions": {
     "inherits": "2.0.3",
@@ -41,6 +43,7 @@
     "d2l-fetch-siren-entity-behavior": "Brightspace/d2l-fetch-siren-entity-behavior.git#semver:^6",
     "d2l-icons": "BrightspaceUI/icons#semver:^6",
     "d2l-button": "BrightspaceUI/button#semver:^5",
-    "d2l-localize-behavior": "BrightspaceUI/localize-behavior#semver:^2"
+    "d2l-localize-behavior": "BrightspaceUI/localize-behavior#semver:^2",
+    "d2l-fetch-auth": "Brightspace/d2l-fetch-auth.git#semver:^1"
   }
 }
