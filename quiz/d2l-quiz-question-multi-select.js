@@ -25,7 +25,7 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 
 			.choice-content-container {
 				display: inline-block;
-				width: 85%;
+				width: 83%;
 			}
 
 			.choice > .choice-content-container > div > .choice-text > * {
