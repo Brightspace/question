@@ -13,7 +13,7 @@ class D2LQuizQuestionNotSupported extends mixinBehaviors(D2L.PolymerBehaviors.D2
 
 			#d2l-quiz-question-body {
 				height: 180px;
-				width: 405px;
+				width: 100%;
 				border-radius: 6px;
 				border: dotted 2px #dce1e8;
 				color: #b9c2d0;
