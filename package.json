@@ -6,7 +6,7 @@
   },
   "homepage": "https://github.com/BrightspaceUI/question",
   "name": "d2l-question",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "scripts": {
     "lint:js": "eslint . --ext .js,.html test/**/*.js test/**/*.html demo/**/*.js demo/**/*.html",
     "lint": "npm run lint:js",
