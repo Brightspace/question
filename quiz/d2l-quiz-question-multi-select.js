@@ -183,10 +183,6 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 		return 'Select ' + numExpectedAns + ' correct answer(s)';
 	}
 
-	__getFalse() {
-		return 0;
-	}
-
 	__enumerationType(enumerationValue) {
 		if (!enumerationValue) {
 			return '';
