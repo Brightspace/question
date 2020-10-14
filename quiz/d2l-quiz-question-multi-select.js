@@ -1,6 +1,7 @@
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 
 import './d2l-quiz-question-hint.js';
+import './d2l-quiz-question-cals-label.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 class D2LQuizQuestionMultiSelect extends PolymerElement {
 	static get template() {
@@ -16,13 +17,6 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 
 			#d2l-quiz-question-body {
 				margin-bottom: 0.6rem;
-			}
-			.d2l-quiz-question-label{
-				color: #6e7376;
-				font-size: .7rem;
-				font-weight: 400;
-				line-height: 1rem;
-				margin: auto;
 			}
 
 			.choice {
@@ -141,7 +135,9 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 
 		<div id='d2l-quiz-question'>
 			<div id='d2l-quiz-question-body' inner-h-t-m-l='[[questionData.bodyText]]' tabindex='0'></div>
-			<div class='d2l-quiz-question-label' inner-h-t-m-l='[[__getPromptForCALSgrading(questionData.numExpectedAns)]]' tabindex='0'></div>
+			<template is='dom-if' if='[[questionData.numExpectedAns]]'>
+				<d2l-quiz-question-cals-label label='[[__getPromptForCalsGrading(questionData.numExpectedAns)]]'></d2l-quiz-question-cals-label>
+			</template>
 			<div class='d2l-fieldset-container'>
 				<template is='dom-repeat' items='[[__getChoices(questionData.choices, questionData.randomization)]]'>
 					<label class='choice'>
@@ -180,12 +176,15 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 
 	constructor() {
 		super();
-		console.log("ms constructor");
 	}
 
-	// TODO: does this need to involve LANG TERMS?
-	__getPromptForCALSgrading(numExpectedAns) {
+	// TODO: change to LANG string
+	__getPromptForCalsGrading(numExpectedAns) {
 		return 'Select ' + numExpectedAns + ' correct answer(s)';
+	}
+
+	__getFalse() {
+		return 0;
 	}
 
 	__enumerationType(enumerationValue) {

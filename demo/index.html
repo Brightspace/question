@@ -1,20 +1,21 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
-		<title>d2l-question demo</title>
-		<script src="../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-		<script type="module" src="../../@polymer/iron-demo-helpers/demo-pages-shared-styles.js"></script>
-		<script type="module" src="../../@polymer/iron-demo-helpers/demo-snippet.js"></script>
-		<script type="module" src="../../d2l-typography/d2l-typography.js"></script>
-		<script type="module" src="../quiz/d2l-quiz-question-not-supported.js"></script>
-		<script type="module" src="../quiz/d2l-quiz-question-multiple-choice.js"></script>
-		<script type="module" src="../quiz/d2l-quiz-question-multi-select.js"></script>
-		<script type="module" src="../quiz/d2l-quiz-question-short-answer.js"></script>
-		<script type="module" src="../quiz/d2l-quiz-question-fill-in-the-blank.js"></script>
-		<script type="module" src="../quiz/d2l-quiz-question-written-response.js"></script>
-		<!-- FIXME(polymer-modulizer):
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+	<title>d2l-question demo</title>
+	<script src="../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+	<script type="module" src="../../@polymer/iron-demo-helpers/demo-pages-shared-styles.js"></script>
+	<script type="module" src="../../@polymer/iron-demo-helpers/demo-snippet.js"></script>
+	<script type="module" src="../../d2l-typography/d2l-typography.js"></script>
+	<script type="module" src="../quiz/d2l-quiz-question-not-supported.js"></script>
+	<script type="module" src="../quiz/d2l-quiz-question-multiple-choice.js"></script>
+	<script type="module" src="../quiz/d2l-quiz-question-multi-select.js"></script>
+	<script type="module" src="../quiz/d2l-quiz-question-short-answer.js"></script>
+	<script type="module" src="../quiz/d2l-quiz-question-fill-in-the-blank.js"></script>
+	<script type="module" src="../quiz/d2l-quiz-question-written-response.js"></script>
+	<!-- FIXME(polymer-modulizer):
 		These imperative modules that innerHTML your HTML are
 		a hacky way to be sure that any mixins in included style
 		modules are ready before any elements that reference them are
@@ -23,40 +24,41 @@
 		See: https://github.com/Polymer/polymer-modulizer/issues/154
 		-->
 	<script type="module">
-const $_documentContainer = document.createElement('template');
+		const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = `<custom-style>
+		$_documentContainer.innerHTML = `<custom-style>
 			<style is="custom-style" include="demo-pages-shared-styles"></style>
 		</custom-style>`;
 
-document.body.appendChild($_documentContainer.content);
-</script>
-		<script type="module">
-const $_documentContainer = document.createElement('template');
+		document.body.appendChild($_documentContainer.content);
+	</script>
+	<script type="module">
+		const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = `<custom-style include="d2l-typography">
+		$_documentContainer.innerHTML = `<custom-style include="d2l-typography">
 			<style is="custom-style" include="d2l-typography"></style>
 		</custom-style>`;
 
-document.body.appendChild($_documentContainer.content);
-</script>
-		<script type="module">
-const $_documentContainer = document.createElement('template');
+		document.body.appendChild($_documentContainer.content);
+	</script>
+	<script type="module">
+		const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = `<style>
+		$_documentContainer.innerHTML = `<style>
 		html {
 			font-size: 20px;
 		}
 		</style>`;
 
-document.body.appendChild($_documentContainer.content);
-</script>
-	</head>
-	<body unresolved class="d2l-typography">
-		<script type="module">
-const $_documentContainer = document.createElement('template');
+		document.body.appendChild($_documentContainer.content);
+	</script>
+</head>
 
-$_documentContainer.innerHTML = `<div class="vertical-section-container centered">
+<body unresolved class="d2l-typography">
+	<script type="module">
+		const $_documentContainer = document.createElement('template');
+
+		$_documentContainer.innerHTML = `<div class="vertical-section-container centered">
 
 			<h3>True false question</h3>
 			<demo-snippet>
@@ -72,10 +74,17 @@ $_documentContainer.innerHTML = `<div class="vertical-section-container centered
 				</template>
 			</demo-snippet>
 
-			<h3>Multi select question</h3>
+			<h3>Multi select question - all or nothing grading</h3>
 			<demo-snippet>
 				<template>
-					<d2l-quiz-question-multi-select question-data="{&quot;bodyText&quot;:&quot;I am a test question&quot;, &quot;hint&quot;:&quot;HAHAHAHHAHA&quot;, &quot;enumeration&quot;:&quot;4&quot;, &quot;randomization&quot;:true,&quot;choices&quot;:[{&quot;text&quot;:&quot;Test answer 1&quot;}, {&quot;text&quot;:&quot;Test answer 2&quot;}, {&quot;text&quot;:&quot;Test answer 3&quot;}], &quot;numExpectedAns&quot;:&quot;100&quot}"></d2l-quiz-question-multi-select>
+					<d2l-quiz-question-multi-select question-data="{&quot;bodyText&quot;:&quot;I am a test question&quot;, &quot;hint&quot;:&quot;HAHAHAHHAHA&quot;, &quot;enumeration&quot;:&quot;4&quot;, &quot;randomization&quot;:true,&quot;choices&quot;:[{&quot;text&quot;:&quot;Test answer 1&quot;}, {&quot;text&quot;:&quot;Test answer 2&quot;}, {&quot;text&quot;:&quot;Test answer 3&quot;}]}"></d2l-quiz-question-multi-select>
+				</template>
+			</demo-snippet>
+
+			<h3>Multi select question - CALS grading</h3>
+			<demo-snippet>
+				<template>
+					<d2l-quiz-question-multi-select question-data="{&quot;bodyText&quot;:&quot;I am a test question&quot;, &quot;hint&quot;:&quot;HAHAHAHHAHA&quot;, &quot;enumeration&quot;:&quot;4&quot;, &quot;randomization&quot;:true,&quot;choices&quot;:[{&quot;text&quot;:&quot;Test answer 1&quot;}, {&quot;text&quot;:&quot;Test answer 2&quot;}, {&quot;text&quot;:&quot;Test answer 3&quot;}], &quot;numExpectedAns&quot;:&quot;2&quot}"></d2l-quiz-question-multi-select>
 				</template>
 			</demo-snippet>
 
@@ -116,7 +125,8 @@ $_documentContainer.innerHTML = `<div class="vertical-section-container centered
 
 		</div>`;
 
-document.body.appendChild($_documentContainer.content);
-</script>
-	</body>
+		document.body.appendChild($_documentContainer.content);
+	</script>
+</body>
+
 </html>

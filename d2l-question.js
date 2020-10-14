@@ -58,7 +58,6 @@ class D2LQuestion extends mixinBehaviors([D2L.PolymerBehaviors.FetchSirenEntityB
 	constructor() {
 		super();
 		window.d2lfetch.use({ name: 'auth', fn: window.d2lfetch.auth });
-		console.log("question constructor");
 	}
 
 	static get properties() {
@@ -78,7 +77,6 @@ class D2LQuestion extends mixinBehaviors([D2L.PolymerBehaviors.FetchSirenEntityB
 
 	_appendQuestionType(questionData) {
 		try {
-			console.log(questionData);
 			const question = {};
 			const config = {};
 
@@ -215,7 +213,6 @@ class D2LQuestion extends mixinBehaviors([D2L.PolymerBehaviors.FetchSirenEntityB
 					if (questionData.properties.question.response.grading == 'right_answers_limited_selection') {
 						question.numExpectedAns = questionData.properties.question.response.responseItems[0].correctResponse.length;
 					}
-
 
 					const choices = [];
 					for (const prop in questionData.properties.question.choiceInteraction.choices) {
