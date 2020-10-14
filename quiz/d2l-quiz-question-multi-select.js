@@ -1,7 +1,6 @@
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 
 import './d2l-quiz-question-hint.js';
-import './d2l-quiz-question-cals-label.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 class D2LQuizQuestionMultiSelect extends PolymerElement {
 	static get template() {
