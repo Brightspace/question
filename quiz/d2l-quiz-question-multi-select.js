@@ -86,6 +86,10 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 				background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23565A5C%22%20d%3D%22M8.4%2016.6c.6.6%201.5.6%202.1%200l8-8c.6-.6.6-1.5%200-2.1-.6-.6-1.5-.6-2.1%200l-6.9%207-1.9-1.9c-.6-.6-1.5-.6-2.1%200-.6.6-.6%201.5%200%202.1l2.9%202.9z%22%2F%3E%3C%2Fsvg%3E');
 			}
 
+			.check-box-not-allowed {
+				cursor: not-allowed;
+			}
+
 			.d2l-fieldset-container{
 				margin-top: 0.6rem;
 			}
@@ -141,13 +145,13 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 		<div id='d2l-quiz-question'>
 			<div id='d2l-quiz-question-body' inner-h-t-m-l='[[questionData.bodyText]]' tabindex='0'></div>
 			<template is='dom-if' if='[[questionData.numExpectedAns]]'>
-				<span class='d2l-quiz-question-label' inner-h-t-m-l='[[__getPromptForCalsGrading(questionData.numExpectedAns)]]'></span>
+				<span class='d2l-quiz-question-label' inner-h-t-m-l='[[__getLabelForCalsGrading(questionData.numExpectedAns)]]'></span>
 			</template>
 			<div class='d2l-fieldset-container'>
-				<template is='dom-repeat' items='[[__getChoices(questionData.choices, questionData.randomization)]]'>
+				<template is='dom-repeat' items='[[__getChoices(questionData.choices, questionData.randomization)]]' >
 					<label class='choice'>
-						<div class='check-box-container'>
-							<input type='checkbox' class='check-box' value='[[item.text]]'>
+						<div class='check-box-container'  >
+							<input type='checkbox' class='check-box' value='[[item.text]]' on-change='__tryToggleCheckbox'>
 						</div>
 						<div class='choice-content-container'>											
 							<div class$='[[__enumerationType(questionData.enumeration)]]'>
@@ -181,11 +185,42 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 
 	constructor() {
 		super();
+		this.numExpectedAns;
 	}
 
 	// TODO: change to LANG string
-	__getPromptForCalsGrading(numExpectedAns) {
+	__getLabelForCalsGrading(numExpectedAns) {
+		this.numExpectedAns = numExpectedAns;
 		return 'Select ' + numExpectedAns + ' correct answer(s)';
+	}
+
+	__tryToggleCheckbox(e) {
+		// if checkbox is getting unchecked, reset remove check-box-not-allowed styling from all boxes
+		if (!e.target.checked) {
+			const boxes = this.shadowRoot.querySelectorAll('input[type=checkbox]');
+			for (let i = 0; i < boxes.length; i++) {
+				boxes[i].classList.remove('check-box-not-allowed');
+				boxes[i].disabled = false;
+			}
+			return;
+		}
+
+		// count number of checked boxes
+		let numChecked = 0;
+		const checkboxes = this.shadowRoot.querySelectorAll('input[type=checkbox]');
+		for (let i = 0; i < checkboxes.length; i++) {
+			if (checkboxes[i].checked) {
+				numChecked++;
+			}
+		}
+		// if limit exceeded, add check-box-not-allowed styling to unchecked boxes
+		if (numChecked >= this.numExpectedAns) {
+			const unchecked = this.shadowRoot.querySelectorAll('input[type=checkbox]:not(:checked)');
+			for (let i = 0; i < unchecked.length; i++) {
+				unchecked[i].classList.add('check-box-not-allowed');
+				unchecked[i].disabled = true;
+			}
+		}
 	}
 
 	__enumerationType(enumerationValue) {
