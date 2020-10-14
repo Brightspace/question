@@ -18,7 +18,13 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 			#d2l-quiz-question-body {
 				margin-bottom: 0.6rem;
 			}
-
+            .d2l-quiz-question-label{
+				color: #6e7376;
+				font-size: .7rem;
+				font-weight: 400;
+				line-height: 1rem;
+				margin: auto;
+			}
 			.choice {
 				display: block;
 				margin-bottom: 1rem;
@@ -136,7 +142,7 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 		<div id='d2l-quiz-question'>
 			<div id='d2l-quiz-question-body' inner-h-t-m-l='[[questionData.bodyText]]' tabindex='0'></div>
 			<template is='dom-if' if='[[questionData.numExpectedAns]]'>
-				<d2l-quiz-question-cals-label label='[[__getPromptForCalsGrading(questionData.numExpectedAns)]]'></d2l-quiz-question-cals-label>
+				<span class='d2l-quiz-question-label' inner-h-t-m-l='[[__getPromptForCalsGrading(questionData.numExpectedAns)]]'></span>
 			</template>
 			<div class='d2l-fieldset-container'>
 				<template is='dom-repeat' items='[[__getChoices(questionData.choices, questionData.randomization)]]'>
