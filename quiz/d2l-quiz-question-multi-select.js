@@ -1,6 +1,7 @@
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 
 import './d2l-quiz-question-hint.js';
+import './d2l-quiz-question-cals-label.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 class D2LQuizQuestionMultiSelect extends PolymerElement {
 	static get template() {
@@ -15,9 +16,15 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 			}
 
 			#d2l-quiz-question-body {
-				margin-bottom: 1rem;
+				margin-bottom: 0.6rem;
 			}
-
+            .d2l-quiz-question-label{
+				color: #6e7376;
+				font-size: .7rem;
+				font-weight: 400;
+				line-height: 1rem;
+				margin: auto;
+			}
 			.choice {
 				display: block;
 				margin-bottom: 1rem;
@@ -80,6 +87,9 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 				background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23565A5C%22%20d%3D%22M8.4%2016.6c.6.6%201.5.6%202.1%200l8-8c.6-.6.6-1.5%200-2.1-.6-.6-1.5-.6-2.1%200l-6.9%207-1.9-1.9c-.6-.6-1.5-.6-2.1%200-.6.6-.6%201.5%200%202.1l2.9%202.9z%22%2F%3E%3C%2Fsvg%3E');
 			}
 
+			.d2l-fieldset-container{
+				margin-top: 0.6rem;
+			}
 			.preview-counters {
 				margin-left: 0.4rem;
 
@@ -131,7 +141,10 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 
 		<div id='d2l-quiz-question'>
 			<div id='d2l-quiz-question-body' inner-h-t-m-l='[[questionData.bodyText]]' tabindex='0'></div>
-			<div>
+			<template is='dom-if' if='[[questionData.numExpectedAns]]'>
+				<span class='d2l-quiz-question-label' inner-h-t-m-l='[[__getPromptForCalsGrading(questionData.numExpectedAns)]]'></span>
+			</template>
+			<div class='d2l-fieldset-container'>
 				<template is='dom-repeat' items='[[__getChoices(questionData.choices, questionData.randomization)]]'>
 					<label class='choice'>
 						<div class='check-box-container'>
@@ -169,6 +182,11 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 
 	constructor() {
 		super();
+	}
+
+	// TODO: change to LANG string
+	__getPromptForCalsGrading(numExpectedAns) {
+		return 'Select ' + numExpectedAns + ' correct answer(s)';
 	}
 
 	__enumerationType(enumerationValue) {

@@ -21,20 +21,20 @@ import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 import 'whatwg-fetch/fetch.js';
 const QuestionTypeEnum = {
-	MULTIPLE_CHOICE: {value: 1, string: 'multiple_choice'},
-	TRUE_FALSE :  {value: 2, string: 'true_false'},
-	FILL_IN_BLANKS :  {value: 3, string: 'fill_in_blanks'},
-	MULTI_SELECT :  {value: 4, string: 'multi_select'},
-	MATCHING :  {value: 5, string: 'matching'},
-	ORDERING :  {value: 6, string: 'ordering'},
-	WRITTEN_RESPONSE :  {value: 7, string: 'written_response'},
-	SHORT_ANSWER :  {value: 8, string: 'short_answer'},
-	LIKERT :  {value: 9, string: 'likert'},
-	IMAGE_INFORMATION :  {value: 10, string: 'image_information'},
-	TEXT_INFORMATION :  {value: 11, string: 'text_information'},
-	ARITHMETIC :  {value: 12, string: 'arithmetic'},
-	SIGNIFICANT_FIGURES :  {value: 13, string: 'significant_figures'},
-	MULTI_SHORT_ANSWER : {value: 14, string: 'multi_short_answer'}
+	MULTIPLE_CHOICE: { value: 1, string: 'multiple_choice' },
+	TRUE_FALSE: { value: 2, string: 'true_false' },
+	FILL_IN_BLANKS: { value: 3, string: 'fill_in_blanks' },
+	MULTI_SELECT: { value: 4, string: 'multi_select' },
+	MATCHING: { value: 5, string: 'matching' },
+	ORDERING: { value: 6, string: 'ordering' },
+	WRITTEN_RESPONSE: { value: 7, string: 'written_response' },
+	SHORT_ANSWER: { value: 8, string: 'short_answer' },
+	LIKERT: { value: 9, string: 'likert' },
+	IMAGE_INFORMATION: { value: 10, string: 'image_information' },
+	TEXT_INFORMATION: { value: 11, string: 'text_information' },
+	ARITHMETIC: { value: 12, string: 'arithmetic' },
+	SIGNIFICANT_FIGURES: { value: 13, string: 'significant_figures' },
+	MULTI_SHORT_ANSWER: { value: 14, string: 'multi_short_answer' }
 };
 
 class D2LQuestion extends mixinBehaviors([D2L.PolymerBehaviors.FetchSirenEntityBehavior, D2L.PolymerBehaviors.D2LQuestion.LocalizeBehavior], PolymerElement) {
@@ -57,7 +57,7 @@ class D2LQuestion extends mixinBehaviors([D2L.PolymerBehaviors.FetchSirenEntityB
 
 	constructor() {
 		super();
-		window.d2lfetch.use({name: 'auth', fn: window.d2lfetch.auth});
+		window.d2lfetch.use({ name: 'auth', fn: window.d2lfetch.auth });
 	}
 
 	static get properties() {
@@ -98,7 +98,7 @@ class D2LQuestion extends mixinBehaviors([D2L.PolymerBehaviors.FetchSirenEntityB
 				case QuestionTypeEnum.TRUE_FALSE.value: {
 					question.bodyText = questionData.properties.question.choiceInteraction.prompt;
 					question.orientation = questionData.properties.question.choiceInteraction.orientation;
-					question.choices = [{text: this.localize('true')}, {text: this.localize('false')}];
+					question.choices = [{ text: this.localize('true') }, { text: this.localize('false') }];
 
 					if (questionData.properties.question.modalFeedback.hint.text && this.allowHint) {
 						question.hint = questionData.properties.question.modalFeedback.hint.text;
@@ -209,6 +209,10 @@ class D2LQuestion extends mixinBehaviors([D2L.PolymerBehaviors.FetchSirenEntityB
 				case QuestionTypeEnum.MULTI_SELECT.value: {
 					question.bodyText = questionData.properties.question.choiceInteraction.prompt;
 					question.orientation = questionData.properties.question.choiceInteraction.orientation;
+
+					if (questionData.properties.question.response.grading === 'right_answers_limited_selection') {
+						question.numExpectedAns = questionData.properties.question.response.responseItems[0].correctResponse.length;
+					}
 
 					const choices = [];
 					for (const prop in questionData.properties.question.choiceInteraction.choices) {
@@ -343,7 +347,7 @@ class D2LQuestion extends mixinBehaviors([D2L.PolymerBehaviors.FetchSirenEntityB
 	_getQuestionData() {
 		if (this.href) {
 			this._fetchEntity(this.href)
-				.then((questionData) => {this._appendQuestionType(questionData);}, () => {this._appendQuestionType();});
+				.then((questionData) => { this._appendQuestionType(questionData); }, () => { this._appendQuestionType(); });
 		}
 	}
 }
