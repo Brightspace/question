@@ -210,7 +210,7 @@ class D2LQuestion extends mixinBehaviors([D2L.PolymerBehaviors.FetchSirenEntityB
 					question.bodyText = questionData.properties.question.choiceInteraction.prompt;
 					question.orientation = questionData.properties.question.choiceInteraction.orientation;
 
-					if (questionData.properties.question.response.grading == 'right_answers_limited_selection') {
+					if (questionData.properties.question.response.grading === 'right_answers_limited_selection') {
 						question.numExpectedAns = questionData.properties.question.response.responseItems[0].correctResponse.length;
 					}
 
