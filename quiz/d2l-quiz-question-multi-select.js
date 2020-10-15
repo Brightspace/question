@@ -156,10 +156,10 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 				<template is='dom-repeat' items='[[__getChoices(questionData.choices, questionData.randomization)]]' >
 					<label class='choice'>
 						<div class='check-box-container'  >
-							<input id='abc_{{index}}' type='checkbox' class='check-box' value='[[item.text]]' on-click='__tryToggleCheckbox'>
+							<input id='ans_{{index}}' type='checkbox' class='check-box' value='[[item.text]]' on-click='__tryToggleCheckbox'>
 							<template is='dom-if' if='[[questionData.numExpectedAns]]'>
-								<d2l-tooltip class="hidden" for='abc_{{index}}' align='start'>
-									[[__getLabelForCalsGrading(questionData.numExpectedAns)]]
+								<d2l-tooltip class="hidden" for='ans_{{index}}' align='start'>
+									[[__getLabelForTooltip(questionData.numExpectedAns)]]
 								</d2l-tooltip> 
 							</template>
 						</div>
@@ -200,6 +200,10 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 	// TODO: change to LANG string
 	__getLabelForCalsGrading(numExpectedAns) {
 		return 'Select ' + numExpectedAns + ' correct answer(s)';
+	}
+
+	__getLabelForTooltip(numExpectedAns) {
+		return 'Only select ' + numExpectedAns + ' correct answer(s)';
 	}
 
 	__tryToggleCheckbox(e) {
