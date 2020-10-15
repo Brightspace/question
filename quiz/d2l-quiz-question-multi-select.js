@@ -2,6 +2,8 @@ import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 
 import './d2l-quiz-question-hint.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import '@brightspace-ui/core/components/tooltip/tooltip.js';
+
 class D2LQuizQuestionMultiSelect extends PolymerElement {
 	static get template() {
 		return html`
@@ -93,6 +95,9 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 			.d2l-fieldset-container{
 				margin-top: 0.6rem;
 			}
+			.hidden{
+				display: none;
+			}
 			.preview-counters {
 				margin-left: 0.4rem;
 
@@ -151,7 +156,12 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 				<template is='dom-repeat' items='[[__getChoices(questionData.choices, questionData.randomization)]]' >
 					<label class='choice'>
 						<div class='check-box-container'  >
-							<input type='checkbox' class='check-box' value='[[item.text]]' on-change='__tryToggleCheckbox'>
+							<input id='abc_{{index}}' type='checkbox' class='check-box' value='[[item.text]]' on-click='__tryToggleCheckbox'>
+							<template is='dom-if' if='[[questionData.numExpectedAns]]'>
+								<d2l-tooltip class="hidden" for='abc_{{index}}' align='start'>
+									[[__getLabelForCalsGrading(questionData.numExpectedAns)]]
+								</d2l-tooltip> 
+							</template>
 						</div>
 						<div class='choice-content-container'>											
 							<div class$='[[__enumerationType(questionData.enumeration)]]'>
@@ -185,41 +195,45 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 
 	constructor() {
 		super();
-		this.numExpectedAns;
 	}
 
 	// TODO: change to LANG string
 	__getLabelForCalsGrading(numExpectedAns) {
-		this.numExpectedAns = numExpectedAns;
 		return 'Select ' + numExpectedAns + ' correct answer(s)';
 	}
 
 	__tryToggleCheckbox(e) {
-		// if checkbox is getting unchecked, reset remove check-box-not-allowed styling from all boxes
-		if (!e.target.checked) {
-			const boxes = this.shadowRoot.querySelectorAll('input[type=checkbox]');
-			for (let i = 0; i < boxes.length; i++) {
-				boxes[i].classList.remove('check-box-not-allowed');
-				boxes[i].disabled = false;
-			}
-			return;
-		}
-
-		// count number of checked boxes
-		let numChecked = 0;
+		// get all checkboxes
 		const checkboxes = this.shadowRoot.querySelectorAll('input[type=checkbox]');
+		let numChecked = 0;
 		for (let i = 0; i < checkboxes.length; i++) {
 			if (checkboxes[i].checked) {
 				numChecked++;
 			}
 		}
-		// if limit exceeded, add check-box-not-allowed styling to unchecked boxes
-		if (numChecked >= this.numExpectedAns) {
-			const unchecked = this.shadowRoot.querySelectorAll('input[type=checkbox]:not(:checked)');
-			for (let i = 0; i < unchecked.length; i++) {
-				unchecked[i].classList.add('check-box-not-allowed');
-				unchecked[i].disabled = true;
+		// if checkbox cannot be checked, set checked to false
+		if (e.target.classList.contains('check-box-not-allowed')) {
+			e.target.checked = false;
+			return;
+		}
+
+		if (e.target.checked) {
+			// if selection limit has been reached, make remaining checkboxes uncheckable and pop tooltip
+			if (numChecked >= this.questionData.numExpectedAns) {
+				const unchecked = this.shadowRoot.querySelectorAll('input[type=checkbox]:not(:checked)');
+				for (let i = 0; i < unchecked.length; i++) {
+					unchecked[i].classList.add('check-box-not-allowed');
+					unchecked[i].nextElementSibling.classList.remove('hidden');
+
+				}
 			}
+			// if checkbox is being unchecked, all checkboxes are checkable again
+		} else {
+			for (let i = 0; i < checkboxes.length; i++) {
+				checkboxes[i].classList.remove('check-box-not-allowed');
+				checkboxes[i].nextElementSibling.classList.add('hidden');
+			}
+
 		}
 	}
 
