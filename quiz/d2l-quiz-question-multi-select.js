@@ -95,9 +95,10 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 			.d2l-fieldset-container{
 				margin-top: 0.6rem;
 			}
-			.hidden{
+			.hidden {
 				display: none;
 			}
+
 			.preview-counters {
 				margin-left: 0.4rem;
 
@@ -156,9 +157,9 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 				<template is='dom-repeat' items='[[__getChoices(questionData.choices, questionData.randomization)]]' >
 					<label class='choice'>
 						<div class='check-box-container'  >
-							<input id='ans_{{index}}' type='checkbox' class='check-box' value='[[item.text]]' on-click='__tryToggleCheckbox'>
+							<input id='ans_{{index}}' type='checkbox' class='check-box' value='[[item.text]]' on-click='__onMultiSelectLimitedAnswerCheckboxClick' on-mouseover='__onMultiSelectLimitedAnswerCheckboxMouseOver'>
 							<template is='dom-if' if='[[questionData.numExpectedAns]]'>
-								<d2l-tooltip class="hidden" for='ans_{{index}}' align='start'>
+								<d2l-tooltip class="tooltip hidden" for='ans_{{index}}' align='start'>
 									[[__getLabelForTooltip(questionData.numExpectedAns)]]
 								</d2l-tooltip> 
 							</template>
@@ -206,38 +207,41 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 		return 'Only select ' + numExpectedAns + ' correct answer(s)';
 	}
 
-	__tryToggleCheckbox(e) {
-		// get all checkboxes
+	__onMultiSelectLimitedAnswerCheckboxClick(e) {
 		const checkboxes = this.shadowRoot.querySelectorAll('input[type=checkbox]');
-		let numChecked = 0;
-		for (let i = 0; i < checkboxes.length; i++) {
-			if (checkboxes[i].checked) {
-				numChecked++;
-			}
-		}
-		// if checkbox cannot be checked, set checked to false
-		if (e.target.classList.contains('check-box-not-allowed')) {
-			e.target.checked = false;
-			return;
-		}
-
 		if (e.target.checked) {
-			// if selection limit has been reached, make remaining checkboxes uncheckable and pop tooltip
-			if (numChecked >= this.questionData.numExpectedAns) {
-				const unchecked = this.shadowRoot.querySelectorAll('input[type=checkbox]:not(:checked)');
-				for (let i = 0; i < unchecked.length; i++) {
-					unchecked[i].classList.add('check-box-not-allowed');
-					unchecked[i].nextElementSibling.classList.remove('hidden');
-
+			let numChecked = 0;
+			for (let i = 0; i < checkboxes.length; i++) {
+				if (checkboxes[i].checked) {
+					numChecked++;
 				}
 			}
-			// if checkbox is being unchecked, all checkboxes are checkable again
-		} else {
+			if (numChecked > this.questionData.numExpectedAns) {
+				e.target.checked = false;
+				e.target.nextElementSibling.classList.remove('hidden');
+			}
+		}
+		else {
 			for (let i = 0; i < checkboxes.length; i++) {
-				checkboxes[i].classList.remove('check-box-not-allowed');
+				checkboxes[i].style.cursor = 'default';
 				checkboxes[i].nextElementSibling.classList.add('hidden');
 			}
+		}
+	}
 
+	__onMultiSelectLimitedAnswerCheckboxMouseOver(e) {
+		if (!e.target.checked) {
+			const checkboxes = this.shadowRoot.querySelectorAll('input[type=checkbox]');
+			var numChecked = 0;
+			for (let i = 0; i < checkboxes.length; i++) {
+				checkboxes[i].nextElementSibling.classList.add('hidden');
+				if (checkboxes[i].checked) {
+					numChecked++;
+				}
+			}
+			if (numChecked >= this.questionData.numExpectedAns) {
+				e.target.style.cursor = 'not-allowed';
+			}
 		}
 	}
 
