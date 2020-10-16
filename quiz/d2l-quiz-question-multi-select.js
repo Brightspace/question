@@ -201,7 +201,6 @@ class D2LQuizQuestionMultiSelect extends mixinBehaviors(D2L.PolymerBehaviors.D2L
 		super();
 	}
 
-	// TODO: change to LANG string
 	__getLabelForCalsGrading() {
 		return this.localize('select_correct_answers', 'number', this.questionData.numExpectedAns);
 	}
