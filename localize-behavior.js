@@ -32,7 +32,9 @@ D2L.PolymerBehaviors.D2LQuestion.LocalizeBehaviorImpl = {
 						'hide_hint': 'Hide hint',
 						'blank': 'Blank # ',
 						'spell_check': 'Spell check',
-						'select_option': '-- Select an Option --'
+						'select_option': '-- Select an Option --',
+						'select_correct_answers': 'Select {number} correct answer(s)',
+						'only_select_correct_answers': 'Only select {number} correct answer(s)'
 					},
 					'ar': {
 						'multiple_choice': 'خيارات متعددة',
@@ -57,7 +59,9 @@ D2L.PolymerBehaviors.D2LQuestion.LocalizeBehaviorImpl = {
 						'hide_hint': 'إخفاء التلميح',
 						'blank': 'فارغ # ',
 						'spell_check': 'التدقيق الإملائي',
-						'select_option': '-- تحديد خيار --'
+						'select_option': '-- تحديد خيار --',
+						'select_correct_answers': 'يمكن تحديد {number} من الإجابات فقط',
+						'only_select_correct_answers': 'يمكن تحديد {number} من الإجابات فقط'
 					},
 					'de': {
 						'multiple_choice': 'Multiple Choice',
@@ -82,7 +86,9 @@ D2L.PolymerBehaviors.D2LQuestion.LocalizeBehaviorImpl = {
 						'hide_hint': 'Tipp ausblenden',
 						'blank': 'Leerraum ',
 						'spell_check': 'Rechtschreibprüfung',
-						'select_option': '-- Option auswählen --'
+						'select_option': '-- Option auswählen --',
+						'select_correct_answers': 'Wählen Sie {number} richtige Antworten aus.',
+						'only_select_correct_answers': 'Es können nur {number} Antworten ausgewählt werden'
 					},
 					'es': {
 						'multiple_choice': 'Selección múltiple',
@@ -107,7 +113,9 @@ D2L.PolymerBehaviors.D2LQuestion.LocalizeBehaviorImpl = {
 						'hide_hint': 'Ocultar sugerencia',
 						'blank': 'Espacio en blanco # ',
 						'spell_check': 'Corrección ortográfica',
-						'select_option': '-- Seleccionar una opción --'
+						'select_option': '-- Seleccionar una opción --',
+						'select_correct_answers': 'Seleccione {number} respuestas correctas',
+						'only_select_correct_answers': 'Solo se pueden seleccionar {number} respuestas'
 					},
 					'fr': {
 						'multiple_choice': 'Réponse à choix multiples',
@@ -132,7 +140,9 @@ D2L.PolymerBehaviors.D2LQuestion.LocalizeBehaviorImpl = {
 						'hide_hint': 'Indice pour masquer',
 						'blank': 'Espace blanc n° ',
 						'spell_check': 'Vérification d\'orthographe',
-						'select_option': '-- Choisissez une option --'
+						'select_option': '-- Choisissez une option --',
+						'select_correct_answers': 'Sélectionnez {number} réponses correctes',
+						'only_select_correct_answers': 'Vous ne pouvez sélectionner que {number} réponses'
 					},
 					'ja': {
 						'multiple_choice': '複数の選択肢',
@@ -157,7 +167,9 @@ D2L.PolymerBehaviors.D2LQuestion.LocalizeBehaviorImpl = {
 						'hide_hint': 'ヒントを非表示',
 						'blank': '空欄 # ',
 						'spell_check': 'スペルチェック',
-						'select_option': '-- オプションの選択 --'
+						'select_option': '-- オプションの選択 --',
+						'select_correct_answers': '{number} 個の正しい回答を選択',
+						'only_select_correct_answers': '{number} 個の回答のみ選択可能]'
 					},
 					'ko': {
 						'multiple_choice': '다지선다형',
@@ -182,7 +194,9 @@ D2L.PolymerBehaviors.D2LQuestion.LocalizeBehaviorImpl = {
 						'hide_hint': '힌트 감추기',
 						'blank': '공백 # ',
 						'spell_check': '맞춤법 검사',
-						'select_option': '-- 옵션 선택 --'
+						'select_option': '-- 옵션 선택 --',
+						'select_correct_answers': '{number} 정답을 선택합니다.',
+						'only_select_correct_answers': '{number} 답변만 선택할 수 있습니다.'
 					},
 					'nl': {
 						'multiple_choice': 'Meerkeuze',
@@ -207,7 +221,9 @@ D2L.PolymerBehaviors.D2LQuestion.LocalizeBehaviorImpl = {
 						'hide_hint': 'Tip verbergen',
 						'blank': 'Lege # ',
 						'spell_check': 'Spellingcontrole',
-						'select_option': '-- Selecteer een optie --'
+						'select_option': '-- Selecteer een optie --',
+						'select_correct_answers': 'Selecteer {number} juiste antwoorden',
+						'only_select_correct_answers': 'Er kunnen maar {number} antwoorden worden geselecteerd'
 					},
 					'pt': {
 						'multiple_choice': 'Múltipla Escolha',
@@ -232,7 +248,9 @@ D2L.PolymerBehaviors.D2LQuestion.LocalizeBehaviorImpl = {
 						'hide_hint': 'Ocultar dica',
 						'blank': 'N° em branco ',
 						'spell_check': 'Verificação ortográfica',
-						'select_option': '-- Selecione uma Opção --'
+						'select_option': '-- Selecione uma Opção --',
+						'select_correct_answers': 'Selecionar {number} respostas corretas',
+						'only_select_correct_answers': 'Somente {number} respostas podem ser selecionadas'
 					},
 					'sv': {
 						'multiple_choice': 'Flerval',
@@ -257,7 +275,9 @@ D2L.PolymerBehaviors.D2LQuestion.LocalizeBehaviorImpl = {
 						'hide_hint': 'Dölj ledtråd',
 						'blank': 'Tom # ',
 						'spell_check': 'Stavningskontroll',
-						'select_option': '-- Välj ett alternativ --'
+						'select_option': '-- Välj ett alternativ --',
+						'select_correct_answers': 'Välj {number} rätta svar',
+						'only_select_correct_answers': 'Endast {number} svar kan väljas'
 					},
 					'tr': {
 						'multiple_choice': 'Çoktan Seçmeli',
@@ -282,7 +302,9 @@ D2L.PolymerBehaviors.D2LQuestion.LocalizeBehaviorImpl = {
 						'hide_hint': 'İpucunu gizle',
 						'blank': 'Boş # ',
 						'spell_check': 'Yazım denetimi',
-						'select_option': '-- Bir Seçenek Belirleyin --'
+						'select_option': '-- Bir Seçenek Belirleyin --',
+						'select_correct_answers': 'Doğru {number} yanıt seçin',
+						'only_select_correct_answers': 'Yalnızca {number} yanıt seçilebilir'
 					},
 					'zh': {
 						'multiple_choice': '单选题',
@@ -307,7 +329,9 @@ D2L.PolymerBehaviors.D2LQuestion.LocalizeBehaviorImpl = {
 						'hide_hint': '隐藏提示',
 						'blank': '空白 # ',
 						'spell_check': '拼写检查',
-						'select_option': '-- 选择选项 --'
+						'select_option': '-- 选择选项 --',
+						'select_correct_answers': '选择 {number} 个正确答案',
+						'only_select_correct_answers': '只能选择 {number} 个答案'
 					},
 					'zh-cn': {
 						'multiple_choice': '单选题',
@@ -332,7 +356,9 @@ D2L.PolymerBehaviors.D2LQuestion.LocalizeBehaviorImpl = {
 						'hide_hint': '隐藏提示',
 						'blank': '空白 # ',
 						'spell_check': '拼写检查',
-						'select_option': '-- 选择选项 --'
+						'select_option': '-- 选择选项 --',
+						'select_correct_answers': '选择 {number} 个正确答案',
+						'only_select_correct_answers': '只能选择 {number} 个答案'
 					},
 					'zh-tw': {
 						'multiple_choice': '單選題',
@@ -357,7 +383,9 @@ D2L.PolymerBehaviors.D2LQuestion.LocalizeBehaviorImpl = {
 						'hide_hint': '隱藏提示',
 						'blank': '填充題 # ',
 						'spell_check': '拼字檢查',
-						'select_option': '-- 選取選項 --'
+						'select_option': '-- 選取選項 --',
+						'select_correct_answers': '選取 {number} 個正確答案',
+						'only_select_correct_answers': '只能選取 {number} 個答案'
 					}
 				};
 			}

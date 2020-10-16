@@ -3,8 +3,10 @@ import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import './d2l-quiz-question-hint.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import '@brightspace-ui/core/components/tooltip/tooltip.js';
+import '../localize-behavior.js';
+import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 
-class D2LQuizQuestionMultiSelect extends PolymerElement {
+class D2LQuizQuestionMultiSelect extends mixinBehaviors(D2L.PolymerBehaviors.D2LQuestion.LocalizeBehavior, PolymerElement) {
 	static get template() {
 		return html`
 		<style>
@@ -25,6 +27,7 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 				font-weight: 400;
 				line-height: 1rem;
 				margin: auto;
+				display: inherit;
 			}
 			.choice {
 				display: block;
@@ -151,7 +154,7 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 		<div id='d2l-quiz-question'>
 			<div id='d2l-quiz-question-body' inner-h-t-m-l='[[questionData.bodyText]]' tabindex='0'></div>
 			<template is='dom-if' if='[[questionData.numExpectedAns]]'>
-				<span class='d2l-quiz-question-label' inner-h-t-m-l='[[__getLabelForCalsGrading(questionData.numExpectedAns)]]'></span>
+				<span class='d2l-quiz-question-label' inner-h-t-m-l='[[__getLabelForCalsGrading()]]'></span>
 			</template>
 			<div class='d2l-fieldset-container'>
 				<template is='dom-repeat' items='[[__getChoices(questionData.choices, questionData.randomization)]]' >
@@ -159,8 +162,8 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 						<div class='check-box-container'  >
 							<input id='ans_{{index}}' type='checkbox' class='check-box' value='[[item.text]]' on-click='__onMultiSelectLimitedAnswerCheckboxClick' on-mouseover='__onMultiSelectLimitedAnswerCheckboxMouseOver'>
 							<template is='dom-if' if='[[questionData.numExpectedAns]]'>
-								<d2l-tooltip class="tooltip hidden" for='ans_{{index}}' align='start'>
-									[[__getLabelForTooltip(questionData.numExpectedAns)]]
+								<d2l-tooltip class='hidden' for='ans_{{index}}' align='start'>
+									[[__getLabelForTooltip()]]
 								</d2l-tooltip> 
 							</template>
 						</div>
@@ -199,12 +202,12 @@ class D2LQuizQuestionMultiSelect extends PolymerElement {
 	}
 
 	// TODO: change to LANG string
-	__getLabelForCalsGrading(numExpectedAns) {
-		return 'Select ' + numExpectedAns + ' correct answer(s)';
+	__getLabelForCalsGrading() {
+		return this.localize('select_correct_answers', 'number', this.questionData.numExpectedAns);
 	}
 
-	__getLabelForTooltip(numExpectedAns) {
-		return 'Only select ' + numExpectedAns + ' correct answer(s)';
+	__getLabelForTooltip() {
+		return this.localize('only_select_correct_answers', 'number', this.questionData.numExpectedAns);
 	}
 
 	__onMultiSelectLimitedAnswerCheckboxClick(e) {
