@@ -114,7 +114,7 @@ class D2LQuizQuestionWrittenResponse extends mixinBehaviors(D2L.PolymerBehaviors
 	_config() {
 		const maxWidth = parseInt(getComputedStyle(this).getPropertyValue('--d2l-quiz-question-written-response-max-width-in-px'));
 		if (this.configData.htmlEditorUrl) {
-			const editorWidth = this.__getParameterByName('width', this.configData.htmlEditorUrl);
+			const editorWidth = +this.__getParameterByName('width', this.configData.htmlEditorUrl);
 			const actualWidth = editorWidth > maxWidth ? maxWidth : editorWidth;
 			const editor = document.createElement('iframe');
 			editor.setAttribute('scrolling', 'no');
