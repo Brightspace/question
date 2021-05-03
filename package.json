@@ -18,14 +18,14 @@
     "@polymer/iron-component-page": "^4.0.0",
     "@polymer/iron-demo-helpers": "^3.0.0",
     "@webcomponents/webcomponentsjs": "^2.2.4",
+    "async": "^1.5.2",
     "babel-eslint": "^10.0.1",
     "eslint": "^4.15.0",
     "eslint-config-brightspace": "^0.4.1",
     "eslint-plugin-html": "^4.0.1",
     "polymer-cli": "^1.9.5",
     "sinon": "^2.0.0-pre",
-    "wct-browser-legacy": "^1.0.1",
-    "async": "^1.5.2"
+    "wct-browser-legacy": "^1.0.1"
   },
   "resolutions": {
     "inherits": "2.0.3",
@@ -37,7 +37,6 @@
   "dependencies": {
     "@brightspace-ui/core": "^1.85.1",
     "@polymer/polymer": "^3.0.0",
-    "@polymer/promise-polyfill": "^3.0.0-pre.18",
     "d2l-button": "BrightspaceUI/button#semver:^5",
     "d2l-fetch-auth": "Brightspace/d2l-fetch-auth.git#semver:^1",
     "d2l-fetch-siren-entity-behavior": "Brightspace/d2l-fetch-siren-entity-behavior.git#semver:^6",
