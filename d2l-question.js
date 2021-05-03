@@ -4,7 +4,6 @@ Polymer-based web component for D2L questions
 
 @demo demo/index.hmtl
 */
-import '@polymer/promise-polyfill/promise-polyfill.js';
 
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import 'd2l-fetch-siren-entity-behavior/d2l-fetch-siren-entity-behavior.js';
